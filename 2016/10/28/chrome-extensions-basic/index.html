@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Chrome Extension Basic | JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Chrome Extension Basic"/>
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-28T05:28:17.000Z"><a href="/2016/10/28/chrome-extensions-basic/">2016-10-28</a></time>
+      
+      
+  
+    <h1 class="title">Chrome Extension Basic</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="https://developer.chrome.com/extensions/getstarted" target="_blank" rel="external">官方文件</a></p>
+<p><a href="https://developer.chrome.com/extensions/api_index" target="_blank" rel="external">API</a></p>
+<h2 id="基本外掛"><a href="#基本外掛" class="headerlink" title="基本外掛"></a>基本外掛</h2><p>一開始要做一個簡單的外掛，建立一個按鈕在 Chrome 旁邊</p>
+<p>要做一個按鈕會使用到 <a href="https://developer.chrome.com/extensions/browserAction" target="_blank" rel="external">chrome.browserAction</a>，如下圖所示</p>
+<p><a href="https://developer.chrome.com/static/images/browser-action.png" target="_blank" rel="external"><img src="https://developer.chrome.com/static/images/browser-action.png" alt="panel" title="panel"></a></p>
+<p>當然還有其他類型的按鈕，例如<a href="https://crxdoc-zh.appspot.com/extensions/pageAction" target="_blank" rel="external">pageAction</a>，下圖橘色 RSS 按鈕</p>
+<p><a href="https://crxdoc-zh.appspot.com/static/images/page-action.png" target="_blank" rel="external"><img src="https://crxdoc-zh.appspot.com/static/images/page-action.png" alt="panel" title="panel"></a></p>
+<p>不過為什麼不命名為<code>browserButton</code>這就不清楚了</p>
+<p>再來看一下 API 頁面的介紹，基本上 API 介紹不外乎下面幾個重點</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">描述功能 : 就是描述功能</span><br><span class="line">Manifest : 如何寫(裡面出現 optional 代表可寫可不寫)</span><br><span class="line">小提示   : 告訴你可以用在什麼情境或是要注意的一些事情</span><br><span class="line">範例     : 提供 Google 寫的範例原始碼</span><br><span class="line">API      : 此元件可用的 API，例如 browserAction 可以用 setTitle 這個方法</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="開始撰寫"><a href="#開始撰寫" class="headerlink" title="開始撰寫"></a>開始撰寫</h2><p>一開始撰寫<code>Manifest</code>，他就是一個 json 格式的檔案，裡面描述此外掛的訊息</p>
+<p>當然內容也是有<a href="https://developer.chrome.com/extensions/manifest" target="_blank" rel="external">標準規定</a></p>
+<p>Manifest 內容類別有分為 4 種</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Required           : 一定要寫</span><br><span class="line">Recommended        : 建議要寫</span><br><span class="line">Pick one (or none) : 擇一或不選</span><br><span class="line">Optional           : 可選可不選</span><br></pre></td></tr></table></figure>
+<p>以下為其中一部分範例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  // Required</span><br><span class="line">  &quot;manifest_version&quot;: 2,</span><br><span class="line">  &quot;name&quot;: &quot;My Extension&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;versionString&quot;,</span><br><span class="line"></span><br><span class="line">  // Recommended</span><br><span class="line">  &quot;default_locale&quot;: &quot;en&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;A plain text description&quot;,</span><br><span class="line">  &quot;icons&quot;: &#123;...&#125;,</span><br><span class="line"></span><br><span class="line">  // Pick one (or none)</span><br><span class="line">  &quot;browser_action&quot;: &#123;...&#125;,</span><br><span class="line">  &quot;page_action&quot;: &#123;...&#125;,</span><br><span class="line"></span><br><span class="line">  // Optional</span><br><span class="line">  &quot;author&quot;: ...,</span><br><span class="line">  &quot;automation&quot;: ...,</span><br><span class="line">  &quot;background&quot;: &#123;</span><br><span class="line">    // Recommended</span><br><span class="line">    &quot;persistent&quot;: false</span><br><span class="line">  &#125;,</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>目前我們要使用<code>browserAction</code>，所以<code>Manifest</code>內容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;manifest_version&quot;: 2,</span><br><span class="line">    &quot;name&quot;: &quot;基本範例&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0&quot;,</span><br><span class="line"></span><br><span class="line">    &quot;description&quot;: &quot;第一個外掛&quot;,</span><br><span class="line">    </span><br><span class="line">    &quot;browser_action&quot;: &#123;</span><br><span class="line">        &quot;default_icon&quot;: &quot;icon.png&quot;,</span><br><span class="line">        &quot;default_popup&quot;: &quot;popup.html&quot;</span><br><span class="line">    &#125;,    </span><br><span class="line">    </span><br><span class="line">    &quot;permissions&quot;: [</span><br><span class="line">        &quot;activeTab&quot;,</span><br><span class="line">        &quot;https://ajax.googleapis.com/&quot;</span><br><span class="line">    ]    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這邊比較重要的就是<a href="https://developer.chrome.com/extensions/declare_permissions" target="_blank" rel="external">permissions</a></p>
+<p>如果你要取得使用者的資料(例如他目前在看什麼網頁)，就需要用特定的<code>permissions</code></p>
+<p>當然使用者使用時會根據你要求的<code>permissions</code>來決定要不要使用此外掛</p>
+<p>第一個<code>activeTab</code>的用途在你可以暫時的取得使用者目前在看的網頁網址、網站標題、等等</p>
+<p>第二個是一個網址，此欄位稱為<a href="https://developer.chrome.com/extensions/match_patterns" target="_blank" rel="external">Match patterns</a></p>
+<p>例如你可以取得此網址的資源，或是只有瀏覽到此網址才會運作你的外掛</p>
+<p>把以下 3 個檔案下載放同一個目錄</p>
+<p><a href="https://developer.chrome.com/extensions/examples/tutorials/getstarted/icon.png" target="_blank" rel="external">icon.png</a></p>
+<p><a href="https://developer.chrome.com/extensions/examples/tutorials/getstarted/popup.html" target="_blank" rel="external">popup.html</a></p>
+<p><a href="https://developer.chrome.com/extensions/examples/tutorials/getstarted/popup.js" target="_blank" rel="external">popup.js</a></p>
+<p><code>browser_action</code>裡面定義按鈕圖案，以及按下去之後會打開什麼頁面(popup.html)</p>
+<p>先將<code>popup.html</code>改成以下內容，載入外掛後按下按鈕就會出現 Hello</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;Getting Started Extension&apos;s Popup&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">      body &#123;</span><br><span class="line">        font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Tahoma, sans-serif;</span><br><span class="line">        font-size: 100%;</span><br><span class="line">      &#125;</span><br><span class="line">      #status &#123;</span><br><span class="line">        /* avoid an excessively wide status text */</span><br><span class="line">        white-space: pre;</span><br><span class="line">        text-overflow: ellipsis;</span><br><span class="line">        overflow: hidden;</span><br><span class="line">        max-width: 400px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    Hello</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<img src="/2016/10/28/chrome-extensions-basic/2016-10-28_173627.png" alt="2016-10-28_173627.png" title="">
+<p>如果成功出現 Hello 則把 popup.html 改為以下內容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;Getting Started Extension&apos;s Popup&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">      body &#123;</span><br><span class="line">        font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Tahoma, sans-serif;</span><br><span class="line">        font-size: 100%;</span><br><span class="line">      &#125;</span><br><span class="line">      #status &#123;</span><br><span class="line">        /* avoid an excessively wide status text */</span><br><span class="line">        white-space: pre;</span><br><span class="line">        text-overflow: ellipsis;</span><br><span class="line">        overflow: hidden;</span><br><span class="line">        max-width: 400px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--</span><br><span class="line">      - JavaScript and HTML must be in separate files: see our Content Security</span><br><span class="line">      - Policy documentation[1] for details and explanation.</span><br><span class="line">      -</span><br><span class="line">      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy</span><br><span class="line">     --&gt;</span><br><span class="line">    &lt;script src=&quot;popup.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    Hello</span><br><span class="line">    &lt;div id=&quot;status&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;img id=&quot;image-result&quot; hidden&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>唯一要注意的是，js 檔案要和 html 分開，不能將 javascript 放在 html 裡面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JavaScript and HTML must be in separate files: </span><br><span class="line">see our Content Security Policy documentation[1] for details and explanation.</span><br></pre></td></tr></table></figure>
+<p>首先一樣將 popup.js 改為以下內容</p>
+<p>改完之後在按鈕上按右鍵，選擇<code>檢查彈出式視窗</code>，就會出現<code>Press Button!</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">document.addEventListener(&apos;DOMContentLoaded&apos;, function() &#123;</span><br><span class="line">     console.log(&quot;Press Button!&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>這樣寫代表加入一個事件監聽器，監聽 DOMContentLoaded 事件是否被呼叫</p>
+<p>簡單的說，只要一發生 DOMContentLoaded 事件，就去呼叫後面那個 function</p>
+<p>而 DOMContentLoaded 事件發生代表當 DOM 加載完成(不包括樣式表、圖片等)</p>
+<p>另一種寫法如下，把 function 分開比較容易看懂</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function pressBtn() &#123;</span><br><span class="line">    console.log(&quot;Press Button!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">document.addEventListener(&quot;DOMContentLoaded&quot;, pressBtn);</span><br></pre></td></tr></table></figure>
+<p>接下來看這個 API <code>chrome.tabs.query(object queryInfo, function callback)</code></p>
+<p><code>queryInfo</code>是你自訂的一個物件，此物件裡面有許多參數可以使用</p>
+<p>例如你可以這樣寫來建立一個物件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var queryInfo = &#123;</span><br><span class="line">  active          : true,  // 取得目前的 TAB 頁面</span><br><span class="line">  currentWindow   : true   // 取得目前的 Window 頁面</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>Window</code>表示目前使用的 Chrome，因為你可以開多個 Chrome</p>
+<p>所以你要指定目前使用的<code>Chrome</code>，以及目前使用的<code>頁面</code>，所以把程式改寫為</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">currentTabInfo</span>(<span class="params">tabs</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tab = tabs[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">var</span> url = tab.url;</span><br><span class="line">    <span class="built_in">console</span>.assert(<span class="keyword">typeof</span> url == <span class="string">'string'</span>, <span class="string">'tab.url should be a string'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Current Tab Url = "</span>+url);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCurrentTabUrl</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> queryInfo = &#123;</span><br><span class="line">        active          : <span class="literal">true</span>,</span><br><span class="line">        currentWindow   : <span class="literal">true</span></span><br><span class="line">    &#125;;</span><br><span class="line">    chrome.tabs.query(queryInfo, currentTabInfo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pressBtn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    getCurrentTabUrl();    </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"DOMContentLoaded"</span>, pressBtn);</span><br></pre></td></tr></table></figure>
+<p>以上就是基本的外掛流程</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Chrome/">Chrome</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Chrome/">Chrome</a>, <a href="/tags/Extension/">Extension</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2016/10/28/chrome-extensions-basic/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>7</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>7</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

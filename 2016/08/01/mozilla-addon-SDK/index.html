@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Firefox Add-on 製作 | JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Firefox Add-on 製作"/>
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-01T05:28:17.000Z"><a href="/2016/08/01/mozilla-addon-SDK/">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title">Firefox Add-on 製作</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="http://tech.mozilla.com.tw/posts/5832/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%80%8F%E8%A6%BD%E5%99%A8%E8%87%AA%E5%B7%B1%E6%94%B9-part-i-%E5%88%A9%E7%94%A8firefox-addon-sdk%E9%96%8B%E7%99%BC%E7%B0%A1%E5%96%AE%E7%9A%84%E9%99%84%E5%8A%A0%E5%85%83#ref-5" target="_blank" rel="external">Linux 開發</a></p>
+<p><a href="https://wwssllabcd.github.io/blog/2014/05/03/building-an-extension-for-firefox/" target="_blank" rel="external">Windows 開發</a></p>
+<p>注意 Windows 開發要安裝 Python 2.X 版本，3.X 版本不能用</p>
+<p>另外以下使用 cfx 指令，不過之後推薦改用 jpm，jpm 指令需要用 npm 安裝，所以你要先安裝 nodejs</p>
+<p>下面分別示範 cfx 和 jpm </p>
+<h2 id="使用-cfx-開發"><a href="#使用-cfx-開發" class="headerlink" title="使用 cfx 開發"></a>使用 cfx 開發</h2><p>此篇記錄 Linux 開發實作內容，首先建立資料夾 mozilla</p>
+<p>然後下載 <a href="https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/jetpack-sdk-latest.zip" target="_blank" rel="external">Add-on SKD</a> 放進去解壓縮，此時結構如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addon-sdk-1.17/</span><br><span class="line">jetpack-sdk-latest.zip*</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>接著執行 <code>source bin/activate</code>，執行完前面會出現 (addon-sdk-1.17)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(addon-sdk-1.17)jason.cc.chiu:~/mozilla$</span><br></pre></td></tr></table></figure>
+<p>現在建立一個我們的專案目錄(附加元件)，依照你想要的名稱命名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir mdn-mod</span><br><span class="line">cd mdn-mod</span><br><span class="line">cfx init</span><br></pre></td></tr></table></figure>
+<p>完成之後可以用 tree 指令來看一下架構</p>
+<p>tree 指令並非預設指令，需要自行安裝 sudo apt-get install tree</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(addon-sdk-1.17)jason.cc.chiu:~/mozilla$ tree mdn-mod/</span><br><span class="line">mdn-mod/</span><br><span class="line">├── data                // Add-on 需要的資源檔案</span><br><span class="line">├── lib                 // Add-on 主要的 JavaScript 程式碼</span><br><span class="line">│   └── main.js         // 程式的進入點(目前是空的) </span><br><span class="line">├── package.json        // 定義這個 Add-on 的 metadata</span><br><span class="line">└── test                // 測試檔案</span><br><span class="line">    └── test-main.js</span><br><span class="line"></span><br><span class="line">3 directories, 3 files</span><br></pre></td></tr></table></figure>
+<p>package.json 填寫<a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/package_json" target="_blank" rel="external">參考這裡</a></p>
+<p>預設內如如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;mdn-mod&quot;,</span><br><span class="line">  &quot;title&quot;: &quot;mdn-mod&quot;,</span><br><span class="line">  &quot;id&quot;: &quot;jid1-wiMk7csR0xVhEg&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;a basic add-on&quot;,</span><br><span class="line">  &quot;author&quot;: &quot;&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;MPL 2.0&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用-page-mod-API"><a href="#使用-page-mod-API" class="headerlink" title="使用 page-mod API"></a>使用 page-mod API</h2><p>此 API 作用為，當使用者進入某網頁時，自動插入 JavaScript 到此頁面</p>
+<p>API 介紹<a href="https://developer.mozilla.org/zh-TW/Add-ons/SDK/High-Level_APIs/page-mod" target="_blank" rel="external">參考這裡</a></p>
+<p>打開 lib/main.js 加入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匯入 SKD 檔案</span></span><br><span class="line"><span class="keyword">var</span> pageMod = <span class="built_in">require</span>(<span class="string">"sdk/page-mod"</span>);  </span><br><span class="line"><span class="keyword">var</span> data    = <span class="built_in">require</span>(<span class="string">"sdk/self"</span>).data;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">pageMod.PageMod(&#123;</span><br><span class="line">    <span class="comment">// 只要網址結尾是 mozilla.org，就插入 contentScriptFile 指定的 JavaScript 檔案</span></span><br><span class="line">    include: <span class="string">"*.mozilla.org"</span>, </span><br><span class="line">    <span class="comment">// data.url("my-script.js")，放在 data/ 中的 my-script.js</span></span><br><span class="line">    contentScriptFile: data.url(<span class="string">"my-script.js"</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>現在新增 my-script.js 到 data 資料夾下面，並將下面程式碼加入其中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 將 body tag 設為紅色</span></span><br><span class="line"><span class="built_in">document</span>.body.style.background=<span class="string">"red"</span>;</span><br></pre></td></tr></table></figure>
+<p>現在近來進行測試，一般可以執行 cfx run，他會開啟乾淨的瀏覽器幫我們測試</p>
+<p>但如果有問題你也可以直接安裝到你目前瀏覽器測試</p>
+<p>要直接安裝需要打包，在 <code>mdn-mod</code> 資料夾下執行 <code>cfx xpi</code></p>
+<p>會產生一個 <code>mdn-mod.xpi</code> 檔案，現在在瀏覽器中按下 <code>Ctrl+Shift+A</code> 打開附加元件介面</p>
+<p>右上角有個齒輪 &gt; 從檔案安裝附加元件 &gt; 選擇剛剛產生出來的 <code>mdn-mod.xpi</code></p>
+<p>預設情況下會跳出錯誤，說你的附加元件沒有經過驗證不能安裝</p>
+<p>所以我們要把檢查的功能關掉，關掉步驟<a href="http://errerrors.blogspot.tw/2015/11/firefox.html" target="_blank" rel="external">參考這裡</a></p>
+<p>記住測試完附加元件要再打開比較安全，安裝好之後就可以打開<a href="https://developer.mozilla.org/zh-TW/" target="_blank" rel="external">Mozilla網站</a>測試</p>
+<p>成功的話背景會變成紅色</p>
+<h2 id="使用-jpm-開發"><a href="#使用-jpm-開發" class="headerlink" title="使用 jpm 開發"></a>使用 jpm 開發</h2><p>注意，要安裝 jpm 你需要安裝 nodejs，先檢查你是否成功安裝 nodejs</p>
+<p>輸入 <code>node -v</code> 看是否有出現版本，如果有再執行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jpm --global</span><br></pre></td></tr></table></figure>
+<p>安裝成功後執行 <code>jpm -V</code> 看是否安裝成功，jpm 使用方式和 cfx 基本上一樣</p>
+<p>首先也是建立新的資料夾 mdn-mod，然後進入輸入 <code>jpm init</code></p>
+<p>接下來會自動問你一些訊息來產生 package.json 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">title: (My Jetpack Addon)</span><br><span class="line">name: (mdn-mod)</span><br><span class="line">version: (0.0.1)</span><br><span class="line">description: (A basic add-on)</span><br><span class="line">entry point: (index.js)</span><br><span class="line">author: Jason</span><br><span class="line">engines (comma separated): (firefox,fennec)</span><br><span class="line">license: (MIT)</span><br><span class="line">JPM [info] About to write to Y:\mdn-mod\package.json:</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;title&quot;: &quot;My Jetpack Addon&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;mdn-mod&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;A basic add-on&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index.js&quot;,</span><br><span class="line">  &quot;author&quot;: &quot;Jason&quot;,</span><br><span class="line">  &quot;engines&quot;: &#123;</span><br><span class="line">    &quot;firefox&quot;: &quot;&gt;=38.0a1&quot;,</span><br><span class="line">    &quot;fennec&quot;: &quot;&gt;=38.0a1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;license&quot;: &quot;MIT&quot;,</span><br><span class="line">  &quot;keywords&quot;: [</span><br><span class="line">    &quot;jetpack&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Is this ok? (yes) yes</span><br></pre></td></tr></table></figure>
+<p>不過產生出來的架構和 cfx 有點不一樣</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mdn-mod/</span><br><span class="line">├── index.js</span><br><span class="line">├── package.json</span><br><span class="line">├── README.md</span><br><span class="line">└── test</span><br><span class="line">    └── test-index.js</span><br><span class="line"></span><br><span class="line">1 directory, 4 files</span><br></pre></td></tr></table></figure>
+<p>index.js 是進入的程式碼，所以一樣放入以下程式碼</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pageMod = <span class="built_in">require</span>(<span class="string">"sdk/page-mod"</span>);  </span><br><span class="line"><span class="keyword">var</span> data    = <span class="built_in">require</span>(<span class="string">"sdk/self"</span>).data;</span><br><span class="line"> </span><br><span class="line">pageMod.PageMod(&#123;    </span><br><span class="line">    include: <span class="string">"*.mozilla.org"</span>,     </span><br><span class="line">    contentScriptFile: data.url(<span class="string">"my-script.js"</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然後自己建立 data 資料夾並放入 my-script.js，而 my-script.js 放入以下程式碼</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.style.background=<span class="string">"red"</span>;</span><br></pre></td></tr></table></figure>
+<p>現在執行 <code>jpm run</code> 測試，成功一樣背景會出現紅色，這種方法就不用改驗證權限</p>
+<p>接下來新增按鈕，在 my-script.js 下面加上</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> button = <span class="string">"&lt;button onClick='alert(\"Hi!\")'&gt;CLICK ME&lt;/button&gt;"</span>;</span><br><span class="line"><span class="built_in">document</span>.body.innerHTML = button + <span class="built_in">document</span>.body.innerHTML;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Firefox/">Firefox</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Firefox/">Firefox</a>, <a href="/tags/Add-on/">Add-on</a>, <a href="/tags/Extend/">Extend</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2016/08/01/mozilla-addon-SDK/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>7</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>7</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

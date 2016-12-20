@@ -1,0 +1,718 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-11-18T05:28:17.000Z"><a href="/2016/11/18/gcc-attribute/">2016-11-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/11/18/gcc-attribute/">GNU GCC __attribute__ 用法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="https://gcc.gnu.org/onlinedocs/gcc/Function-Attributes.html" target="_blank" rel="external">Function attributes</a></p>
+<p><a href="https://gcc.gnu.org/onlinedocs/gcc/Variable-Attributes.html" target="_blank" rel="external">Variable attributes</a></p>
+<p><a href="https://gcc.gnu.org/onlinedocs/gcc/Type-Attributes.html" target="_blank" rel="external">Type attributes</a></p>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p><strong>attribute</strong> 其實就是一種檢查工具，他主要是給 GCC 編譯時看的</p>
+<p>也就是說就算你把 <strong>attribute</strong> 拿掉也是可以編譯不會影響程式邏輯</p>
+<p><strong>attribute</strong> 可以檢查的有以下 3 種</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Function   // 檢查函式</span><br><span class="line">Variable   // 檢查變數</span><br><span class="line">Type       // 檢查類型</span><br></pre></td></tr></table></figure>
+<p>要注意的是，有些檢查只能在特定平台(ARM/X86/PowerPC etc)上才有作用</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-11-17T05:28:17.000Z"><a href="/2016/11/17/c-dlopen-and-dlsym/">2016-11-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/11/17/c-dlopen-and-dlsym/">dlopen 和 dlsym 用法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="http://bjglife.blogspot.tw/2014/12/linux-dlopen-dlsym.html">參考-1</a></p>
+<p><a href="http://www.jollen.org/blog/2007/02/dynamic_loader_1_dlopen.html">參考-2</a></p>
+<h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>使用 dlopen 和 dlsym 可以使用 so 檔</p>
+<p>將 so 檔裡面的函式取出來使用，達到動態替換函式的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;dlfcn.h&gt;</span><br><span class="line">void    *dlopen (const char *filename, int flag); </span><br><span class="line">void    *dlsym  (void *handle, const char *symbol); </span><br><span class="line">int     dlclose (void *handle);</span><br></pre></td></tr></table></figure>
+<p>首先 man dlopen 可以看到範例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">//Load the math library, and print the cosine of 2.0:</span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;dlfcn.h&gt;</span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">   void     *handle;</span><br><span class="line">   </span><br><span class="line">   // 建立一個 function 名叫 cosine</span><br><span class="line">   // 需要傳入 double 類型參數並會回傳 double</span><br><span class="line">   double   (*cosine)(double);</span><br><span class="line">   char     *error;</span><br><span class="line"></span><br><span class="line">   // 打開 libm.so 動態函示庫</span><br><span class="line">   handle = dlopen(&quot;libm.so&quot;, RTLD_LAZY);</span><br><span class="line">   if (!handle) &#123;</span><br><span class="line">       fprintf(stderr, &quot;%s\n&quot;, dlerror());</span><br><span class="line">       exit(EXIT_FAILURE);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   dlerror();    /* Clear any existing error */</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">   /* Writing: cosine = (double (*)(double)) dlsym(handle, &quot;cos&quot;);</span><br><span class="line">      would seem more natural, but the C99 standard leaves</span><br><span class="line">      casting from &quot;void *&quot; to a function pointer undefined.</span><br><span class="line">      The assignment used below is the POSIX.1-2003 (Technical</span><br><span class="line">      Corrigendum 1) workaround; see the Rationale for the</span><br><span class="line">      POSIX specification of dlsym(). */</span><br><span class="line"></span><br><span class="line">   // 將 libm.so 裡面的 cos 函式取出並指派給 cosine   </span><br><span class="line">   //*(void **) (&amp;cosine) = dlsym(handle, &quot;cos&quot;);</span><br><span class="line">   // 可以改寫成以下這種寫法比較容易閱讀   </span><br><span class="line">   cosine = dlsym(handle, &quot;cos&quot;);</span><br><span class="line">   </span><br><span class="line">   if ((error = dlerror()) != NULL)  &#123;</span><br><span class="line">       fprintf(stderr, &quot;%s\n&quot;, error);</span><br><span class="line">       exit(EXIT_FAILURE);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   printf(&quot;%f\n&quot;, (*cosine)(2.0));</span><br><span class="line">   dlclose(handle);</span><br><span class="line">   exit(EXIT_SUCCESS);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/11/17/c-dlopen-and-dlsym/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-28T05:28:17.000Z"><a href="/2016/10/28/chrome-extensions-basic/">2016-10-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/28/chrome-extensions-basic/">Chrome Extension Basic</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="https://developer.chrome.com/extensions/getstarted">官方文件</a></p>
+<p><a href="https://developer.chrome.com/extensions/api_index">API</a></p>
+<h2 id="基本外掛"><a href="#基本外掛" class="headerlink" title="基本外掛"></a>基本外掛</h2><p>一開始要做一個簡單的外掛，建立一個按鈕在 Chrome 旁邊</p>
+<p>要做一個按鈕會使用到 <a href="https://developer.chrome.com/extensions/browserAction">chrome.browserAction</a>，如下圖所示</p>
+<p><a href="https://developer.chrome.com/static/images/browser-action.png"><img src="https://developer.chrome.com/static/images/browser-action.png" alt="panel" title="panel"></a></p>
+<p>當然還有其他類型的按鈕，例如<a href="https://crxdoc-zh.appspot.com/extensions/pageAction">pageAction</a>，下圖橘色 RSS 按鈕</p>
+<p><a href="https://crxdoc-zh.appspot.com/static/images/page-action.png"><img src="https://crxdoc-zh.appspot.com/static/images/page-action.png" alt="panel" title="panel"></a></p>
+<p>不過為什麼不命名為<code>browserButton</code>這就不清楚了</p>
+<p>再來看一下 API 頁面的介紹，基本上 API 介紹不外乎下面幾個重點</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">描述功能 : 就是描述功能</span><br><span class="line">Manifest : 如何寫(裡面出現 optional 代表可寫可不寫)</span><br><span class="line">小提示   : 告訴你可以用在什麼情境或是要注意的一些事情</span><br><span class="line">範例     : 提供 Google 寫的範例原始碼</span><br><span class="line">API      : 此元件可用的 API，例如 browserAction 可以用 setTitle 這個方法</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/28/chrome-extensions-basic/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-25T08:00:39.000Z"><a href="/2016/10/25/data-structures-tree/">2016-10-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/25/data-structures-tree/">資料結構（樹）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h2><p><a href="http://www.csie.ntnu.edu.tw/~u91029/index.html" target="_blank" rel="external">演算法筆記</a></p>
+<p><a href="https://zh.visualgo.net/" target="_blank" rel="external">演算法動畫</a></p>
+<p><a href="https://github.com/raywenderlich/swift-algorithm-club" target="_blank" rel="external">Swift 演算法</a></p>
+<h2 id="樹的定義"><a href="#樹的定義" class="headerlink" title="樹的定義"></a>樹的定義</h2><p>樹是<code>1對多</code>的結構，沒有節點的樹稱為<code>空樹</code></p>
+<p>1.存在唯一的根節點(root)</p>
+<p>2.其餘節點可成為另一棵樹或稱子樹，注意子樹互不相交</p>
+<h2 id="節點分類"><a href="#節點分類" class="headerlink" title="節點分類"></a>節點分類</h2><p>一個節點的子樹數量稱為<code>度</code></p>
+<p>度為 0 表示此節點是葉子</p>
+<h2 id="階級"><a href="#階級" class="headerlink" title="階級"></a>階級</h2><p>階級是從<code>root</code>開始算，根為一階並往下加</p>
+<p>最大階度也稱為樹的深度或高度</p>
+<h2 id="樹的抽象資料型別"><a href="#樹的抽象資料型別" class="headerlink" title="樹的抽象資料型別"></a>樹的抽象資料型別</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">樹 (Tree)</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">樹中節點有相同資料型態及階級關係</span><br><span class="line"></span><br><span class="line">Operation</span><br><span class="line">  InitTree(*T)       : 初始化</span><br><span class="line">  DestroyTree(*T)    : 銷毀樹</span><br><span class="line">  CreateTree(*T,def) : 根據 def 定義樹</span><br><span class="line">  ClearTree(*T)      : 清空 Tree  </span><br><span class="line">  TreeEmpty(T)       : 檢查 Tree 是否為空</span><br><span class="line">  TreeDepth(T)       : 檢查 Tree 深度</span><br><span class="line">  Root(T)            : 回傳 Tree 根節點</span><br><span class="line">  Value(T,cur_e)     : 回傳此節點的值</span><br><span class="line">  Assign(T,cur_e,val): 將節點值改變</span><br><span class="line">  Parent(T,cur_e)    : 回傳節點雙親</span><br></pre></td></tr></table></figure>
+<h2 id="二元樹"><a href="#二元樹" class="headerlink" title="二元樹"></a>二元樹</h2><p>1.每個節點最多兩個子樹，所以沒有大於2度的節點</p>
+<p>2.左子樹和右子樹是有順序的</p>
+<p>3.即使只有一個子樹也要區分左右</p>
+<h2 id="特殊二元樹"><a href="#特殊二元樹" class="headerlink" title="特殊二元樹"></a>特殊二元樹</h2><p>斜樹:所有節點只有左子樹或右子樹</p>
+<p>完滿二元樹(Full binary):所有葉子都在同一階，<code>高度 h 要有 2^h-1 個 Node</code></p>
+<p>完整二元樹(Complete binary):也就是<code>高度 h 但 Node &lt; 2^h-1 個 Node 的樹</code></p>
+<h2 id="實作二元樹"><a href="#實作二元樹" class="headerlink" title="實作二元樹"></a>實作二元樹</h2><p>3 種實作二元樹的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">陣列表示法(如果是斜樹會浪費空間)</span><br><span class="line">結構陣列表示法(如果是斜樹會浪費空間)</span><br><span class="line">鏈結表示法</span><br></pre></td></tr></table></figure>
+<h2 id="走訪二元樹"><a href="#走訪二元樹" class="headerlink" title="走訪二元樹"></a>走訪二元樹</h2><p>走訪二元樹的順序很重要，每個 Node 只拜訪一次</p>
+<p>主要分為下面 4 種走法，都用遞迴寫法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">前序(PreOrder)</span><br><span class="line">中序(InOrder)</span><br><span class="line">後序(PostOrder)</span><br><span class="line">階序</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-25T08:00:39.000Z"><a href="/2016/10/25/other-reference/">2016-10-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/25/other-reference/">參考資料網站</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Lunux-Kernel"><a href="#Lunux-Kernel" class="headerlink" title="Lunux Kernel"></a>Lunux Kernel</h2><p>中文</p>
+<p><a href="http://jamesgodzilla.blogspot.tw/" target="_blank" rel="external">JamesGodzilla 詹姆士酷斯拉</a></p>
+<p><a href="http://reborn2266.blogspot.tw/" target="_blank" rel="external">軟體學徒forever </a></p>
+<p><a href="http://bjglife.blogspot.tw/" target="_blank" rel="external">筆記人生</a></p>
+<p>英文</p>
+<p><a href="http://www.ibm.com/developerworks/library/?sort_by=&amp;contentarea_by=Linux&amp;type_by=Tutorials,Articles" target="_blank" rel="external">IBM Developerworks</a></p>
+<h2 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h2><p><a href="https://gcc.gnu.org/onlinedocs/gcc/" target="_blank" rel="external">GCC GNU</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-24T16:00:39.000Z"><a href="/2016/10/25/data-structures-linear-list/">2016-10-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/25/data-structures-linear-list/">資料結構（線性串列）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h2><p><a href="http://www.csie.ntnu.edu.tw/~u91029/index.html">演算法筆記</a></p>
+<p><a href="https://zh.visualgo.net/">演算法動畫</a></p>
+<p><a href="https://github.com/raywenderlich/swift-algorithm-club">Swift 演算法</a></p>
+<h2 id="線性串列抽象資料型別"><a href="#線性串列抽象資料型別" class="headerlink" title="線性串列抽象資料型別"></a>線性串列抽象資料型別</h2><p>線性串列是一種資料結構</p>
+<p>包含順序儲存(陣列)或是鏈結串列都屬於線性串列</p>
+<p>以下是線性串列的基本操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">線性串列 (LinearList)</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">線性串列資料物件集合 = &#123;a1,a2,a3...an&#125;</span><br><span class="line">每個元素型態皆相同</span><br><span class="line"></span><br><span class="line">Operation</span><br><span class="line">  InitList(*L)       : 初始化、建立空的線性表</span><br><span class="line">  ListEmpty(L)       : 檢查 L 是否為空</span><br><span class="line">  ClearList          : 清空 List </span><br><span class="line">  GetElem(L,i,*e)    : 取得 L 中第 i 個傳給 e</span><br><span class="line">  LocateElem(L,e)    : 搜尋 L 中和 e 相同的元素位置</span><br><span class="line">  ListInsert(*L,i,e) : 在 i 位置插入 e</span><br><span class="line">  ListDelete(*L,i,*e): 刪除第 i 位置的元素</span><br><span class="line">  ListLength(L)      : 傳回 L 元素個數</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/25/data-structures-linear-list/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-24T07:28:17.000Z"><a href="/2016/10/24/linux-porting-ethtool/">2016-10-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/24/linux-porting-ethtool/">Linux（移植 Ethtool）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="參考網址"><a href="#參考網址" class="headerlink" title="參考網址"></a>參考網址</h2><p><a href="http://cateee.net/lkddb/web-lkddb/IGB.html">參考</a></p>
+<h2 id="下載安裝-Ethtool"><a href="#下載安裝-Ethtool" class="headerlink" title="下載安裝 Ethtool"></a>下載安裝 Ethtool</h2><p><a href="https://www.kernel.org/pub/software/network/ethtool/">下載網址</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 解壓縮</span><br><span class="line">$tar zxvf ethtool-4.8.tar.gz</span><br><span class="line">$cd ethtool-4.8</span><br><span class="line"></span><br><span class="line"># 看有哪些指令可以使用</span><br><span class="line">$./configure -help  </span><br><span class="line"></span><br><span class="line"># 看此 SourceCode 的版本</span><br><span class="line">$./configure -version</span><br><span class="line"></span><br><span class="line"># 環境設定、編譯</span><br><span class="line">$./configure CC=CrossCompilerPath --host=x86 --prefix=Path</span><br><span class="line">$make</span><br><span class="line">$make install</span><br></pre></td></tr></table></figure>
+<h2 id="Ethtool-指令"><a href="#Ethtool-指令" class="headerlink" title="Ethtool 指令"></a>Ethtool 指令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"># 看 ethX 基本設定</span><br><span class="line"># ./ethtool eth0</span><br><span class="line">Settings for eth0:</span><br><span class="line">        Supported ports: [ TP ]</span><br><span class="line">        Supported link modes:   10baseT/Half 10baseT/Full</span><br><span class="line">                                100baseT/Half 100baseT/Full</span><br><span class="line">                                1000baseT/Full</span><br><span class="line">        Supported pause frame use: Symmetric</span><br><span class="line">        Supports auto-negotiation: Yes</span><br><span class="line">        Advertised link modes:  10baseT/Half 10baseT/Full</span><br><span class="line">                                100baseT/Half 100baseT/Full</span><br><span class="line">                                1000baseT/Full</span><br><span class="line">        Advertised pause frame use: Symmetric</span><br><span class="line">        Advertised auto-negotiation: Yes</span><br><span class="line">        Speed: 1000Mb/s</span><br><span class="line">        Duplex: Full</span><br><span class="line">        Port: Twisted Pair</span><br><span class="line">        PHYAD: 1</span><br><span class="line">        Transceiver: internal</span><br><span class="line">        Auto-negotiation: on</span><br><span class="line">        MDI-X: off</span><br><span class="line">        Supports Wake-on: pumbg</span><br><span class="line">        Wake-on: g</span><br><span class="line">        Current message level: 0x00000007 (7)</span><br><span class="line">                               drv probe link</span><br><span class="line">        Link detected: yes</span><br><span class="line">        </span><br><span class="line"># 看 ethX 基本訊息</span><br><span class="line">#./ethtool -i eth0</span><br><span class="line">driver: igb       // Module 驅動，Intel® 82575/6，82580，I350，I210/211 </span><br><span class="line">version: 5.0.6</span><br><span class="line">firmware-version: 1.8, 0x80000bec</span><br><span class="line">expansion-rom-version:</span><br><span class="line">bus-info: 0000:00:14.0</span><br><span class="line">supports-statistics: yes</span><br><span class="line">supports-test: yes</span><br><span class="line">supports-eeprom-access: yes</span><br><span class="line">supports-register-dump: yes</span><br><span class="line">supports-priv-flags: no        </span><br><span class="line"></span><br><span class="line"># 看 ethX Rx/Tx 封包資訊</span><br><span class="line"># ./ethtool -S eth0</span><br><span class="line">NIC statistics:</span><br><span class="line">     rx_packets: 1638</span><br><span class="line">     tx_packets: 1458</span><br><span class="line">     rx_bytes: 812443</span><br><span class="line">     tx_bytes: 103860</span><br><span class="line">     rx_broadcast: 210</span><br><span class="line">     tx_broadcast: 36</span><br><span class="line">     rx_multicast: 24</span><br><span class="line">     tx_multicast: 18</span><br><span class="line">     multicast: 24</span><br><span class="line">     collisions: 0</span><br><span class="line">     rx_crc_errors: 0</span><br><span class="line">     rx_no_buffer_count: 0</span><br><span class="line">     rx_missed_errors: 0</span><br><span class="line">     tx_aborted_errors: 0</span><br><span class="line">     tx_carrier_errors: 0</span><br><span class="line">     tx_window_errors: 0</span><br><span class="line">     </span><br><span class="line"># 看 Mac Address     </span><br><span class="line">#./ethtool -P eth0</span><br><span class="line">Permanent address: 00:a0:c9:00:00:00</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/24/linux-porting-ethtool/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-18T07:28:17.000Z"><a href="/2016/10/18/the-linux-programming-interface-ch4/">2016-10-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/18/the-linux-programming-interface-ch4/">The Linux Programming Interface〈檔案 I/O〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="系統呼叫"><a href="#系統呼叫" class="headerlink" title="系統呼叫"></a>系統呼叫</h2><p>大多的 Process 可以使用以下 3 種標準<code>file descriptor</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 標準輸入 stdin</span><br><span class="line">1 標準輸出 stdout</span><br><span class="line">2 標準錯誤 stderr</span><br></pre></td></tr></table></figure>
+<p>shell 一開始會將這三個一直開啟</p>
+<p>在程式中你可以直接使用 0、1、2 表示</p>
+<p>或是<code>include &lt;unistd.h&gt;</code> 並使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">STDIN_FILENO</span><br><span class="line">STDOUT_FILENO</span><br><span class="line">STDERR_FILENO</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/18/the-linux-programming-interface-ch4/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-17T07:28:17.000Z"><a href="/2016/10/17/the-linux-programming-interface-ch3/">2016-10-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/17/the-linux-programming-interface-ch3/">The Linux Programming Interface〈系統概念〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="系統呼叫"><a href="#系統呼叫" class="headerlink" title="系統呼叫"></a>系統呼叫</h2><p>系統呼叫流程，以使用 execve() 來說</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *argv[] = &#123;<span class="string">"ls"</span>,<span class="string">"-al"</span>,<span class="string">"/etc/passwd"</span>,(char *)<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">char</span> *envp[] = &#123;<span class="string">"PATH=/bin"</span>,<span class="number">0</span>&#125;;</span><br><span class="line">    execve(<span class="string">"/bin/ls"</span>,argv,envp);</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>execve 是 syscall 編號 11</p>
+<p>編號定義位於<code>kernel\linux-3.6.5\arch\x86\include\generated\asm\unistd_32/64.h</code> </p>
+<p>不同版本 Kernel 放的位置可能有點差別，另外 32/64 定義編號也會不一樣</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 32 位元編號定義</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_link    9</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_unlink 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_execve 11</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 64 位元編號定義</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_fork   57</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_vfork  58</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_execve 59</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_exit   60</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/17/the-linux-programming-interface-ch3/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-13T07:28:17.000Z"><a href="/2016/10/13/program-self-cultivation-ch4/">2016-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/13/program-self-cultivation-ch4/">程式設計師的自我修養〈靜態連結〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>前面目的檔章節介紹 ELF 檔案格式</p>
+<p>此章節說明如果有兩個目的檔要如何連結</p>
+<p>這裡使用 a.c 和 b.c 兩個檔案當範例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># a.c</span><br><span class="line">extern int shared;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 100;</span><br><span class="line">    swap(&amp;a, &amp;shared);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># b.c</span><br><span class="line">int shared = 1;</span><br><span class="line"></span><br><span class="line">void swap(int *a, int *b)</span><br><span class="line">&#123;</span><br><span class="line">    *a ^= *b ^= *a ^= *b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">readelf -s a.o</span><br><span class="line">Symbol table &apos;.symtab&apos; contains 11 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND</span><br><span class="line">     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS a.c</span><br><span class="line">     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1</span><br><span class="line">     3: 0000000000000000     0 SECTION LOCAL  DEFAULT    3</span><br><span class="line">     4: 0000000000000000     0 SECTION LOCAL  DEFAULT    4</span><br><span class="line">     5: 0000000000000000     0 SECTION LOCAL  DEFAULT    6</span><br><span class="line">     6: 0000000000000000     0 SECTION LOCAL  DEFAULT    7</span><br><span class="line">     7: 0000000000000000     0 SECTION LOCAL  DEFAULT    5</span><br><span class="line">     8: 0000000000000000    44 FUNC    GLOBAL DEFAULT    1 main</span><br><span class="line">     9: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND shared</span><br><span class="line">    10: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND swap</span><br><span class="line"> </span><br><span class="line">$ readelf -s b.o</span><br><span class="line"></span><br><span class="line">Symbol table &apos;.symtab&apos; contains 10 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND</span><br><span class="line">     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS b.c</span><br><span class="line">     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1</span><br><span class="line">     3: 0000000000000000     0 SECTION LOCAL  DEFAULT    2</span><br><span class="line">     4: 0000000000000000     0 SECTION LOCAL  DEFAULT    3</span><br><span class="line">     5: 0000000000000000     0 SECTION LOCAL  DEFAULT    5</span><br><span class="line">     6: 0000000000000000     0 SECTION LOCAL  DEFAULT    6</span><br><span class="line">     7: 0000000000000000     0 SECTION LOCAL  DEFAULT    4</span><br><span class="line">     8: 0000000000000000     4 OBJECT  GLOBAL DEFAULT    2 shared(全域符號)</span><br><span class="line">     9: 0000000000000000    74 FUNC    GLOBAL DEFAULT    1 swap  (全域符號)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/13/program-self-cultivation-ch4/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+    <a href="/page/2/" class="alignright next">下一頁</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>7</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>7</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

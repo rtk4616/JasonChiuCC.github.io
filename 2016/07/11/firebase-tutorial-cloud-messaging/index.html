@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Firebase 心得（Cloud Messaging） | JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Firebase 心得（Cloud Messaging）"/>
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-11T08:28:17.000Z"><a href="/2016/07/11/firebase-tutorial-cloud-messaging/">2016-07-11</a></time>
+      
+      
+  
+    <h1 class="title">Firebase 心得（Cloud Messaging）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="官方文件"><a href="#官方文件" class="headerlink" title="官方文件"></a>官方文件</h2><p>此文使用版本 : 3.1.0，官方文件更新日期 : 2016/06/29</p>
+<p><a href="https://firebase.google.com/docs/cloud-messaging/" target="_blank" rel="external">Firebase Doc</a></p>
+<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>使用 FCM 來通知 APP 有新的訊息需要同步(例如通知有新的 email )</p>
+<p>傳送的訊息最大到 4KB 到 client App</p>
+<p>Google 推薦之前使用 GCM 的應該換成 FCM (FCM 繼承 GCM，下層結構還是 GCM)</p>
+<p>因為 FCM 更簡單且之後更新會以 FCM 為主 <a href="https://firebase.google.com/support/faq/#gcm-fcm" target="_blank" rel="external">如何從 GCM 升級 FCM</a></p>
+<a id="more"></a>
+<h2 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h2><ul>
+<li>傳送 notification messages 或 data messages</li>
+<li>可以指定不同的 device 傳送(可傳送到一個 device，或是一個 group device，或是有訂閱的 device)</li>
+<li>client 可送訊息給 server，並非只能有 server 送訊息給 client</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">App Server -&gt; FCM Server -&gt; Client(chrome/ios/android)</span><br></pre></td></tr></table></figure>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-11_161808.png" alt="2016-07-11_161808.png" title="">
+<p>Server 通過 http 和 xmpp 協定來送訊息</p>
+<p>Firebase Notifications 包在 FCM 當中</p>
+<p>簡單或測試訊息可以用 Notifications，有複雜需求使用 FCM</p>
+<h2 id="FCM-格式"><a href="#FCM-格式" class="headerlink" title="FCM 格式"></a>FCM 格式</h2><ul>
+<li>notification messages (2KB)</li>
+<li>data messages (4KB)</li>
+</ul>
+<p>Server 可同時傳送 notification(FCM handle 處理) 和 data msg(client app 處理)</p>
+<h2 id="Notification-messages"><a href="#Notification-messages" class="headerlink" title="Notification messages"></a>Notification messages</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">json 格式</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"to"</span> : <span class="string">"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1..."</span>,</span><br><span class="line">    <span class="string">"notification"</span> : &#123;</span><br><span class="line">      <span class="string">"body"</span> : <span class="string">"great match!"</span>,            // 內容</span><br><span class="line">      <span class="string">"title"</span> : <span class="string">"Portugal vs. Denmark"</span>,   // 標題</span><br><span class="line">      <span class="string">"icon"</span> : <span class="string">"myicon"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">處理訊息的方法</span><br><span class="line">didReceiveRemoteNotification()  on iOS</span><br><span class="line">onMessageReceived()             on Android</span><br></pre></td></tr></table></figure>
+<h2 id="Data-messages"><a href="#Data-messages" class="headerlink" title="Data messages"></a>Data messages</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="string">"to"</span> : <span class="string">"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1..."</span>,</span><br><span class="line">   <span class="string">"data"</span> : &#123;</span><br><span class="line">     <span class="string">"Nick"</span> : <span class="string">"Mario"</span>,</span><br><span class="line">     <span class="string">"body"</span> : <span class="string">"great match!"</span>,</span><br><span class="line">     <span class="string">"Room"</span> : <span class="string">"PortugalVSDenmark"</span></span><br><span class="line">   &#125;,</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="兩種訊息同時送"><a href="#兩種訊息同時送" class="headerlink" title="兩種訊息同時送"></a>兩種訊息同時送</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"to"</span> : <span class="string">"APA91bHun4MxP5egoKMwt2KZFBaFUH-1RYqx..."</span>,</span><br><span class="line">  <span class="string">"notification"</span> : &#123;</span><br><span class="line">    <span class="string">"body"</span> : <span class="string">"great match!"</span>,</span><br><span class="line">    <span class="string">"title"</span> : <span class="string">"Portugal vs. Denmark"</span>,</span><br><span class="line">    <span class="string">"icon"</span> : <span class="string">"myicon"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"data"</span> : &#123;</span><br><span class="line">    <span class="string">"Nick"</span> : <span class="string">"Mario"</span>,</span><br><span class="line">    <span class="string">"Room"</span> : <span class="string">"PortugalVSDenmark"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="FCM-Server"><a href="#FCM-Server" class="headerlink" title="FCM Server"></a>FCM Server</h2><p>傳送訊息流程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">App Server -&gt; FCM Server -&gt; Client(chrome/ios/android)</span><br><span class="line"></span><br><span class="line">App Server 我們要自己實作，通常就是送一個 post 給 FCM Server</span><br><span class="line">FCM Server 收到我們的 post 封包會自己處理後送給對應的 client device</span><br></pre></td></tr></table></figure>
+<p>如何選擇協定?  HTTP 或 XMPP ?</p>
+<ol>
+<li>Upstream/Downstream messages</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HTTP: </span><br><span class="line">Downstream only, cloud-to-device up to 4KB of data</span><br><span class="line"></span><br><span class="line">XMPP: </span><br><span class="line">Upstream and downstream (device-to-cloud, cloud-to-device)</span><br><span class="line">up to 4 KB of data</span><br></pre></td></tr></table></figure>
+<p>2.Messaging (synchronous or asynchronous)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP: </span><br><span class="line">同步. App servers 送出 HTTP POST requests 並等待回應</span><br><span class="line">此機制會導致 block App Server (因為要等回應)</span><br><span class="line">要等到回應之後才能送下一個 requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">XMPP: </span><br><span class="line">非同步. XMPP server 會送 acknowledgment 或 failure notifications </span><br><span class="line">(<span class="keyword">in</span> the form of special ACK and NACK JSON-encoded XMPP messages)</span><br></pre></td></tr></table></figure></p>
+<p>3.JSON<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP: JSON 訊息以 HTTP POST 送出</span><br><span class="line">XMPP: JSON 訊息封裝成 XMPP messages</span><br></pre></td></tr></table></figure></p>
+<p>4.Plain Text<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP: 以 HTTP POST 送出</span><br><span class="line">XMPP: 沒支援</span><br></pre></td></tr></table></figure></p>
+<p>5.Multicast downstream send to multiple registration tokens.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP: 支援 JSON 格式.</span><br><span class="line">XMPP: 沒支援</span><br></pre></td></tr></table></figure></p>
+<h2 id="Web-Client-範例"><a href="#Web-Client-範例" class="headerlink" title="Web Client 範例"></a>Web Client 範例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">App Server -&gt; FCM Server -&gt; Client(chrome)</span><br></pre></td></tr></table></figure>
+<p>此小節以 Web client 作為範例，Web client 目前只能以 chrome 外掛來接收</p>
+<p>所以我們的目標是:</p>
+<ol>
+<li><p>建立能接收訊息的 chrome 外掛，並向 FCM server 註冊</p>
+</li>
+<li><p>送出訊息給 FCM Server(使用 Post)</p>
+</li>
+<li><p>如果正常，你會收到 Post 的訊息</p>
+</li>
+</ol>
+<p>現在執行第 1 步驟，google 已經有寫好的外掛範例，直接下載就好 <a href="https://github.com/GoogleChrome/chrome-app-samples" target="_blank" rel="external">下載網址</a></p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_170450.png" alt="2016-07-12_170450.png" title="">
+<p>解壓縮之後打開 chrome，按下右上角功能按鈕 &gt; 設定 &gt; 擴充功能</p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_170820.png" alt="2016-07-12_170820.png" title="">
+<p>進入擴充功能管理頁面，選擇載入未封裝擴充功能</p>
+<p>然後選擇剛下載的 chrome 外掛裡面的一個範例資料夾(\chrome-app-samples-master\samples\gcm-notifications)</p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_171015.png" alt="2016-07-12_171015.png" title="">
+<p>安裝好之後擴充功能管理頁面會出現以下畫面，並跳出一個視窗</p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_171431.png" alt="2016-07-12_171431.png" title="">
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_171635.png" alt="2016-07-12_171635.png" title="">
+<p>現在要將此外掛向 FCM Server 註冊，這樣 FCM Server 才會知道把訊息送給誰</p>
+<p>先到 Firebase console 畫面 <a href="https://console.firebase.google.com/" target="_blank" rel="external">Firebase console</a>，選擇之前建立好的專案(MyFirebaseProject)</p>
+<p>左上角選專案盤邊的齒輪 &gt; 專案設定 &gt; Cloud Messaging，你會看到伺服器金鑰 &amp; 寄件者 ID  </p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_172109.png" alt="2016-07-12_172109.png" title="">
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_172354.png" alt="2016-07-12_172354.png" title="">
+<p>把寄件者 ID 複製後貼到剛剛跳出來視窗中的 Sender ID，按下 Register，成功會出現以下訊息</p>
+<p>並且最下方會出現一些字串，代表第 1 步成功了</p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_172652.png" alt="2016-07-12_172652.png" title="">
+<p>現在回到Firebase console 畫面把伺服器金鑰複製貼到 API Key 中，下面字串會改變</p>
+<p>Message Key &amp; value 你可以隨便輸入，這裡我 Key 填 Hello，value 填 World 把分析下面字串如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl </span><br><span class="line">-H <span class="string">"Content-Type:application/x-www-form-urlencoded;charset=UTF-8"</span> </span><br><span class="line">-H <span class="string">"Authorization: key=(這裡是你的 API Key = 伺服器金鑰)"</span> </span><br><span class="line"><span class="_">-d</span> <span class="string">"registration_id=(你的 id )"</span> </span><br><span class="line"><span class="_">-d</span> data.Hello=World </span><br><span class="line">https://android.googleapis.com/gcm/send</span><br><span class="line"></span><br><span class="line">-H 代表 Header，<span class="_">-d</span> 代表 Data，https://android.googleapis.com/gcm/send 表示你要送出訊息到哪個網址</span><br><span class="line">這些訊息是等一下 Post 要用的訊息</span><br></pre></td></tr></table></figure>
+<p>接著第 2 步要實作 Post 訊息到 FCM Server，要做一個 Post 有很多種方法</p>
+<p>這邊推薦一種比較簡單的方法，先去安裝一個 chrome 外掛 <a href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=zh-TW" target="_blank" rel="external">Advanced REST client</a></p>
+<p>安裝完打開會出現一個視窗如下，設定如下</p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_174213.png" alt="2016-07-12_174213.png" title="">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Request URL 填上 https://android.googleapis.com/gcm/send</span><br><span class="line">選擇 Post</span><br><span class="line">選擇 Raw Header 並把這兩行貼上</span><br><span class="line">Content-Type:application/x-www-form-urlencoded;charset=UTF-8</span><br><span class="line">Authorization: key=(這裡是你的 API Key = 伺服器金鑰)</span><br><span class="line">選擇 Data form，必填入對應的數值</span><br></pre></td></tr></table></figure>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_174856.png" alt="2016-07-12_174856.png" title="">
+<p>填完之後按下 Send ，成功的話右下角會出現你傳送的訊息，以上就是以 Web client(chrome) 當作接收訊息的範例</p>
+<img src="/2016/07/11/firebase-tutorial-cloud-messaging/2016-07-12_174951.png" alt="2016-07-12_174951.png" title="">
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Firebase/">Firebase</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Firebase/">Firebase</a>, <a href="/tags/CloudMessaging/">CloudMessaging</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2016/07/11/firebase-tutorial-cloud-messaging/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>7</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>7</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

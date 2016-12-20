@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux（Ram） | JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Linux（Ram）"/>
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-ram/">2016-08-22</a></time>
+      
+      
+  
+    <h1 class="title">Linux（Ram）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux Kernel 通常放在 Ram 開頭 1 MB 的位置</p>
+<p>利用 mmap 和 /dev/mem 來直接使用實體 ram</p>
+<p>可利用 devmem 指令確認是否正確讀寫實體 ram</p>
+<p>/dev/kmem : kernel virtual address (0x0 - 0xFFFFFFFF(4GB) )</p>
+<p>/dev/mem  : physical address       (0x0 - 0x7FFFFFFF(2GB) )</p>
+<p>特定 process 的 VMA(Virtual Memory Areas),可從 /proc/pid/maps 看到</p>
+<p>以下欄位分別對應 vm_area_struct(<linux mm.h="">) 結構</linux></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># cat /proc/1/maps</span><br><span class="line">#start-end        perm offset   major:minor inode      imagename</span><br><span class="line">00008000-000a7000 r-xp 00000000 00:01       141        /bin/busybox</span><br><span class="line">000af000-000b0000 rw-p 0009f000 00:01       141        /bin/busybox</span><br><span class="line">000b0000-000b1000 rw-p 00000000 00:00       0</span><br><span class="line">00dd5000-00dda000 rw-p 00000000 00:00       0          [heap]</span><br><span class="line">b6eb9000-b6f0f000 r-xp 00000000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f0f000-b6f17000 ---p 00000000 00:00       0</span><br><span class="line">b6f17000-b6f18000 r--p 00056000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f18000-b6f19000 rw-p 00057000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f19000-b6f1d000 rw-p 00000000 00:00       0</span><br><span class="line">b6f1d000-b6f23000 r-xp 00000000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f28000-b6f2a000 rw-p 00000000 00:00       0</span><br><span class="line">b6f2a000-b6f2b000 r--p 00005000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f2b000-b6f2c000 rw-p 00006000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">bec5e000-bec7f000 rw-p 00000000 00:00       0          [stack]</span><br><span class="line">ffff0000-ffff1000 r-xp 00000000 00:00       0          [vectors]</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="DMA"><a href="#DMA" class="headerlink" title="DMA"></a>DMA</h2><p>配置一塊適合DMA的緩衝區，需靠核心的開機期參數配合,如原有32M,當 mem=31,</p>
+<p>可用 dmabuf=ioremap(0x1f00000,0x100000) 來存取保留的1M記憶體</p>
+<p>0x1f00000 = 31M，0x100000 = 1M</p>
+<p>ioremap 需要用在 kernel module</p>
+<h2 id="System-map"><a href="#System-map" class="headerlink" title="System.map"></a>System.map</h2><p>Linux source code 目錄下編譯完會出現 System.map </p>
+<p>內容等於實際在 kernel 中輸入 cat /proc/kallsyms </p>
+<p>裡面內容表示某個變數或函式的 address</p>
+<h2 id="Cpu-map"><a href="#Cpu-map" class="headerlink" title="Cpu map"></a>Cpu map</h2><p>進入 Linux 之後，要使用實體記憶體</p>
+<p>需要看 CPU Spec，Spec 會顯示 memory mapping 位置</p>
+<p>例如在 Linux 下面 0x60000000 可能是對應實體 ram 的 0x0</p>
+<p>如果沒有 DTS，則 driver init 寫在 linux-3.6.5\arch\arm\product\board_bu.c</p>
+<h2 id="Kernel-Module"><a href="#Kernel-Module" class="headerlink" title="Kernel Module"></a>Kernel Module</h2><p>makefile </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ARCH=arm</span><br><span class="line">COMPILER=/home/.../host/usr/bin/arm-linux-   # 絕對路徑</span><br><span class="line">KERNELDIR=../ProjectPath/linux-3.6.5</span><br><span class="line">obj-m += hello.o</span><br><span class="line"></span><br><span class="line">all:</span><br><span class="line">	make ARCH=arm CROSS_COMPILE=$(COMPILER) -C $(KERNELDIR) M=$(PWD) modules</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	make -C $(KERNELDIR) M=$(PWD) clean</span><br></pre></td></tr></table></figure>
+<p>Linux 下操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 載入 modules</span><br><span class="line">insmod hello.ko</span><br><span class="line"></span><br><span class="line"># 檢查是否成功載入</span><br><span class="line">dmesg | tail -5</span><br><span class="line"></span><br><span class="line"># 移除 modules</span><br><span class="line">rmmod ./hello.ko</span><br></pre></td></tr></table></figure>
+<h2 id="Test-Ram"><a href="#Test-Ram" class="headerlink" title="Test Ram"></a>Test Ram</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 可用範圍</span><br><span class="line">0x6000_0000 - (0m)</span><br><span class="line">| 可用</span><br><span class="line">0x6100_0000 - (16m)</span><br><span class="line">| 不可用</span><br><span class="line">0x6640_0000 - (100m)</span><br><span class="line">| 可用</span><br><span class="line">0x8580_0000 - (600m)</span><br><span class="line">| 不可用</span><br><span class="line">0x9200_0000 - (800m)</span><br><span class="line">| 可用</span><br><span class="line">0xDFFF_FFFF - (2048m)</span><br><span class="line"></span><br><span class="line"># 對應 Ram</span><br><span class="line">0x6000_0000 - (0m)</span><br><span class="line">0x6100_0000 - (16m)</span><br><span class="line">0x6640_0000 - (100m)</span><br><span class="line">0x6C80_0000 - (200m)</span><br><span class="line">0x72C0_0000 - (300m)</span><br><span class="line">0x7900_0000 - (400m)</span><br><span class="line">0x7F40_0000 - (500m)</span><br><span class="line">0x8580_0000 - (600m)</span><br><span class="line">0x8BC0_0000 - (700m)</span><br><span class="line">0x9200_0000 - (800m)</span><br><span class="line">0x9840_0000 - (900m)</span><br><span class="line">0x9E80_0000 - (1000m)</span><br><span class="line">0xBDC0_0000 - (1500m)</span><br><span class="line">0xDD00_0000 - (2000m)</span><br><span class="line">0xDFFF_FFFF - (2048m)</span><br></pre></td></tr></table></figure>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="http://blog.xuite.net/raibura/dorama/29063147-%E5%9C%A8+linux+%E4%B8%8B%E7%9B%B4%E6%8E%A5%E5%AD%98%E5%8F%96%E8%A8%98%E6%86%B6%E9%AB%94%E7%9A%84%E6%96%B9%E5%BC%8F" target="_blank" rel="external">參考-1</a></p>
+<p><a href="https://github.com/wowotech/wowolib" target="_blank" rel="external">參考-2</a></p>
+<p><a href="http://www.wowotech.net/soft/186.html" target="_blank" rel="external">參考-3</a></p>
+<p><a href="http://www.mech.tohoku-gakuin.ac.jp/rde/contents/linux/drivers/nodriver.html" target="_blank" rel="external">參考-4</a></p>
+<p><a href="http://www.voidcn.com/blog/skyflying2012/" target="_blank" rel="external">參考-5</a></p>
+<p><a href="http://www.cnblogs.com/hanyan225/archive/2010/10/25/1860730.html" target="_blank" rel="external">參考-6</a></p>
+<p><a href="http://free-electrons.com/doc/training/linux-kernel/linux-kernel-slides.pdf" target="_blank" rel="external">參考-7</a></p>
+<p><a href="http://ant.comm.ccu.edu.tw/index.php?menu=m2i1&amp;course_name=92_Driver&amp;course_dir=0_Lectures" target="_blank" rel="external">參考-8</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux/">Linux</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Linux/">Linux</a>, <a href="/tags/Ram/">Ram</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2016/08/22/linux-ram/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>7</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>7</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
