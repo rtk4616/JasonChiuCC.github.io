@@ -1,0 +1,658 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 7 頁 | JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-13T05:28:17.000Z"><a href="/2016/06/13/design-patterns-swift-2/">2016-06-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/13/design-patterns-swift-2/">設計模式 Swift（簡單工廠）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>閱讀大話設計模式心得，使用 Swift Ver. 3.0 (Jun 6, 2016)</p>
+<p><a href="http://swiftdoc.org/v3.0/">Swift API Doc</a></p>
+<h2 id="簡單計算機程式"><a href="#簡單計算機程式" class="headerlink" title="簡單計算機程式"></a>簡單計算機程式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> numA        = 10</span><br><span class="line"><span class="built_in">let</span> numB        = 20</span><br><span class="line">var resultNum   = 0</span><br><span class="line"><span class="built_in">let</span> strOperate  = <span class="string">"+"</span></span><br><span class="line"></span><br><span class="line">switch(strOperate)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"+"</span>:</span><br><span class="line">        resultNum = numA + numB</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"-"</span>:</span><br><span class="line">        resultNum = numA - numB</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"*"</span>:</span><br><span class="line">        resultNum = numA * numB</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"/"</span>:</span><br><span class="line">        <span class="keyword">if</span> numB != 0 &#123;</span><br><span class="line">            resultNum = numA / numB    </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"Error"</span>)    </span><br><span class="line">        &#125;</span><br><span class="line">    default:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"default"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Result = \(resultNum)"</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/13/design-patterns-swift-2/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-01T16:00:39.000Z"><a href="/2016/06/02/grammar-for-new-toeic-3/">2016-06-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/02/grammar-for-new-toeic-3/">Grammar For New TOEIC（時態、被動）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.taiwantestcentral.com/Grammar/">參考</a></p>
+<h1 id="簡單式"><a href="#簡單式" class="headerlink" title="簡單式"></a>簡單式</h1><h2 id="現在簡單式-Simple-Present"><a href="#現在簡單式-Simple-Present" class="headerlink" title="現在簡單式(Simple Present)"></a>現在簡單式(Simple Present)</h2><p>表示過去、現在、未來的事實或狀態或習慣</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">            |</span><br><span class="line">            |</span><br><span class="line">  X X X X X X X X X X X X </span><br><span class="line">&lt;------------------------&gt;</span><br><span class="line">Past     Present    Future</span><br><span class="line"></span><br><span class="line">S + V(原) / S(第三人稱單數) + V(<span class="_">-s</span>/-es)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/02/grammar-for-new-toeic-3/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-30T10:28:17.000Z"><a href="/2016/05/30/design-patterns-swift-1/">2016-05-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/30/design-patterns-swift-1/">設計模式 Swift（基本介紹）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>閱讀大話設計模式心得，使用 Swift</p>
+<h3 id="類別"><a href="#類別" class="headerlink" title="類別"></a>類別</h3><p>具有相同屬性和功能的物件的抽象集合</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Cat &#123;</span><br><span class="line">    func Shout() -&gt; String&#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="string">"Meow"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立真實的物件 -&gt; 實體</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> cat = Cat()</span><br><span class="line"><span class="built_in">print</span>(cat.Shout())</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/30/design-patterns-swift-1/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-25T12:47:09.000Z"><a href="/2016/05/25/uboot-1/">2016-05-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/25/uboot-1/">U-Boot Boot（1）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>U-Boot 載入 Kernel 時會初始化 UART console</p>
+<p><a href="https://github.com/trini/u-boot" target="_blank" rel="external">U-Boot</a></p>
+<p>Start Kernel 後造成亂碼可能是 UART console 初始化失敗</p>
+<p>可以檢查:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">board\company\model\xxx.S</span><br><span class="line">nand_spl\board\company\model\xxx.S</span><br></pre></td></tr></table></figure>
+<p>使用 assembly code init</p>
+<h2 id="組語紀錄"><a href="#組語紀錄" class="headerlink" title="組語紀錄"></a>組語紀錄</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loop:</span><br><span class="line">LDR R1, =CPU_REGISTER           ;   R1 = CPU_REGISTER</span><br><span class="line">LDR R3, [R2], <span class="comment">#4                ;   R3 = [R2]; R2 = R2+4;</span></span><br><span class="line">ADD R0, R0, R3                  ;   R0 = R0 + R3</span><br><span class="line">SUBS R1, R1, <span class="comment">#1                 ;   R1 = R1 – 1; if (R1 &gt; 0)</span></span><br><span class="line">BGT loop                        ;     goto Loop;</span><br><span class="line">STR R0, sum                     ;   sum = R0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-23T17:23:04.000Z"><a href="/2016/05/24/grammar-for-new-toeic-2/">2016-05-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/24/grammar-for-new-toeic-2/">Grammar For New TOEIC（常見詞性）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>單句填空</p>
+<h2 id="詞性題"><a href="#詞性題" class="headerlink" title="詞性題"></a>詞性題</h2><p>此題型會給不同詞性的單字，需要知道詞性變化和使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.找主詞和動詞</span><br><span class="line">2.助動詞後面接<span class="string">"原型動詞"</span></span><br><span class="line">3.adj + n，adv + v</span><br></pre></td></tr></table></figure>
+<p>注意有時候 adv 修飾 v 時不一定會在 v 旁邊</p>
+<p>例如: The supervisor [read] the report [carefully].</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/24/grammar-for-new-toeic-2/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-23T13:35:38.000Z"><a href="/2016/05/23/grammar-for-new-toeic-1/">2016-05-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/23/grammar-for-new-toeic-1/">Grammar For New TOEIC（基本介紹）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>朗文新多益文法心得</p>
+<p>聽力 100 題(45分鐘) / 閱讀 100 題(75分鐘)</p>
+<h2 id="詞性與用法"><a href="#詞性與用法" class="headerlink" title="詞性與用法"></a>詞性與用法</h2><p>常見八大詞性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">noun        [n.]        名詞      <span class="comment">#可做主詞、受詞、補語</span></span><br><span class="line">pronoun     [pron.]     代名詞    <span class="comment">#代替名詞，所以和名詞一樣可做主詞、受詞、補語(me、you、him、it)</span></span><br><span class="line">verb        [v.]        動詞      <span class="comment">#動作或狀態，句子不可缺動詞</span></span><br><span class="line">adjective   [adj.]      形容詞    <span class="comment">#可為單字、片語、子句，用來修飾"名詞、代名詞"(happy、informative) </span></span><br><span class="line">adverb      [adv.]      副詞      <span class="comment">#可為單字、片語、子句，用來修飾"動詞、形容詞、副詞、句子"(often、happily) </span></span><br><span class="line">conjunction [conj.]     連接詞    <span class="comment">#連接句子、子句，分為對等連接詞、從屬連接詞</span></span><br><span class="line">preposition [prep.]     介係詞    <span class="comment">#放於名詞類之前(名詞、代名詞、動名詞)</span></span><br><span class="line">interjection[interj.]   感嘆詞    <span class="comment">#表情緒的單字或片語</span></span><br><span class="line"></span><br><span class="line">adj -&gt; n/pron</span><br><span class="line">adv -&gt; v/adj/adv/sentence</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/23/grammar-for-new-toeic-1/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-09T16:14:36.000Z"><a href="/2016/05/10/hexo-tutorial-2/">2016-05-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/10/hexo-tutorial-2/">Hexo 使用心得（2）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="新增頁面"><a href="#新增頁面" class="headerlink" title="新增頁面"></a>新增頁面</h2><p>上面章節說明如何新增文章，這次來新增新頁面</p>
+<p>預設安裝完 Hexo 後，左上角應該只有兩個預設頁面 Home 和 Archive</p>
+<img src="/2016/05/10/hexo-tutorial-2/2016-05-09_161259.png" alt="2016-05-09_161259.png" title="">
+<p>我們目標是想新增一個新頁面 About </p>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><p>開啟 themes\landscape_config.yml 修改如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Header</span></span><br><span class="line">menu:</span><br><span class="line">  Home: /</span><br><span class="line">  Archives: /archives</span><br><span class="line">  About: /about      <span class="comment"># 新增 About 連結</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/10/hexo-tutorial-2/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-09T00:00:00.000Z"><a href="/2016/05/09/hexo-tutorial-post-image/">2016-05-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/09/hexo-tutorial-post-image/">Hexo 貼圖教學</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Hexo-版本"><a href="#Hexo-版本" class="headerlink" title="Hexo 版本"></a>Hexo 版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">hexo: 3.2.0</span><br><span class="line">hexo-cli: 1.0.1</span><br><span class="line">os: Linux 3.13.0-32-generic linux x64</span><br><span class="line">http_parser: 2.5.2</span><br><span class="line">node: 4.4.3</span><br><span class="line">v8: 4.5.103.35</span><br><span class="line">uv: 1.8.0</span><br><span class="line">zlib: 1.2.8</span><br><span class="line">ares: 1.10.1-DEV</span><br><span class="line">icu: 56.1</span><br><span class="line">modules: 46</span><br><span class="line">openssl: 1.0.2g</span><br></pre></td></tr></table></figure>
+<h2 id="貼圖方法"><a href="#貼圖方法" class="headerlink" title="貼圖方法"></a>貼圖方法</h2><p>這是 Hexo 3.0 新增的貼圖方法，稱為”資產資料夾(asset_folder)”</p>
+<p>傳統貼圖方法是你需要將圖片上傳到某個免費空間，之後再用 Markdown 語法輸入圖片 URL 做連結</p>
+<p>而 asset_folder 方法是直接將圖片和文章放在一起，這樣管理起來也比較方便</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/09/hexo-tutorial-post-image/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-05T12:46:25.000Z"><a href="/2016/05/05/hexo-tutorial-1/">2016-05-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/05/hexo-tutorial-1/">Hexo 使用心得（1）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Hexo 使用心得</p>
+<p><a href="https://hexo.io/">Hexo</a></p>
+<p><a href="https://hexo.io/docs/">文件說明</a> </p>
+<p><a href="https://hexo.io/docs/troubleshooting.html">問題討論</a> </p>
+<p><a href="https://github.com/hexojs/hexo/">原始碼</a></p>
+<h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g        <span class="comment"># 產生靜態檔案    </span></span><br><span class="line">$ hexo s        <span class="comment"># 啟動 Server，可進入 http://localhost:4000/ 預覽</span></span><br><span class="line">$ hexo d        <span class="comment"># 實際發佈到網站上，例如發佈到 GitHub</span></span><br><span class="line">$ hexo <span class="built_in">help</span>     <span class="comment"># 顯示 Hexo 相關指令</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/05/05/hexo-tutorial-1/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/6/" class="alignleft prev">上一頁</a>
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>8</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>8</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
+	
+  
+	
+		<li><a href="/categories/Machine-Learning/">Machine Learning</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>8</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>2</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/ML/">ML</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PCI/">PCI</a><small>2</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

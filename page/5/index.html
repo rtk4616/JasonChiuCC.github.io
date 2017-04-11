@@ -54,71 +54,32 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-07-27T04:28:17.000Z"><a href="/2016/07/27/php-curl/">2016-07-27</a></time>
+        <time datetime="2016-08-10T07:28:17.000Z"><a href="/2016/08/10/laravel-study-package/">2016-08-10</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/07/27/php-curl/">PHP curl</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="http://php.net/manual/en/book.curl.php" target="_blank" rel="external">PHP API 使用</a></p>
-<p>PHP 支援使用 libcurl，此 Lib 讓你可以使用不同 protocol 來通訊</p>
-<p>目前支援的協定在下面，此功能要 PHP 4.0.2 以上才可以使用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http, https, ftp, gopher, telnet, dict, file, ldap, HTTP POST, HTTP PUT, FTP</span><br></pre></td></tr></table></figure>
-<p>要要確認主機有沒有開啟這個功能可以使用 phpinfo(INFO_MODULES);  檢查</p>
-<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>curl_setopt 有非常多的選項可以設定，詳細設定參考<a href="http://php.net/manual/zh/function.curl-setopt.php" target="_blank" rel="external">這裡</a></p>
-<p>curl_setopt 設定第三個欄位型態要正確，有些要填字串，整數或布林值</p>
-<p>例如 CURLOPT_HTTPHEADER 就要填入一個陣列</p>
-<p>另外不同 PHP 版本或 curl 版本也會影響這些參數設定，使用時要注意</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 參數</span></span><br><span class="line">$url    = <span class="string">"www.google.com.tw"</span>;</span><br><span class="line">$header = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">"content-type: application/x-www-form-urlencoded"</span>,</span><br><span class="line">    <span class="string">"charset=UTF-8"</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// curl 初始化和設定</span></span><br><span class="line">$ch = curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_HTTPHEADER,$header);</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行 curl</span></span><br><span class="line">$output = curl_exec($ch);</span><br><span class="line"><span class="keyword">echo</span> $output;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 關閉 curl</span></span><br><span class="line">curl_close($ch);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-26T09:09:45.000Z"><a href="/2016/07/26/php-composer/">2016-07-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/26/php-composer/">PHP Composer Plugin 製作</a></h1>
+    <h1 class="title"><a href="/2016/08/10/laravel-study-package/">Laravel Study（Package）</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><p>首先建立資料夾 Composer-plugin，並且 git init</p>
-<p>在資料夾中建立 composer.json 檔案，內容如下</p>
-<p>composer.json 內容是以 JSON 格式儲存，寫好之後記得驗證是否格式正確</p>
-<p>更簡單的方式是使用 composer init，他會自動幫你產生 json 檔案</p>
-<p>因為我們要使用 PHP namespace 功能，而此功能要 5.3 以上才有支援</p>
-<p>autoload 的 classmap 表示會把 lib 中的所有檔案都掃過一次</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"jasonchiucc/firebase-php"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"Firebase Realtime Database PHP Client Lib"</span>,</span><br><span class="line">    <span class="attr">"license"</span>: <span class="string">"MIT"</span>,</span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">    <span class="attr">"authors"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"JasonChiuCC"</span>,</span><br><span class="line">            <span class="attr">"email"</span>: <span class="string">"JasonChiuCC@gmail.com"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"require"</span>: &#123;</span><br><span class="line">        <span class="attr">"php"</span>: <span class="string">"&gt;=5.3.0"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"autoload"</span>: &#123;</span><br><span class="line">        <span class="attr">"classmap"</span>: [<span class="string">"src"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="開始"><a href="#開始" class="headerlink" title="開始"></a>開始</h2><p>之前有說 vender 底下都是放模組，這些模組都是別人寫好的</p>
+<p>你可以去以下網站查詢有哪些模組可用</p>
+<p><a href="https://packagist.org/">packagist</a></p>
+<p><a href="http://packalyst.com/">packalyst</a></p>
+<p>選好需要的模組就可以用 composer 安裝</p>
+<p>以下示範安裝兩個模組</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;filp/whoops&quot;: 出現錯誤訊息時，畫面更漂亮</span><br><span class="line">&quot;barryvdh/laravel-debugbar&quot;: 畫面底部出現 debug 工具列，方便開發時 debug</span><br></pre></td></tr></table></figure>
+<p>首先在 composer.json 修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;require&quot;: &#123;</span><br><span class="line">    &quot;php&quot;: &quot;&gt;=5.5.9&quot;,</span><br><span class="line">    &quot;laravel/framework&quot;: &quot;5.2.*&quot;,</span><br><span class="line">    &quot;filp/whoops&quot;:&quot;~1.0&quot;,</span><br><span class="line">    &quot;barryvdh/laravel-debugbar&quot;: &quot;^2.0&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2016/07/26/php-composer/#more" class="more-link">繼續閱讀</a>
+            <a href="/2016/08/10/laravel-study-package/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
@@ -137,430 +98,359 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-07-26T08:28:17.000Z"><a href="/2016/07/26/git-intro/">2016-07-26</a></time>
+        <time datetime="2016-08-10T05:28:17.000Z"><a href="/2016/08/10/laravel-study-intro/">2016-08-10</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/07/26/git-intro/">Git 基本筆記</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>此篇心得筆記是由<a href="https://speakerdeck.com/eddie/use-git-to-control-your-life">高見龍</a>投影片閱讀而來</p>
-<p>內容為對 Git 基本指令操作和認識</p>
-<h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>以下是幾個常用的線上編輯環境，你可以在上面部屬你想要的開發環境</p>
-<p>更多的工具可以<a href="http://www.hongkiat.com/blog/cloud-ide-developers/">參考這裡</a></p>
-<p><a href="https://codenvy.com/">Codenvy</a></p>
-<p><a href="https://codeanywhere.com/">Codeanywhere</a></p>
-<p><a href="https://c9.io/">Cloud9</a></p>
-<p><a href="https://koding.com/">Koding</a></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/26/git-intro/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-20T09:00:17.000Z"><a href="/2016/07/20/firebase-tutorial-realtime-database/">2016-07-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/20/firebase-tutorial-realtime-database/">Firebase 心得（Realtime Database）</a></h1>
+    <h1 class="title"><a href="/2016/08/10/laravel-study-intro/">Laravel Study（使用 Laravel ）</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="官方文件"><a href="#官方文件" class="headerlink" title="官方文件"></a>官方文件</h2><p>此文使用版本 : 3.1.0，官方文件更新日期 : 2016/06/22</p>
-<p><a href="https://firebase.google.com/docs/database/">Firebase Doc</a></p>
-<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>Firebase Realtime Database 是一個雲端 NoSQL 資料庫</p>
-<p>資料使用 JSON 來儲存，當各裝置連上資料庫時可進行同步</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/20/firebase-tutorial-realtime-database/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-19T08:28:17.000Z"><a href="/2016/07/19/firebase-tutorial-authentication/">2016-07-19</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/19/firebase-tutorial-authentication/">Firebase 心得（Authentication）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="官方文件"><a href="#官方文件" class="headerlink" title="官方文件"></a>官方文件</h2><p>此文使用版本 : 3.1.0，官方文件更新日期 : 2016/06/28</p>
-<p><a href="https://firebase.google.com/docs/auth/">Firebase Doc</a></p>
-<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>大多數 App 會希望知道 User 是誰</p>
-<p>知道 User 是誰可以讓 App 提供客製化的內容或儲存個別 User 的資料到雲端</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/19/firebase-tutorial-authentication/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-11T08:28:17.000Z"><a href="/2016/07/11/firebase-tutorial-cloud-messaging/">2016-07-11</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/11/firebase-tutorial-cloud-messaging/">Firebase 心得（Cloud Messaging）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="官方文件"><a href="#官方文件" class="headerlink" title="官方文件"></a>官方文件</h2><p>此文使用版本 : 3.1.0，官方文件更新日期 : 2016/06/29</p>
-<p><a href="https://firebase.google.com/docs/cloud-messaging/">Firebase Doc</a></p>
-<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>使用 FCM 來通知 APP 有新的訊息需要同步(例如通知有新的 email )</p>
-<p>傳送的訊息最大到 4KB 到 client App</p>
-<p>Google 推薦之前使用 GCM 的應該換成 FCM (FCM 繼承 GCM，下層結構還是 GCM)</p>
-<p>因為 FCM 更簡單且之後更新會以 FCM 為主 <a href="https://firebase.google.com/support/faq/#gcm-fcm">如何從 GCM 升級 FCM</a></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/11/firebase-tutorial-cloud-messaging/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-11T06:28:17.000Z"><a href="/2016/07/11/firebase-tutorial-started/">2016-07-11</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/11/firebase-tutorial-started/">Firebase 心得（Started）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="官方文件"><a href="#官方文件" class="headerlink" title="官方文件"></a>官方文件</h2><p>此文使用版本 : 3.1.0</p>
-<p><a href="https://firebase.google.com/docs/">Firebase Doc</a></p>
-<p><a href="https://github.com/JasonChiuCC/Firebase/tree/master/Web/01_WebStarted">專案下載</a></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/11/firebase-tutorial-started/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-11T05:28:17.000Z"><a href="/2016/07/11/firebase-tutorial-intro/">2016-07-11</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/11/firebase-tutorial-intro/">Firebase 心得（Introduction）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="官方文件"><a href="#官方文件" class="headerlink" title="官方文件"></a>官方文件</h2><p>此文使用版本 : 3.1.0</p>
-<p><a href="https://firebase.google.com/docs/" target="_blank" rel="external">Firebase Doc</a></p>
-<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>Firebase 支援平台</p>
-<ul>
-<li>IOS</li>
-<li>Android</li>
-<li>Web</li>
-</ul>
-<h2 id="支援功能"><a href="#支援功能" class="headerlink" title="支援功能"></a>支援功能</h2><table>
-<thead>
-<tr>
-<th style="text-align:center">開發功能</th>
-<th style="text-align:center">IOS</th>
-<th style="text-align:center">Android</th>
-<th style="text-align:center">Web</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Analytics</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">Cloud Messaging</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-</tr>
-<tr>
-<td style="text-align:center">Authentication</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-</tr>
-<tr>
-<td style="text-align:center">Realtime Database</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-</tr>
-<tr>
-<td style="text-align:center">Storage</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-</tr>
-<tr>
-<td style="text-align:center">Hosting</td>
-<td style="text-align:center">X</td>
-<td style="text-align:center">X</td>
-<td style="text-align:center">O</td>
-</tr>
-<tr>
-<td style="text-align:center">Remote Config</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">Test Lab</td>
-<td style="text-align:center">X</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">Crash Reporting</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">社群功能</th>
-<th style="text-align:center">IOS</th>
-<th style="text-align:center">Android</th>
-<th style="text-align:center">Web</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Notifications</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">App Indexing</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">Dynamic Links</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">Invites</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-<tr>
-<td style="text-align:center">AdWords</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">廣告功能</th>
-<th style="text-align:center">IOS</th>
-<th style="text-align:center">Android</th>
-<th style="text-align:center">Web</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">AdMob</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">O</td>
-<td style="text-align:center">X</td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-07-06T02:09:45.000Z"><a href="/2016/07/06/nand-flash/">2016-07-06</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/07/06/nand-flash/">Nand Flash</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><img src="/2016/07/06/nand-flash/2016-07-06_111757.png" alt="2016-07-06_111757.png" title="">
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Flash Device    = N Block</span><br><span class="line">Blocl           = N Page</span><br><span class="line">Page            = N Byte + OOB</span><br><span class="line"></span><br><span class="line">Nand Flash</span><br><span class="line">+-------------------------------------+</span><br><span class="line">| B1 | B2 | ...                 | B16 |</span><br><span class="line">|    |    |                     |     |</span><br><span class="line">+-------------------------------------+</span><br><span class="line"></span><br><span class="line">+----+</span><br><span class="line">| B1 |   =&gt;   N Page + OOB </span><br><span class="line">|    |  </span><br><span class="line">+----+</span><br><span class="line"></span><br><span class="line">Page </span><br><span class="line">大小有 512, 2048, 4096, 8192 (bytes)，常見的為 2048 (bytes)</span><br><span class="line">page 容量 512 bytes 的稱 small page，大於等2k bytes 都稱為large page</span><br><span class="line"></span><br><span class="line">Spare or OOB (out of boundary)</span><br><span class="line">每一個 page 在實體的結構中除了 2k bytes的使用空間，還會有 64 bytes 額外的容量</span><br><span class="line">供hw/sw儲存一些額外的資訊，通常會用來儲存ecc的data，來效正nand flash使用久後會有bit不能使用的問題</span><br><span class="line"></span><br><span class="line">Block</span><br><span class="line">nand flash chip 寫入的最小單位, 每 64 page 即為一個block</span><br><span class="line">因為 page size 會有不同，block size 也就不同</span><br><span class="line">一顆chip裡有多少block，是依nand flash的大小而定，但通常是 2 的冪次方。</span><br><span class="line"></span><br><span class="line">Read/Write operation</span><br><span class="line">nand flash 讀寫方式異於一般的磁性儲性裝置。因為結構上的問題</span><br><span class="line">如果要針對特定的 page 寫入，只能把資料寫由1 -&gt; 0，</span><br><span class="line">如果要0-&gt;1 那只能針對整個 block (64 pages)做動作，此動作稱為 erase，而寫入page的動作稱為 program，</span><br><span class="line">一般 nand chip 的資料都會標明erase/program的時間</span><br><span class="line">以 Micro MT29F2G08AABWP 為例，erase/program的時間分別為(2ms/300us)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># write -&gt; Block</span></span><br><span class="line"><span class="comment"># read  -&gt; Page</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/07/06/nand-flash/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-06-17T16:00:39.000Z"><a href="/2016/06/18/grammar-for-new-toeic-4/">2016-06-18</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/06/18/grammar-for-new-toeic-4/">Grammar For New TOEIC（片語動詞）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="可分離片語動詞"><a href="#可分離片語動詞" class="headerlink" title="可分離片語動詞"></a>可分離片語動詞</h2><p>V + 介副詞(Particle) + O = V + O + 介副詞</p>
+        <h2 id="開始"><a href="#開始" class="headerlink" title="開始"></a>開始</h2><p>伺服器及相關工具安裝自行建立，在伺服器跟目錄下 </p>
+<p>有兩種方式建立 Laravel 專案，這裡使用 composer 建立專案</p>
+<p>使用 composer 要在 PHP 5.3.2 以上才能使用</p>
+<p>composer 簡單說就從 <a href="https://packagist.org/">packagist</a> 網站抓檔案下來</p>
+<p>而 packagist 裡面的檔案其實會連結到 github 上面</p>
 <ol>
-<li>片語動詞通常用在口語中，可以替換相同意思的動詞<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">discover  = find out </span><br><span class="line"><span class="built_in">return</span>    = go back</span><br><span class="line"><span class="built_in">continue</span>  = go on</span><br><span class="line">invent    = make up</span><br><span class="line">refuse    = turn down</span><br><span class="line">abandon   = give up</span><br><span class="line">explode   = go off</span><br><span class="line">omit      = leave out </span><br><span class="line">establish = <span class="built_in">set</span> up</span><br><span class="line">calculate = work out</span><br></pre></td></tr></table></figure>
+<li><p>用 Laravel 工具，速度快，因為先下載一份到本機，建立專案時直接 copy</p>
+</li>
+<li><p>用 composer 工具，較慢，建立專案時都會上網抓</p>
 </li>
 </ol>
-<p>2.可分離片語動詞<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">add up          把...加起來</span><br><span class="line">back up         備份</span><br><span class="line"><span class="built_in">break</span> down      分解、故障</span><br><span class="line">bring up        提到、養育</span><br><span class="line">buy out         買股份</span><br><span class="line">buy up          買進</span><br><span class="line">call off        取消</span><br><span class="line">call up         打電話給誰</span><br><span class="line">carry out       執行</span><br><span class="line">clean up        清理</span><br><span class="line">close down      停業</span><br><span class="line">cross out       刪去</span><br><span class="line">cut off         中斷</span><br></pre></td></tr></table></figure></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/10/laravel-study-intro/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-02T15:28:17.000Z"><a href="/2016/08/02/swift-autolayout/">2016-08-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/02/swift-autolayout/">Swift AutoLayout</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="開始"><a href="#開始" class="headerlink" title="開始"></a>開始</h2><p>AutoLayout 可以動態計算所有的 view 物件的 <code>size(大小)</code> 和 <code>position(位置)</code></p>
+<p>這是利用 <code>constraints</code> 這個功能，另外 AutoLayout 並非只能用在 App ，桌面程式一樣可以使用</p>
+<h2 id="外部改變（External-Changes）"><a href="#外部改變（External-Changes）" class="headerlink" title="外部改變（External Changes）"></a>外部改變（External Changes）</h2><p>當 superview 發生改變時，你需要調整你的 view 到適當的位置</p>
+<p>以下舉出幾點 superview 發生改變的例子</p>
+<p>● 比如使用者調整視窗大小</p>
+<p>● 使用者使用或離開 Split View 功能</p>
+<p>● 當裝置旋轉時（例如手機直向或橫向）</p>
+<p>● 當 audio recording bars 出現或消失時 </p>
+<p>● 你想支援不同大小的螢幕或 size classes</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/02/swift-autolayout/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-02T08:28:17.000Z"><a href="/2016/08/02/mozilla-addon-SDK-context-menu-item/">2016-08-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/02/mozilla-addon-SDK-context-menu-item/">Firefox Add-on SDK（Context Menu Item）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Add_a_Context_Menu_Item">官方文件</a></p>
+<p>請先看基本 <a href="http://jasonchiucc.github.io/2016/08/01/mozilla-addon-SDK/">Add-on 製作方法</a></p>
+<p>Context menu 讓你能在右鍵新增選單，你要使用 <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/context-menu">context menu</a> 模組</p>
+<p>首先 index.js 程式碼如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> contextMenu = <span class="built_in">require</span>(<span class="string">"sdk/context-menu"</span>);</span><br><span class="line"><span class="keyword">var</span> menuItem = contextMenu.Item(&#123;</span><br><span class="line">  label: <span class="string">"Log Selection"</span>,</span><br><span class="line">  context: contextMenu.SelectionContext(),</span><br><span class="line">  contentScript: <span class="string">'self.on("click", function () &#123;'</span> +</span><br><span class="line">                 <span class="string">'  var text = window.getSelection().toString();'</span> +</span><br><span class="line">                 <span class="string">'  self.postMessage(text);'</span> +</span><br><span class="line">                 <span class="string">'&#125;);'</span>,</span><br><span class="line">  onMessage: <span class="function"><span class="keyword">function</span> (<span class="params">selectionText</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.error(selectionText);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/02/mozilla-addon-SDK-context-menu-item/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-02T03:28:17.000Z"><a href="/2016/08/02/mozilla-addon-SDK-log/">2016-08-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/02/mozilla-addon-SDK-log/">Firefox Add-on SDK（Log）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>製作 Add-on 時需要使用 Log 測試，測試 Log 有兩種方式</p>
+<p>第一種使用 <code>console.log(&#39;Message&#39;);</code></p>
+<p>不過使用 console.log 需要用 jpm run，訊息會顯示在 cmd 當中</p>
+<p>第二種使用 <code>console.error(&#39;Message&#39;);</code></p>
+<p>當你用 jpm xpi 建立 xpi 檔案安裝後，你可以打開瀏覽器控制台看 Log </p>
+<p>注意是瀏覽器控制台(Ctrl+Shift+J)，不是網頁主控台(Ctrl+Shift+K)</p>
+<p>開啟瀏覽器主控台之後，打開”紀錄”欄位即可看到 log</p>
 
       
     </div>
     <footer>
       
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-01T08:28:17.000Z"><a href="/2016/08/01/mozilla-addon-SDK-display-popup/">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/01/mozilla-addon-SDK-display-popup/">Firefox Add-on SDK（Display a Popup）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Display_a_Popup">官方文件</a></p>
+<p>請先看基本 <a href="http://jasonchiucc.github.io/2016/08/01/mozilla-addon-SDK/">Add-on 製作方法</a></p>
+<p>要顯示一個跳出視窗介面，你要使用 <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/panel">panel</a> 模組</p>
+<p><a href="https://mdn.mozillademos.org/files/7647/panel.png"><img src="https://mdn.mozillademos.org/files/7647/panel.png" alt="panel" title="panel"></a></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/01/mozilla-addon-SDK-display-popup/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-01T05:28:17.000Z"><a href="/2016/08/01/mozilla-addon-SDK-toolbar-button /">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/01/mozilla-addon-SDK-toolbar-button /">Firefox Add-on SDK（Toolbar Button）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Adding_a_Button_to_the_Toolbar">官方文件</a></p>
+<p>請先看基本 <a href="http://jasonchiucc.github.io/2016/08/01/mozilla-addon-SDK/">Add-on 製作方法</a></p>
+<p>此篇教學會用到 <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Low-Level_APIs/ui_button_action">action btn</a> 或 <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Low-Level_APIs/ui_button_toggle">toggle btn</a> 這兩個模組</p>
+<p>這兩個模組是分類如下，這兩種其實用法和功能都一樣</p>
+<p>基本上就是在 Firefox 上面建立按鈕，使用者按下去之後可以做不同的反應</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Low-Level APIs &gt; ui/button/action</span><br><span class="line">Low-Level APIs &gt; ui/button/toggle</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/01/mozilla-addon-SDK-toolbar-button /#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-01T05:28:17.000Z"><a href="/2016/08/01/mozilla-addon-SDK/">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/01/mozilla-addon-SDK/">Firefox Add-on 製作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="http://tech.mozilla.com.tw/posts/5832/%E8%87%AA%E5%B7%B1%E7%9A%84%E7%80%8F%E8%A6%BD%E5%99%A8%E8%87%AA%E5%B7%B1%E6%94%B9-part-i-%E5%88%A9%E7%94%A8firefox-addon-sdk%E9%96%8B%E7%99%BC%E7%B0%A1%E5%96%AE%E7%9A%84%E9%99%84%E5%8A%A0%E5%85%83#ref-5">Linux 開發</a></p>
+<p><a href="https://wwssllabcd.github.io/blog/2014/05/03/building-an-extension-for-firefox/">Windows 開發</a></p>
+<p>注意 Windows 開發要安裝 Python 2.X 版本，3.X 版本不能用</p>
+<p>另外以下使用 cfx 指令，不過之後推薦改用 jpm，jpm 指令需要用 npm 安裝，所以你要先安裝 nodejs</p>
+<p>下面分別示範 cfx 和 jpm </p>
+<h2 id="使用-cfx-開發"><a href="#使用-cfx-開發" class="headerlink" title="使用 cfx 開發"></a>使用 cfx 開發</h2><p>此篇記錄 Linux 開發實作內容，首先建立資料夾 mozilla</p>
+<p>然後下載 <a href="https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/jetpack-sdk-latest.zip">Add-on SKD</a> 放進去解壓縮，此時結構如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addon-sdk-1.17/</span><br><span class="line">jetpack-sdk-latest.zip*</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/01/mozilla-addon-SDK/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-01T02:28:17.000Z"><a href="/2016/08/01/swift-3-preview-1-released/">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/01/swift-3-preview-1-released/">Swift 3.0 更改項目</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="更改項目說明"><a href="#更改項目說明" class="headerlink" title="更改項目說明"></a>更改項目說明</h3><p><a href="https://swift.org/blog/swift-3-0-preview-1-released/">官方文章</a></p>
+<p><a href="http://swiftdoc.org/v3.0/">Swift API Doc</a></p>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0002-remove-currying.md">SE-0002: Removing currying func declaration syntax</a></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Before:</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">curried</span><span class="params">(x: Int)</span></span>(y: <span class="type">String</span>) -&gt; <span class="type">Float</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="type">Float</span>(x) + <span class="type">Float</span>(y)!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// After:</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">curried</span><span class="params">(x: Int)</span></span> -&gt; (<span class="type">String</span>) -&gt; <span class="type">Float</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;(y: <span class="type">String</span>) -&gt; <span class="type">Float</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> <span class="type">Float</span>(x) + <span class="type">Float</span>(y)!</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/01/swift-3-preview-1-released/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-01T01:28:17.000Z"><a href="/2016/08/01/design-patterns-swift-3/">2016-08-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/01/design-patterns-swift-3/">設計模式 Swift（策略模式）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>閱讀大話設計模式心得，使用 Swift Ver. 3.0 (Jun 6, 2016)</p>
+<p><a href="http://swiftdoc.org/v3.0/">Swift API Doc</a></p>
+<h2 id="商場收銀系統"><a href="#商場收銀系統" class="headerlink" title="商場收銀系統"></a>商場收銀系統</h2><p>目標:根據客戶所買的單價和數量來收費</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var total = 0.0</span><br><span class="line">func addProduct(price:Double, num:Double) &#123;</span><br><span class="line">    <span class="built_in">let</span> totalPrice:Double = price * num</span><br><span class="line">    total = total + totalPrice</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"total = \(total)"</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/01/design-patterns-swift-3/#more" class="more-link">繼續閱讀</a>
+          </div>
         
         
       
@@ -603,7 +493,7 @@
      
   
 	
-		<li><a href="/categories/C/">C</a><small>7</small></li>
+		<li><a href="/categories/C/">C</a><small>8</small></li>
 	
   
 	
@@ -647,11 +537,15 @@
 	
   
 	
-		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+		<li><a href="/categories/Laravel/">Laravel</a><small>8</small></li>
 	
   
 	
-		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
+	
+  
+	
+		<li><a href="/categories/Machine-Learning/">Machine Learning</a><small>1</small></li>
 	
   
 	
@@ -698,7 +592,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -715,7 +609,7 @@
   
     <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
   
-    <li><a href="/tags/C/">C</a><small>7</small></li>
+    <li><a href="/tags/C/">C</a><small>8</small></li>
   
     <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
   
@@ -749,17 +643,21 @@
   
     <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
   
-    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+    <li><a href="/tags/Kernel/">Kernel</a><small>2</small></li>
   
-    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+    <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
   
-    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+    <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
   
     <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/ML/">ML</a><small>1</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   
     <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PCI/">PCI</a><small>2</small></li>
   
     <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
   
@@ -791,7 +689,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2016 JasonChiuCC
+  &copy; 2017 JasonChiuCC
   
 </div>
 

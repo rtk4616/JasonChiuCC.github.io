@@ -77,6 +77,7 @@
 <h2 id="Debug-Level"><a href="#Debug-Level" class="headerlink" title="Debug Level"></a>Debug Level</h2><p><a href="http://smilejay.com/2011/12/linux_loglevel/" target="_blank" rel="external">參考-1</a></p>
 <p><a href="http://zylix666.blogspot.tw/2008/07/kernel-message-level.html" target="_blank" rel="external">參考-2</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">0 (KERN_EMERG)  The system is unusable.</span><br><span class="line">1 (KERN_ALERT)  Actions that must be taken care of immediately.</span><br><span class="line">2 (KERN_CRIT)   Critical conditions.</span><br><span class="line">3 (KERN_ERR)    Noncritical error conditions.</span><br><span class="line">4 (KERN_WARNING)Warning conditions that should be taken care of.</span><br><span class="line">5 (KERN_NOTICE) Normal, but significant events.</span><br><span class="line">6 (KERN_INFO)   Informational messages that require no action.</span><br><span class="line">7 (KERN_DEBUG)  Kernel debugging messages, output by the kernel if the developer enabled debugging at compile time.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 目前 Level 設定</span><br><span class="line">cat /proc/sys/kernel/printk</span><br><span class="line">7       4       1       7</span><br><span class="line"></span><br><span class="line"># 設定 Level </span><br><span class="line">dmesg -n 7</span><br><span class="line">echo &quot;0 0 0 0&quot; &gt; /proc/sys/kernel/printk</span><br><span class="line">echo &quot;8&quot; &gt; /proc/sys/kernel/printk</span><br><span class="line"></span><br><span class="line"># 顯示 message</span><br><span class="line">tail /var/log/messages</span><br><span class="line">dmesg</span><br></pre></td></tr></table></figure>
+<h2 id="OpenSource"><a href="#OpenSource" class="headerlink" title="OpenSource"></a>OpenSource</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">CC=../XXX/arm-linux-</span><br><span class="line">ROOT=../image</span><br><span class="line"></span><br><span class="line">CPPFLAGS := -DMY_FALG</span><br><span class="line">INCLUDE_PATH := ../include</span><br><span class="line">TOOL_PATH := ./</span><br><span class="line"></span><br><span class="line">i2cdetect: i2cdetect.c i2cbusses.c ../lib/smbus.c </span><br><span class="line">	$(CC)gcc -I$(INCLUDE_PATH) -I$(TOOL_PATH) $(CPPFLAGS)  -static -o  $@ $^</span><br><span class="line">	cp ./i2cdetect $(ROOT)</span><br><span class="line">	</span><br><span class="line">i2cdump: i2cdump.c i2cbusses.c util.c ../lib/smbus.c </span><br><span class="line">	$(CC)gcc -I$(INCLUDE_PATH) -I$(TOOL_PATH) $(CPPFLAGS)  -static -o  $@ $^</span><br><span class="line">	cp ./i2cdump $(ROOT)</span><br><span class="line">	</span><br><span class="line">i2cget: i2cget.c i2cbusses.c util.c ../lib/smbus.c </span><br><span class="line">	$(CC)gcc -I$(INCLUDE_PATH) -I$(TOOL_PATH) $(CPPFLAGS)  -static -o  $@ $^</span><br><span class="line">	cp ./i2cget $(ROOT)</span><br><span class="line">	</span><br><span class="line">i2cset: i2cset.c i2cbusses.c util.c ../lib/smbus.c </span><br><span class="line">	$(CC)gcc -I$(INCLUDE_PATH) -I$(TOOL_PATH) $(CPPFLAGS)  -static -o  $@ $^</span><br><span class="line">	cp ./i2cset $(ROOT)</span><br><span class="line"></span><br><span class="line">I2C_Test: I2C_Test.c i2cbusses.c util.c ../lib/smbus.c </span><br><span class="line">	$(CC)gcc -I$(INCLUDE_PATH) -I$(TOOL_PATH) $(CPPFLAGS)  -static -o  $@ $^</span><br><span class="line">	cp ./I2C_Test $(ROOT)	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">TOOLS_TARGETS	:= i2cdetect i2cdump i2cget i2cset I2C_Test	</span><br><span class="line">all: $(TOOLS_TARGETS)</span><br><span class="line">	</span><br><span class="line">clean:</span><br><span class="line">	rm -rf *.o i2cdetect i2cdump i2cget i2cset</span><br></pre></td></tr></table></figure>
 <h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="http://i2c.info/i2c-bus-specification" target="_blank" rel="external">參考-1</a></p>
 <p><a href="http://lxr.free-electrons.com/source/Documentation/i2c/dev-interface" target="_blank" rel="external">參考-2</a></p>
 <p><a href="http://blog.csdn.net/21cnbao/article/details/7919055" target="_blank" rel="external">參考-3</a></p>
@@ -158,7 +159,7 @@
      
   
 	
-		<li><a href="/categories/C/">C</a><small>7</small></li>
+		<li><a href="/categories/C/">C</a><small>8</small></li>
 	
   
 	
@@ -202,11 +203,15 @@
 	
   
 	
-		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+		<li><a href="/categories/Laravel/">Laravel</a><small>8</small></li>
 	
   
 	
-		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
+	
+  
+	
+		<li><a href="/categories/Machine-Learning/">Machine Learning</a><small>1</small></li>
 	
   
 	
@@ -253,7 +258,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -270,7 +275,7 @@
   
     <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
   
-    <li><a href="/tags/C/">C</a><small>7</small></li>
+    <li><a href="/tags/C/">C</a><small>8</small></li>
   
     <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
   
@@ -304,17 +309,21 @@
   
     <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
   
-    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+    <li><a href="/tags/Kernel/">Kernel</a><small>2</small></li>
   
-    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+    <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
   
-    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+    <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
   
     <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/ML/">ML</a><small>1</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   
     <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PCI/">PCI</a><small>2</small></li>
   
     <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
   
@@ -346,7 +355,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2016 JasonChiuCC
+  &copy; 2017 JasonChiuCC
   
 </div>
 

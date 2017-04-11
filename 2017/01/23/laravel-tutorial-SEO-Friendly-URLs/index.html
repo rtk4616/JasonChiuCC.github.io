@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Laravel 5 :（3）SEO Friendly URLs | JasonChiuCC</title>
+  <meta name="author" content="JasonChiuCC">
+  
+  <meta name="description" content="JasonChiuCC">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Laravel 5 :（3）SEO Friendly URLs"/>
+  <meta property="og:site_name" content="JasonChiuCC"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="JasonChiuCC" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">JasonChiuCC</a></h1>
+  <h2><a href="/">You’ve got to find what you love</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首頁</a></li>
+    
+      <li><a href="/archives">文章</a></li>
+    
+      <li><a href="/about">關於</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-01-23T07:28:17.000Z"><a href="/2017/01/23/laravel-tutorial-SEO-Friendly-URLs/">2017-01-23</a></time>
+      
+      
+  
+    <h1 class="title">Laravel 5 :（3）SEO Friendly URLs</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Laravel-範例實作"><a href="#Laravel-範例實作" class="headerlink" title="Laravel 範例實作"></a>Laravel 範例實作</h2><p>此筆記主要紀錄學習以下 Laravel 的範例教學</p>
+<p><a href="https://tutorials.kode-blog.com/laravel-5-tutorial#" target="_blank" rel="external">Laravel 範例</a></p>
+<a id="more"></a>
+<h2 id="實作-SEO-URLs"><a href="#實作-SEO-URLs" class="headerlink" title="實作 SEO URLs"></a>實作 SEO URLs</h2><p>先定義網址路徑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/                       index                   顯示首頁</span><br><span class="line">/products               products                顯示產品頁面</span><br><span class="line">/products/details/&#123;id&#125;  product_details(id)     顯示詳細產品頁面</span><br><span class="line">/products/category      product_categories      顯示產品分類</span><br><span class="line">/products/brands        product_brands          顯示產品品牌</span><br><span class="line">/blog                   blog                    顯示部落格</span><br><span class="line">/blog/post/&#123;id&#125;         blog_post&#123;id&#125;           顯示部落格文章</span><br><span class="line">/contact-us             contact_us              顯示聯絡我們</span><br><span class="line">/login                  login                   登入頁面</span><br><span class="line">/logout                 logout                  登出頁面</span><br><span class="line">/cart                   cart                    顯示購物車</span><br><span class="line">/checkout               checkout                結帳</span><br><span class="line">/search/&#123;query&#125;         search                  顯示搜尋結果</span><br></pre></td></tr></table></figure>
+<h2 id="建立-controller"><a href="#建立-controller" class="headerlink" title="建立 controller"></a>建立 controller</h2><p>複習流程如下(RCV)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-&gt; HTTP 請求 </span><br><span class="line">-&gt; Route 處理      (看網址找 controller &amp; funcrion )</span><br><span class="line">-&gt; Controller 處理 (可用 artisan 建立)</span><br><span class="line">-&gt; (可選) 呼叫 view</span><br></pre></td></tr></table></figure>
+<p>首先建立新的 controller</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:controller Front</span><br></pre></td></tr></table></figure>
+<p>修改<code>/app/Http/Controllers/Front.php</code>如下</p>
+<p>主要就只是回傳網址對應的字串而已</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">class Front extends Controller &#123;</span><br><span class="line"></span><br><span class="line">    public function index() &#123;</span><br><span class="line">        return &apos;index page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function products() &#123;</span><br><span class="line">        return &apos;products page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function product_details($id) &#123;</span><br><span class="line">        return &apos;product details page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function product_categories() &#123;</span><br><span class="line">        return &apos;product categories page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function product_brands() &#123;</span><br><span class="line">        return &apos;product brands page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function blog() &#123;</span><br><span class="line">        return &apos;blog page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function blog_post($id) &#123;</span><br><span class="line">        return &apos;blog post page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function contact_us() &#123;</span><br><span class="line">        return &apos;contact us page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function login() &#123;</span><br><span class="line">        return &apos;login page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function logout() &#123;</span><br><span class="line">        return &apos;logout page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function cart() &#123;</span><br><span class="line">        return &apos;cart page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function checkout() &#123;</span><br><span class="line">        return &apos;checkout page&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function search($query) &#123;</span><br><span class="line">        return &quot;$query search page&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改路由"><a href="#修改路由" class="headerlink" title="修改路由"></a>修改路由</h2><p>將<code>/app/Http/routes.php</code>修改如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">|--------------------------------------------------------------------------</span><br><span class="line">| Application Routes</span><br><span class="line">|--------------------------------------------------------------------------</span><br><span class="line">|</span><br><span class="line">| Here is where you can register all of the routes for an application.</span><br><span class="line">| It&apos;s a breeze. Simply tell Laravel the URIs it should respond to</span><br><span class="line">| and give it the controller to call when that URI is requested.</span><br><span class="line">|</span><br><span class="line">*/</span><br><span class="line">Route::get(&apos;/&apos;,&apos;Front@index&apos;);</span><br><span class="line">Route::get(&apos;/products&apos;,&apos;Front@products&apos;);</span><br><span class="line">Route::get(&apos;/products/details/&#123;id&#125;&apos;,&apos;Front@product_details&apos;);</span><br><span class="line">Route::get(&apos;/products/categories&apos;,&apos;Front@product_categories&apos;);</span><br><span class="line">Route::get(&apos;/products/brands&apos;,&apos;Front@product_brands&apos;);</span><br><span class="line">Route::get(&apos;/blog&apos;,&apos;Front@blog&apos;);</span><br><span class="line">Route::get(&apos;/blog/post/&#123;id&#125;&apos;,&apos;Front@blog_post&apos;);</span><br><span class="line">Route::get(&apos;/contact-us&apos;,&apos;Front@contact_us&apos;);</span><br><span class="line">Route::get(&apos;/login&apos;,&apos;Front@login&apos;);</span><br><span class="line">Route::get(&apos;/logout&apos;,&apos;Front@logout&apos;);</span><br><span class="line">Route::get(&apos;/cart&apos;,&apos;Front@cart&apos;);</span><br><span class="line">Route::get(&apos;/checkout&apos;,&apos;Front@checkout&apos;);</span><br><span class="line">Route::get(&apos;/search/&#123;query&#125;&apos;,&apos;Front@search&apos;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Laravel/">Laravel</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Laravel/">Laravel</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2017/01/23/laravel-tutorial-SEO-Friendly-URLs/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:jasonchiucc.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title" id="categories">分類</h3>
+<!--   
+	
+		<li><a class = "list-2"href="/categories/Swift/AutoLayout/">AutoLayout</a><small>1</small></li>
+     
+  
+	
+		<li><a class = "list-2"href="/categories/IOS/BLE/">BLE</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/C/">C</a><small>8</small></li>
+	
+  
+	
+		<li><a href="/categories/Chrome/">Chrome</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/PHP/Composer/">Composer</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/DataStructures/">DataStructures</a><small>2</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/DesignPattern/">DesignPattern</a><small>3</small></li>
+     
+  
+	
+		<li><a href="/categories/Firebase/">Firebase</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/Firefox/">Firefox</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/GCC/">GCC</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Git/">Git</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Hexo/">Hexo</a><small>3</small></li>
+	
+  
+	
+		<li><a href="/categories/IOS/">IOS</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Laravel/">Laravel</a><small>8</small></li>
+	
+  
+	
+		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
+	
+  
+	
+		<li><a href="/categories/Machine-Learning/">Machine Learning</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Storage/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Other/">Other</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/PHP/">PHP</a><small>2</small></li>
+	
+  
+	
+		<li><a href="/categories/PHY/">PHY</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Port/">Port</a><small>1</small></li>
+	
+  
+	
+		<li><a class = "list-2"href="/categories/Swift/Released/">Released</a><small>1</small></li>
+     
+  
+	
+		<li><a href="/categories/Storage/">Storage</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/Swift/">Swift</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/TOEIC/">TOEIC</a><small>5</small></li>
+	
+  
+	
+		<li><a href="/categories/U-Boot/">U-Boot</a><small>1</small></li>
+	
+  
+	
+		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
+	
+   -->
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+</div>
+ 
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Add-on/">Add-on</a><small>5</small></li>
+  
+    <li><a href="/tags/Arduino/">Arduino</a><small>1</small></li>
+  
+    <li><a href="/tags/Authentication/">Authentication</a><small>1</small></li>
+  
+    <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
+  
+    <li><a href="/tags/C/">C</a><small>8</small></li>
+  
+    <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
+  
+    <li><a href="/tags/CloudMessaging/">CloudMessaging</a><small>1</small></li>
+  
+    <li><a href="/tags/Code/">Code</a><small>1</small></li>
+  
+    <li><a href="/tags/Composer/">Composer</a><small>1</small></li>
+  
+    <li><a href="/tags/DP/">DP</a><small>3</small></li>
+  
+    <li><a href="/tags/DataStructures/">DataStructures</a><small>2</small></li>
+  
+    <li><a href="/tags/Extend/">Extend</a><small>1</small></li>
+  
+    <li><a href="/tags/Extension/">Extension</a><small>1</small></li>
+  
+    <li><a href="/tags/Firebase/">Firebase</a><small>5</small></li>
+  
+    <li><a href="/tags/Firefox/">Firefox</a><small>5</small></li>
+  
+    <li><a href="/tags/GCC/">GCC</a><small>1</small></li>
+  
+    <li><a href="/tags/Git/">Git</a><small>1</small></li>
+  
+    <li><a href="/tags/Grammar/">Grammar</a><small>5</small></li>
+  
+    <li><a href="/tags/Hexo/">Hexo</a><small>3</small></li>
+  
+    <li><a href="/tags/I2C/">I2C</a><small>1</small></li>
+  
+    <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
+  
+    <li><a href="/tags/Kernel/">Kernel</a><small>2</small></li>
+  
+    <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
+  
+    <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
+  
+    <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/ML/">ML</a><small>1</small></li>
+  
+    <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
+  
+    <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PCI/">PCI</a><small>2</small></li>
+  
+    <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
+  
+    <li><a href="/tags/PHY/">PHY</a><small>1</small></li>
+  
+    <li><a href="/tags/Port/">Port</a><small>1</small></li>
+  
+    <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
+  
+    <li><a href="/tags/RealtimeDatabase/">RealtimeDatabase</a><small>1</small></li>
+  
+    <li><a href="/tags/Semaphore/">Semaphore</a><small>1</small></li>
+  
+    <li><a href="/tags/Swift/">Swift</a><small>5</small></li>
+  
+    <li><a href="/tags/TOEIC/">TOEIC</a><small>5</small></li>
+  
+    <li><a href="/tags/U-Boot/">U-Boot</a><small>1</small></li>
+  
+    <li><a href="/tags/Web/">Web</a><small>1</small></li>
+  
+    <li><a href="/tags/XCode/">XCode</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 JasonChiuCC
+  
+</div>
+
+<div class="visit">
+    本站總訪問量 <span id="busuanzi_value_site_pv"></span>次
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<!-- 添加『不蒜子』計數服務 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

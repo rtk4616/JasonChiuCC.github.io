@@ -78,6 +78,9 @@
 <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tftp -gr ubi-4g.img 192.168.1.2</span><br><span class="line">ubidetach <span class="_">-d</span> 0 /dev/ubi_ctrl</span><br><span class="line">ubiformat /dev/mtd6 <span class="_">-f</span> ubifs.img</span><br><span class="line">ubiattach /dev/ubi_ctrl -m 6</span><br><span class="line">mkdir userfs</span><br><span class="line">mount -t ubifs /dev/ubi0_0 ./userfs/</span><br></pre></td></tr></table></figure>
 <h2 id="Uboot"><a href="#Uboot" class="headerlink" title="Uboot"></a>Uboot</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tftpboot ubi.img</span><br><span class="line">nand write 0x68000000 0x4e00000 <span class="variable">$filesize</span></span><br><span class="line">ubi part nand0,6 0</span><br><span class="line">ubifsmount open</span><br></pre></td></tr></table></figure>
 <h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Q:UBI error: vtbl_check: too large reserved_pebs 4064, good PEBs 4010</span><br><span class="line">A:vol_size 太大，要調小</span><br><span class="line"></span><br><span class="line">Q:ubi_<span class="built_in">read</span>_volume_table</span><br><span class="line">A:把 config.ini 裡面的 vol_alignment=1 &amp; vol_flags=autoresize 移除</span><br></pre></td></tr></table></figure>
+<h2 id="Read-Write"><a href="#Read-Write" class="headerlink" title="Read / Write"></a>Read / Write</h2><p>Read</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">先用 mtdinfo /dev/mtd7 找出要讀的 part (看 mtd name)</span><br><span class="line">或是 cat /proc/mtd</span><br><span class="line">dev:    size   erasesize  name</span><br><span class="line">mtd0: 000a0000 00010000 &quot;boot&quot;</span><br><span class="line">mtd1: 00060000 00010000 &quot;env&quot;</span><br><span class="line">...</span><br><span class="line">再用 nanddump -p -f nandinfo.txt /dev/mtd7 將內容讀到 nandinfo.txt 檔案</span><br></pre></td></tr></table></figure>
+<p>Write<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;fcntl.h&gt;</span><br><span class="line">#include &lt;sys/ioctl.h&gt;</span><br><span class="line">#include &lt;mtd/mtd-user.h&gt;</span><br><span class="line"></span><br><span class="line">#define     MTD_NAME    &quot;mtd7&quot;</span><br><span class="line">#define     TMP_NAME    &quot;tmp.txt&quot;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    FILE    *fp;</span><br><span class="line">    int     rv          = 0;</span><br><span class="line">    char    sys_cmd[80];</span><br><span class="line">    char    data[80]    = &#123; 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA,</span><br><span class="line">                            0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB&#125;;</span><br><span class="line">                                  </span><br><span class="line">    // Erase nand flash </span><br><span class="line">    sprintf(sys_cmd, &quot;flash_erase /dev/%s 0 0&quot;, MTD_NAME);</span><br><span class="line">    rv = system(sys_cmd);</span><br><span class="line">    if (rv) &#123;        </span><br><span class="line">        printf(&quot;ERROR : Flash erase !\n&quot;);</span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    // Open file and write data</span><br><span class="line">    fp = fopen(TMP_NAME, &quot;wb&quot;);       </span><br><span class="line">    fwrite(data, sizeof(data[0]), sizeof(data)/sizeof(data[0]), fp); </span><br><span class="line">    fclose(fp);</span><br><span class="line"></span><br><span class="line">    // Write to nand </span><br><span class="line">    sprintf(sys_cmd, &quot;nandwrite -p -s 0 /dev/%s %s&quot;, MTD_NAME,TMP_NAME);</span><br><span class="line">    system(sys_cmd);        </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h2><p><a href="http://technews.tw/2016/03/19/about-nand-flash/" target="_blank" rel="external">Reference 1</a></p>
 <p><a href="http://cmchao.logdown.com/posts/60216" target="_blank" rel="external">Reference 2</a></p>
 <p><a href="http://www.crifan.com/files/doc/docbook/linux_nand_driver/release/html/linux_nand_driver.html" target="_blank" rel="external">Reference 3</a></p>
@@ -162,7 +165,7 @@
      
   
 	
-		<li><a href="/categories/C/">C</a><small>7</small></li>
+		<li><a href="/categories/C/">C</a><small>8</small></li>
 	
   
 	
@@ -206,11 +209,15 @@
 	
   
 	
-		<li><a href="/categories/Laravel/">Laravel</a><small>3</small></li>
+		<li><a href="/categories/Laravel/">Laravel</a><small>8</small></li>
 	
   
 	
-		<li><a href="/categories/Linux/">Linux</a><small>11</small></li>
+		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
+	
+  
+	
+		<li><a href="/categories/Machine-Learning/">Machine Learning</a><small>1</small></li>
 	
   
 	
@@ -257,7 +264,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -274,7 +281,7 @@
   
     <li><a href="/tags/BLE/">BLE</a><small>1</small></li>
   
-    <li><a href="/tags/C/">C</a><small>7</small></li>
+    <li><a href="/tags/C/">C</a><small>8</small></li>
   
     <li><a href="/tags/Chrome/">Chrome</a><small>1</small></li>
   
@@ -308,17 +315,21 @@
   
     <li><a href="/tags/IOS/">IOS</a><small>1</small></li>
   
-    <li><a href="/tags/Kernel/">Kernel</a><small>1</small></li>
+    <li><a href="/tags/Kernel/">Kernel</a><small>2</small></li>
   
-    <li><a href="/tags/Laravel/">Laravel</a><small>3</small></li>
+    <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
   
-    <li><a href="/tags/Linux/">Linux</a><small>12</small></li>
+    <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
   
     <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
+  
+    <li><a href="/tags/ML/">ML</a><small>1</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   
     <li><a href="/tags/Other/">Other</a><small>1</small></li>
+  
+    <li><a href="/tags/PCI/">PCI</a><small>2</small></li>
   
     <li><a href="/tags/PHP/">PHP</a><small>1</small></li>
   
@@ -350,7 +361,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2016 JasonChiuCC
+  &copy; 2017 JasonChiuCC
   
 </div>
 
