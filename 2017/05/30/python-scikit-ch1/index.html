@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>PHY | JasonChiuCC</title>
+  <title>Python 機器學習 （Scikit-Learn Ch1） | JasonChiuCC</title>
   <meta name="author" content="JasonChiuCC">
   
   <meta name="description" content="JasonChiuCC">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Python 機器學習 （Scikit-Learn Ch1）"/>
   <meta property="og:site_name" content="JasonChiuCC"/>
 
   
@@ -47,25 +47,102 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title category">PHY</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-05-30T04:28:17.000Z"><a href="/2017/05/30/python-scikit-ch1/">2017-05-30</a></time>
+      
+      
+  
+    <h1 class="title">Python 機器學習 （Scikit-Learn Ch1）</h1>
+  
 
+    </header>
+    <div class="entry">
+      
+        <h2 id="常用網站"><a href="#常用網站" class="headerlink" title="常用網站"></a>常用網站</h2><p><a href="http://scikit-learn.org/stable/_downloads/scikit-learn-docs.pdf" target="_blank" rel="external">PDF 下載</a></p>
+<p><a href="http://scikit-learn.org/stable/documentation.html#" target="_blank" rel="external">線上文件</a></p>
+<p><a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html" target="_blank" rel="external">Machine learning 簡化流程圖</a></p>
+<h2 id="快速開始"><a href="#快速開始" class="headerlink" title="快速開始"></a>快速開始</h2><p>這邊是根據官網的<code>Quick Start</code>章節做個筆記，內容並非一定正確</p>
+<p>主要是介紹<code>machine learning</code>的一些專屬名詞，並舉一些實際例子</p>
+<p>目前主要把<code>machine learning</code>分為兩大類，其中<code>supervised</code>有兩種演算法</p>
+<p>而<code>unsupervised</code>有一種演算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">supervised learning</span><br><span class="line"> - classification</span><br><span class="line"> - regression</span><br><span class="line">unsupervised learning</span><br><span class="line"> - clustering</span><br></pre></td></tr></table></figure>
+<p>Supervised 就是你先給一些<code>輸入資料</code>以及你預期的<code>輸出結果(答案)</code></p>
+<p>那程式就會根據你給的東西來產生一個<code>公式</code></p>
+<p>產生公式之後你再給新的<code>輸入資料</code></p>
+<p>程式就會根據<code>公式</code>產生輸出結果，此公式也稱為<code>模型 Model</code></p>
+<p>classification 手寫辨識用此演算法，能夠將不同手寫的字對應到有限的字</p>
+<p>簡單的說就像分類一樣，電腦會將輸入的資料分類</p>
+<p>regression 你期望的輸出是由一個或多個變數來表示的</p>
+<p>Unsupervised 就是只有給你<code>輸入資料</code>沒有告訴你答案，所以必需根據這些資料來找出一些線索</p>
+<p>此種演算法稱為<code>clustering</code></p>
+<h2 id="dataset-範例"><a href="#dataset-範例" class="headerlink" title="dataset 範例"></a>dataset 範例</h2><p>scikit-learn 預設有一些 dataset，dataset 其實就是一些數據而已</p>
+<p>例如全班的名字身高體重也算是一種 dataset</p>
+<p>而 scikit-learn 中有包含<code>Iris flower data set</code></p>
+<p><code>Iris</code>是一種花，中文為<code>鳶尾花?</code> </p>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2016-09-23T07:28:17.000Z"><a href="/2016/09/23/phy-mgnt/">2016-09-23</a></time>
-            
-              <h1 class="title"><a href="/2016/09/23/phy-mgnt/">PHY 管理簡介</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+<p><code>Iris flower data set</code>就是此種花的資料，例如花瓣寬度、長度等等</p>
+<p><a href="https://en.wikipedia.org/wiki/Iris_flower_data_set" target="_blank" rel="external">Iris flower data set 可參考</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Python/">Python</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Python/">Python</a>, <a href="/tags/Machine-Learning/">Machine-Learning</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2017/05/30/python-scikit-ch1/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">

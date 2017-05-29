@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>PHY | JasonChiuCC</title>
+  <title>Python 機器學習 （Scikit-Learn Ch2） | JasonChiuCC</title>
   <meta name="author" content="JasonChiuCC">
   
   <meta name="description" content="JasonChiuCC">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Python 機器學習 （Scikit-Learn Ch2）"/>
   <meta property="og:site_name" content="JasonChiuCC"/>
 
   
@@ -47,25 +47,102 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title category">PHY</h2>
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-05-30T04:28:17.000Z"><a href="/2017/05/30/python-scikit-ch2/">2017-05-30</a></time>
+      
+      
+  
+    <h1 class="title">Python 機器學習 （Scikit-Learn Ch2）</h1>
+  
 
+    </header>
+    <div class="entry">
+      
+        <h2 id="安裝-scikit"><a href="#安裝-scikit" class="headerlink" title="安裝 scikit"></a>安裝 scikit</h2><p>首先在乾淨環境下安裝 Python，本文使用 Win10 64 安裝 Python 3.6.1</p>
+<p><a href="https://www.python.org/downloads/windows/" target="_blank" rel="external">Python 3.6.1 For Windows</a></p>
+<p>建議不要安裝在<code>C:</code>(OS 安裝硬碟)，不然之後常遇到權限問題</p>
+<p>安裝完預設就會有 pip，可以在 cmd 下試試看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip -V</span><br><span class="line">pip 9.0.1 from d:\program files\python36\lib\site-packages (python 3.6)</span><br></pre></td></tr></table></figure>
+<p>要安裝<code>Scikit-Learn</code>之前需要先安裝以下其他的 Lib</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">● nose (自動化測試相關)</span><br><span class="line">● numpy+mkl (注意有加上 mkl(math kernel library)，運算陣列矩陣相關)</span><br><span class="line">● scipy (數學演算法相關、訊號處理、圖像處理、積分、線代等等)</span><br></pre></td></tr></table></figure>
+<p>首先先安裝<code>nose</code>，直接用 pip 安裝即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install nose</span><br></pre></td></tr></table></figure>
+<p>接下來的<code>numpy+mkl</code>和<code>scipy</code>不要使用 pip 直接安裝，會發生很多問題</p>
+<p>先打開此網站<a href="www.lfd.uci.edu/~gohlke/pythonlibs/">LFD</a></p>
+<p>裡面有許多<code>whl</code>檔案可以下載，所以要下載 (有32/64位元，依照你的OS下載)</p>
+<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy" target="_blank" rel="external">numpy-1.13.0rc2+mkl-cp36-cp36m-win_amd64.whl</a></p>
+<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy" target="_blank" rel="external">scipy-0.19.0-cp36-cp36m-win_amd64.whl</a></p>
+<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#scikit-learn" target="_blank" rel="external">scikit_learn-0.18.1-cp36-cp36m-win_amd64.whl</a></p>
+<p>下載完後安裝指令如下，記得要按照順序，因為<code>scikit_learn</code>會先檢查<code>numpy+mkl</code>和<code>scipy</code>是否已經安裝</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install &quot;numpy-1.13.0rc2+mkl-cp36-cp36m-win_amd64.whl&quot;</span><br><span class="line">D:\&gt;pip install scipy-0.19.0-cp36-cp36m-win_amd64.whl</span><br><span class="line">D:\&gt;pip install scikit_learn-0.18.1-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+<p>顯示一下已安裝的 Lib</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip freeze</span><br><span class="line">nose==1.3.7</span><br><span class="line">numpy==1.13.0rc2+mkl</span><br><span class="line">scikit-learn==0.18.1</span><br><span class="line">scipy==0.19.0</span><br></pre></td></tr></table></figure>
+<p>最後執行測試指令看是否成功安裝<code>scikit_learn</code> <a href="http://scikit-learn.org/stable/developers/advanced_installation.html#id2" target="_blank" rel="external">參考</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt; nosetests -v sklearn</span><br></pre></td></tr></table></figure>
+<p>之後會開始跑一些測試，會花一段時間，最後顯示以下訊息，會出現兩個 fail </p>
+<p>但是目前不知道為什麼，有找到問題在更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ran 7159 tests in 240.549s</span><br><span class="line"></span><br><span class="line">FAILED (SKIP=19, failures=2)</span><br></pre></td></tr></table></figure>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2016-09-23T07:28:17.000Z"><a href="/2016/09/23/phy-mgnt/">2016-09-23</a></time>
-            
-              <h1 class="title"><a href="/2016/09/23/phy-mgnt/">PHY 管理簡介</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Python/">Python</a>
   </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Python/">Python</a>, <a href="/tags/Machine-Learning/">Machine-Learning</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2017/05/30/python-scikit-ch2/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+      
+  
+</section>
+
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
