@@ -63,30 +63,30 @@
     </header>
     <div class="entry">
       
-        <h2 id="安裝-scikit"><a href="#安裝-scikit" class="headerlink" title="安裝 scikit"></a>安裝 scikit</h2><p>首先在乾淨環境下安裝 Python，本文使用 Win10 64 安裝 Python 3.6.1</p>
-<p><a href="https://www.python.org/downloads/windows/" target="_blank" rel="external">Python 3.6.1 For Windows</a></p>
-<p>建議不要安裝在<code>C:</code>(OS 安裝硬碟)，不然之後常遇到權限問題</p>
-<p>安裝完預設就會有 pip，可以在 cmd 下試試看</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip -V</span><br><span class="line">pip 9.0.1 from d:\program files\python36\lib\site-packages (python 3.6)</span><br></pre></td></tr></table></figure>
-<p>要安裝<code>Scikit-Learn</code>之前需要先安裝以下其他的 Lib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">● nose (自動化測試相關)</span><br><span class="line">● numpy+mkl (注意有加上 mkl(math kernel library)，運算陣列矩陣相關)</span><br><span class="line">● scipy (數學演算法相關、訊號處理、圖像處理、積分、線代等等)</span><br></pre></td></tr></table></figure>
-<p>首先先安裝<code>nose</code>，直接用 pip 安裝即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install nose</span><br></pre></td></tr></table></figure>
-<p>接下來的<code>numpy+mkl</code>和<code>scipy</code>不要使用 pip 直接安裝，會發生很多問題</p>
-<p>先打開此網站<a href="www.lfd.uci.edu/~gohlke/pythonlibs/">LFD</a></p>
-<p>裡面有許多<code>whl</code>檔案可以下載，所以要下載 (有32/64位元，依照你的OS下載)</p>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy" target="_blank" rel="external">numpy-1.13.0rc2+mkl-cp36-cp36m-win_amd64.whl</a></p>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy" target="_blank" rel="external">scipy-0.19.0-cp36-cp36m-win_amd64.whl</a></p>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#scikit-learn" target="_blank" rel="external">scikit_learn-0.18.1-cp36-cp36m-win_amd64.whl</a></p>
-<p>下載完後安裝指令如下，記得要按照順序，因為<code>scikit_learn</code>會先檢查<code>numpy+mkl</code>和<code>scipy</code>是否已經安裝</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install &quot;numpy-1.13.0rc2+mkl-cp36-cp36m-win_amd64.whl&quot;</span><br><span class="line">D:\&gt;pip install scipy-0.19.0-cp36-cp36m-win_amd64.whl</span><br><span class="line">D:\&gt;pip install scikit_learn-0.18.1-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
-<p>顯示一下已安裝的 Lib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip freeze</span><br><span class="line">nose==1.3.7</span><br><span class="line">numpy==1.13.0rc2+mkl</span><br><span class="line">scikit-learn==0.18.1</span><br><span class="line">scipy==0.19.0</span><br></pre></td></tr></table></figure>
-<p>最後執行測試指令看是否成功安裝<code>scikit_learn</code> <a href="http://scikit-learn.org/stable/developers/advanced_installation.html#id2" target="_blank" rel="external">參考</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt; nosetests -v sklearn</span><br></pre></td></tr></table></figure>
-<p>之後會開始跑一些測試，會花一段時間，最後顯示以下訊息，會出現兩個 fail </p>
-<p>但是目前不知道為什麼，有找到問題在更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ran 7159 tests in 240.549s</span><br><span class="line"></span><br><span class="line">FAILED (SKIP=19, failures=2)</span><br></pre></td></tr></table></figure>
+        <h2 id="常用網站"><a href="#常用網站" class="headerlink" title="常用網站"></a>常用網站</h2><p><a href="http://scikit-learn.org/stable/_downloads/scikit-learn-docs.pdf" target="_blank" rel="external">PDF 下載</a></p>
+<p><a href="http://scikit-learn.org/stable/documentation.html#" target="_blank" rel="external">線上文件</a></p>
+<p><a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html" target="_blank" rel="external">Machine learning 簡化流程圖</a></p>
+<h2 id="快速開始"><a href="#快速開始" class="headerlink" title="快速開始"></a>快速開始</h2><p>這邊是根據官網的<code>Quick Start</code>章節做個筆記，內容並非一定正確</p>
+<p>主要是介紹<code>machine learning</code>的一些專屬名詞，並舉一些實際例子</p>
+<p>目前主要把<code>machine learning</code>分為兩大類，其中<code>supervised</code>有兩種演算法</p>
+<p>而<code>unsupervised</code>有一種演算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">supervised learning</span><br><span class="line"> - classification</span><br><span class="line"> - regression</span><br><span class="line">unsupervised learning</span><br><span class="line"> - clustering</span><br></pre></td></tr></table></figure>
+<p>Supervised 就是你先給一些<code>輸入資料</code>以及你預期的<code>輸出結果(答案)</code></p>
+<p>那程式就會根據你給的東西來產生一個<code>公式</code></p>
+<p>產生公式之後你再給新的<code>輸入資料</code></p>
+<p>程式就會根據<code>公式</code>產生輸出結果，此公式也稱為<code>模型 Model</code></p>
+<p>classification 手寫辨識用此演算法，能夠將不同手寫的字對應到有限的字</p>
+<p>簡單的說就像分類一樣，電腦會將輸入的資料分類</p>
+<p>regression 你期望的輸出是由一個或多個變數來表示的</p>
+<p>Unsupervised 就是只有給你<code>輸入資料</code>沒有告訴你答案，所以必需根據這些資料來找出一些線索</p>
+<p>此種演算法稱為<code>clustering</code></p>
+<h2 id="dataset-範例"><a href="#dataset-範例" class="headerlink" title="dataset 範例"></a>dataset 範例</h2><p>scikit-learn 預設有一些 dataset，dataset 其實就是一些數據而已</p>
+<p>例如全班的名字身高體重也算是一種 dataset</p>
+<p>而 scikit-learn 中有包含<code>Iris flower data set</code></p>
+<p><code>Iris</code>是一種花，中文為<code>鳶尾花?</code> </p>
+
+<p><code>Iris flower data set</code>就是此種花的資料，例如花瓣寬度、長度等等</p>
+<p><a href="https://en.wikipedia.org/wiki/Iris_flower_data_set" target="_blank" rel="external">Iris flower data set 可參考</a></p>
 
       
     </div>
