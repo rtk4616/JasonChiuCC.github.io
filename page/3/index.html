@@ -334,46 +334,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">2016-09-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">How to program C〈結構、Union、Bit、列舉〉</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>結構定義如下，定義結構不會佔用記憶體</p>
-<p>他只是建立一種新的類型，就像<code>int</code>一樣</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct player&#123;</span><br><span class="line">    char name[20];    </span><br><span class="line">    /*</span><br><span class="line">    不可以包含自己，只能用指標</span><br><span class="line">    struct player person;</span><br><span class="line">    */</span><br><span class="line">    struct player *personPtr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>宣告變數如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct a, b[20], *c;</span><br><span class="line"></span><br><span class="line">或是直接和定義寫在一起</span><br><span class="line">struct card&#123;</span><br><span class="line">    char name[20];</span><br><span class="line">&#125; a, b[20], *c;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/09/25/how-to-program-c-struct-union-bit/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-char-and-string/">2016-09-25</a></time>
       
       
@@ -401,6 +361,46 @@
         
           <div class="alignleft">
             <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">2016-09-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">How to program C〈結構、Union、Bit、列舉〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>結構定義如下，定義結構不會佔用記憶體</p>
+<p>他只是建立一種新的類型，就像<code>int</code>一樣</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct player&#123;</span><br><span class="line">    char name[20];    </span><br><span class="line">    /*</span><br><span class="line">    不可以包含自己，只能用指標</span><br><span class="line">    struct player person;</span><br><span class="line">    */</span><br><span class="line">    struct player *personPtr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>宣告變數如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct a, b[20], *c;</span><br><span class="line"></span><br><span class="line">或是直接和定義寫在一起</span><br><span class="line">struct card&#123;</span><br><span class="line">    char name[20];</span><br><span class="line">&#125; a, b[20], *c;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/25/how-to-program-c-struct-union-bit/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
