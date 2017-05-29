@@ -54,6 +54,43 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-07-06T02:09:45.000Z"><a href="/2016/07/06/nand-flash/">2016-07-06</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/06/nand-flash/">Nand Flash</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><img src="/2016/07/06/nand-flash/2016-07-06_111757.png" alt="2016-07-06_111757.png" title="">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Flash Device    = N Block</span><br><span class="line">Blocl           = N Page</span><br><span class="line">Page            = N Byte + OOB</span><br><span class="line"></span><br><span class="line">Nand Flash</span><br><span class="line">+-------------------------------------+</span><br><span class="line">| B1 | B2 | ...                 | B16 |</span><br><span class="line">|    |    |                     |     |</span><br><span class="line">+-------------------------------------+</span><br><span class="line"></span><br><span class="line">+----+</span><br><span class="line">| B1 |   =&gt;   N Page + OOB </span><br><span class="line">|    |  </span><br><span class="line">+----+</span><br><span class="line"></span><br><span class="line">Page </span><br><span class="line">大小有 512, 2048, 4096, 8192 (bytes)，常見的為 2048 (bytes)</span><br><span class="line">page 容量 512 bytes 的稱 small page，大於等2k bytes 都稱為large page</span><br><span class="line"></span><br><span class="line">Spare or OOB (out of boundary)</span><br><span class="line">每一個 page 在實體的結構中除了 2k bytes的使用空間，還會有 64 bytes 額外的容量</span><br><span class="line">供hw/sw儲存一些額外的資訊，通常會用來儲存ecc的data，來效正nand flash使用久後會有bit不能使用的問題</span><br><span class="line"></span><br><span class="line">Block</span><br><span class="line">nand flash chip 寫入的最小單位, 每 64 page 即為一個block</span><br><span class="line">因為 page size 會有不同，block size 也就不同</span><br><span class="line">一顆chip裡有多少block，是依nand flash的大小而定，但通常是 2 的冪次方。</span><br><span class="line"></span><br><span class="line">Read/Write operation</span><br><span class="line">nand flash 讀寫方式異於一般的磁性儲性裝置。因為結構上的問題</span><br><span class="line">如果要針對特定的 page 寫入，只能把資料寫由1 -&gt; 0，</span><br><span class="line">如果要0-&gt;1 那只能針對整個 block (64 pages)做動作，此動作稱為 erase，而寫入page的動作稱為 program，</span><br><span class="line">一般 nand chip 的資料都會標明erase/program的時間</span><br><span class="line">以 Micro MT29F2G08AABWP 為例，erase/program的時間分別為(2ms/300us)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># write -&gt; Block</span></span><br><span class="line"><span class="comment"># read  -&gt; Page</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/06/nand-flash/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-06-17T16:00:39.000Z"><a href="/2016/06/18/grammar-for-new-toeic-4/">2016-06-18</a></time>
       
       
@@ -399,52 +436,13 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-05T12:46:25.000Z"><a href="/2016/05/05/hexo-tutorial-1/">2016-05-05</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/05/hexo-tutorial-1/">Hexo 使用心得（1）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Hexo 使用心得</p>
-<p><a href="https://hexo.io/">Hexo</a></p>
-<p><a href="https://hexo.io/docs/">文件說明</a> </p>
-<p><a href="https://hexo.io/docs/troubleshooting.html">問題討論</a> </p>
-<p><a href="https://github.com/hexojs/hexo/">原始碼</a></p>
-<h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g        <span class="comment"># 產生靜態檔案    </span></span><br><span class="line">$ hexo s        <span class="comment"># 啟動 Server，可進入 http://localhost:4000/ 預覽</span></span><br><span class="line">$ hexo d        <span class="comment"># 實際發佈到網站上，例如發佈到 GitHub</span></span><br><span class="line">$ hexo <span class="built_in">help</span>     <span class="comment"># 顯示 Hexo 相關指令</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/05/05/hexo-tutorial-1/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
     <a href="/page/6/" class="alignleft prev">上一頁</a>
   
+  
+    <a href="/page/8/" class="alignright next">下一頁</a>
   
   <div class="clearfix"></div>
 </nav></div></div>
@@ -545,7 +543,7 @@
 	
   
 	
-		<li><a href="/categories/Python/">Python</a><small>1</small></li>
+		<li><a href="/categories/Python/">Python</a><small>2</small></li>
 	
   
 	
@@ -572,7 +570,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -645,7 +643,7 @@
   
     <li><a href="/tags/Port/">Port</a><small>1</small></li>
   
-    <li><a href="/tags/Python/">Python</a><small>1</small></li>
+    <li><a href="/tags/Python/">Python</a><small>2</small></li>
   
     <li><a href="/tags/Ram/">Ram</a><small>1</small></li>
   
