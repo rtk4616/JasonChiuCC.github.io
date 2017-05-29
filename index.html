@@ -66,12 +66,12 @@
       
         <h2 id="安裝-scikit"><a href="#安裝-scikit" class="headerlink" title="安裝 scikit"></a>安裝 scikit</h2><p>首先在乾淨環境下安裝 Python，本文使用 Win10 64 安裝 Python 3.6.1</p>
 <p><a href="https://www.python.org/downloads/windows/" target="_blank" rel="external">Python 3.6.1 For Windows</a></p>
-<p>建議不要安裝在<code>C</code>，不然之後常遇到權限問題</p>
+<p>建議不要安裝在<code>C:</code>(OS 安裝硬碟)，不然之後常遇到權限問題</p>
 <p>安裝完預設就會有 pip，可以在 cmd 下試試看</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip -V</span><br><span class="line">pip 9.0.1 from d:\program files\python36\lib\site-packages (python 3.6)</span><br></pre></td></tr></table></figure>
 <p>要安裝<code>Scikit-Learn</code>之前需要先安裝以下其他的 Lib</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">● nose (自動化測試相關)</span><br><span class="line">● numpy+mkl (注意有加上 mkl(math kernel library)，運算陣列矩陣相關)</span><br><span class="line">● scipy (數學演算法相關、訊號處理、圖像處理、積分、線代等等)</span><br></pre></td></tr></table></figure>
-<p>首先先安裝<code>node</code>，直接用 pip 安裝即可</p>
+<p>首先先安裝<code>nose</code>，直接用 pip 安裝即可</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install nose</span><br></pre></td></tr></table></figure>
 <p>接下來的<code>numpy+mkl</code>和<code>scipy</code>不要使用 pip 直接安裝，會發生很多問題</p>
 <p>先打開此網站<a href="www.lfd.uci.edu/~gohlke/pythonlibs/">LFD</a></p>
