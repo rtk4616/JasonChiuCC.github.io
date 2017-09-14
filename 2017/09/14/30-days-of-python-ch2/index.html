@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Unity （Ch1） | JasonChiuCC</title>
+  <title>Python 30 天筆記（Ch2） | JasonChiuCC</title>
   <meta name="author" content="JasonChiuCC">
   
   <meta name="description" content="JasonChiuCC">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Unity （Ch1）"/>
+  <meta property="og:title" content="Python 30 天筆記（Ch2）"/>
   <meta property="og:site_name" content="JasonChiuCC"/>
 
   
@@ -53,19 +53,20 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-09-13T04:28:17.000Z"><a href="/2017/09/13/unity-1/">2017-09-13</a></time>
+        <time datetime="2017-09-14T04:28:17.000Z"><a href="/2017/09/14/30-days-of-python-ch2/">2017-09-14</a></time>
       
       
   
-    <h1 class="title">Unity （Ch1）</h1>
+    <h1 class="title">Python 30 天筆記（Ch2）</h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="熱鍵"><a href="#熱鍵" class="headerlink" title="熱鍵"></a>熱鍵</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">W: 移動物件</span><br><span class="line">E: 旋轉物件</span><br><span class="line">R: 拉伸物件</span><br></pre></td></tr></table></figure>
-<h2 id="基本介面"><a href="#基本介面" class="headerlink" title="基本介面"></a>基本介面</h2><img src="/2017/09/13/unity-1/2017_09_13_1.png" alt="2017_09_13_1.png" title="">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Transform    : 物件位置/旋轉/大小</span><br><span class="line"></span><br><span class="line">Mesh Filter  : 物件形狀</span><br><span class="line"></span><br><span class="line">Box Collider : 物件碰撞設定</span><br><span class="line">可以按 Edit Collider 按鈕決定物件碰撞的範圍</span><br><span class="line"></span><br><span class="line">Mesh Renderer: 物件材質</span><br><span class="line">可以在 Asset 建立材質，然後直接拉給物件使用</span><br><span class="line"></span><br><span class="line">Rigidbady    : 鋼體，和真實物理相關的設定</span><br><span class="line">質量設定(Mass)</span><br><span class="line">例如使用重力(Use Gravity)</span><br><span class="line">Is Kinematic 打勾物件就不會動</span><br></pre></td></tr></table></figure>
+        <h2 id="類別"><a href="#類別" class="headerlink" title="類別"></a>類別</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Dog():</span><br><span class="line">    name = &apos;Jon&apos;</span><br><span class="line">    color = &apos;brown&apos;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&gt;&gt;&gt; Dog</span><br><span class="line">&lt;class &apos;__main__.Dog&apos;&gt;</span><br><span class="line">Dog 是一個類別</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Dog()</span><br><span class="line">&lt;__main__.Dog object at 0x00000174A8438D68&gt;</span><br><span class="line">Dog() 是一個物件</span><br></pre></td></tr></table></figure>
+<p>範例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Dog():</span><br><span class="line">    name = &apos;Jon&apos;</span><br><span class="line">    color = &apos;brown&apos;</span><br><span class="line"></span><br><span class="line">instance = Dog()</span><br><span class="line">instance.name</span><br></pre></td></tr></table></figure>
+<h2 id="繼承"><a href="#繼承" class="headerlink" title="繼承"></a>繼承</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Animal():</span><br><span class="line">    name    = &apos;Amy&apos;</span><br><span class="line">    noise   = &quot;Grunt&quot;</span><br><span class="line">    size    = &quot;Large&quot;</span><br><span class="line">    color   = &quot;brown&quot;</span><br><span class="line">    hair    = &quot;covers body&quot;</span><br><span class="line">    def get_color(self):</span><br><span class="line">        return  self.color</span><br><span class="line">    def make_noise(self):</span><br><span class="line">        return self.noise</span><br><span class="line"></span><br><span class="line">// Dog 繼承 Animal</span><br><span class="line">class Dog(Animal):</span><br><span class="line">    name = &apos;Jon&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dog = Dog()</span><br><span class="line">dog.make_noise()</span><br><span class="line">dog.size    = &quot;small&quot;</span><br><span class="line">dog.color   = &quot;black&quot;</span><br><span class="line">dog.hair    = &quot;hairless&quot;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -74,13 +75,13 @@
         
   
   <div class="categories">
-    <a href="/categories/Unity/">Unity</a>
+    <a href="/categories/Python/">Python</a>
   </div>
 
         
   
   <div class="tags">
-    <a href="/tags/Unity/">Unity</a>
+    <a href="/tags/Python/">Python</a>
   </div>
 
         
@@ -117,7 +118,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://jasonchiucc.github.io/2017/09/13/unity-1/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
+<div class="fb-comments" data-href="http://jasonchiucc.github.io/2017/09/14/30-days-of-python-ch2/index.html" data-num-posts="5" data-width="840" data-colorscheme="dark"></div>
       
   
 </section>
