@@ -54,28 +54,33 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">2016-09-25</a></time>
+        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-char-and-string/">2016-09-25</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">How to program C〈結構、Union、Bit、列舉〉</a></h1>
+    <h1 class="title"><a href="/2016/09/25/how-to-program-c-char-and-string/">How to program C〈字元與字串〉</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>結構定義如下，定義結構不會佔用記憶體</p>
-<p>他只是建立一種新的類型，就像<code>int</code>一樣</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct player&#123;</span><br><span class="line">    char name[20];    </span><br><span class="line">    /*</span><br><span class="line">    不可以包含自己，只能用指標</span><br><span class="line">    struct player person;</span><br><span class="line">    */</span><br><span class="line">    struct player *personPtr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>宣告變數如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct a, b[20], *c;</span><br><span class="line"></span><br><span class="line">或是直接和定義寫在一起</span><br><span class="line">struct card&#123;</span><br><span class="line">    char name[20];</span><br><span class="line">&#125; a, b[20], *c;</span><br></pre></td></tr></table></figure>
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>字元是程式的基本元素，每一段程式都是由字元組成而來</p>
+<p>字元常數(char constant)是由<code>單引號</code>括起的字元</p>
+<p>他也代表一個<code>int</code>的值，字串及一連串的字元</p>
+<p>字串可包含字母、數字、或特殊符號(+,-,*,/,$)</p>
+<p>字串是由<code>雙引號</code>括起的</p>
+<p>C 的字串是以 <code>NULL(&#39;\0&#39;)</code>為結束的<code>字元陣列</code></p>
+<p>注意</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">字串是指標</span><br><span class="line">字元是整數(0-255)</span><br><span class="line">所以如果方法參數要字元，要宣告為 func(int c);</span><br></pre></td></tr></table></figure>
+<p>字串宣告有兩種</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 字串即陣列</span><br><span class="line">char color[]            = &quot;blue&quot;;</span><br><span class="line">char color[]            = &#123;&apos;b&apos;,&apos;l&apos;,&apos;u&apos;,&apos;e&apos;,&apos;\0&apos;&#125;;</span><br><span class="line">const char *colorPtr    = &quot;blue&quot;;</span><br><span class="line"></span><br><span class="line">// 動態建立陣列</span><br><span class="line">int size = 10;</span><br><span class="line">int i    = 0;</span><br><span class="line">int *arr = malloc(size * sizeof(int));</span><br><span class="line">memset(arr, 0, sizeof(int) * size);</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;指定元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    arr[i] = i*10;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line">free(arr);</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2016/09/25/how-to-program-c-struct-union-bit/#more" class="more-link">繼續閱讀</a>
+            <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
@@ -473,31 +478,31 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-ram/">2016-08-22</a></time>
+        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-semaphore/">2016-08-22</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/08/22/linux-ram/">Linux（Ram）</a></h1>
+    <h1 class="title"><a href="/2016/08/22/linux-semaphore/">Linux（Semaphore）</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux Kernel 通常放在 Ram 開頭 1 MB 的位置</p>
-<p>利用 mmap 和 /dev/mem 來直接使用實體 ram</p>
-<p>可利用 devmem 指令確認是否正確讀寫實體 ram</p>
-<p>/dev/kmem : kernel virtual address (0x0 - 0xFFFFFFFF(4GB) )</p>
-<p>/dev/mem  : physical address       (0x0 - 0x7FFFFFFF(2GB) )</p>
-<p>特定 process 的 VMA(Virtual Memory Areas),可從 /proc/pid/maps 看到</p>
-<p>以下欄位分別對應 vm_area_struct(<linux/mm.h>) 結構</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># cat /proc/1/maps</span><br><span class="line">#start-end        perm offset   major:minor inode      imagename</span><br><span class="line">00008000-000a7000 r-xp 00000000 00:01       141        /bin/busybox</span><br><span class="line">000af000-000b0000 rw-p 0009f000 00:01       141        /bin/busybox</span><br><span class="line">000b0000-000b1000 rw-p 00000000 00:00       0</span><br><span class="line">00dd5000-00dda000 rw-p 00000000 00:00       0          [heap]</span><br><span class="line">b6eb9000-b6f0f000 r-xp 00000000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f0f000-b6f17000 ---p 00000000 00:00       0</span><br><span class="line">b6f17000-b6f18000 r--p 00056000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f18000-b6f19000 rw-p 00057000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f19000-b6f1d000 rw-p 00000000 00:00       0</span><br><span class="line">b6f1d000-b6f23000 r-xp 00000000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f28000-b6f2a000 rw-p 00000000 00:00       0</span><br><span class="line">b6f2a000-b6f2b000 r--p 00005000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f2b000-b6f2c000 rw-p 00006000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">bec5e000-bec7f000 rw-p 00000000 00:00       0          [stack]</span><br><span class="line">ffff0000-ffff1000 r-xp 00000000 00:00       0          [vectors]</span><br></pre></td></tr></table></figure>
+        <h2 id="Semaphore-System-V"><a href="#Semaphore-System-V" class="headerlink" title="Semaphore(System V)"></a>Semaphore(System V)</h2><p>目前 Semaphore 有兩種版本 1.POSIX 2.System V</p>
+<p>以下為 System V 範例</p>
+<p>System V Sem 流程如下</p>
+<p>1.Create Sem</p>
+<p>2.不同 Process 取得 Sem</p>
+<p>3.取得 Sem 後執行 P() FUNC，等於拿走 Sem，其他 Process 只能等</p>
+<p>4.執行完 Critical Section 後執行 V() FUNC，釋放 Sem</p>
+<h2 id="舉例"><a href="#舉例" class="headerlink" title="舉例"></a>舉例</h2><p><a href="https://github.com/JasonChiuCC/Linux-cmd/tree/master/IPC/semaphore">範例檔案</a></p>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2016/08/22/linux-ram/#more" class="more-link">繼續閱讀</a>
+            <a href="/2016/08/22/linux-semaphore/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
