@@ -54,6 +54,60 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-10-25T08:00:39.000Z"><a href="/2016/10/25/data-structures-tree/">2016-10-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/25/data-structures-tree/">資料結構（樹）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h2><p><a href="http://www.csie.ntnu.edu.tw/~u91029/index.html" target="_blank" rel="external">演算法筆記</a></p>
+<p><a href="https://zh.visualgo.net/" target="_blank" rel="external">演算法動畫</a></p>
+<p><a href="https://github.com/raywenderlich/swift-algorithm-club" target="_blank" rel="external">Swift 演算法</a></p>
+<h2 id="樹的定義"><a href="#樹的定義" class="headerlink" title="樹的定義"></a>樹的定義</h2><p>樹是<code>1對多</code>的結構，沒有節點的樹稱為<code>空樹</code></p>
+<p>1.存在唯一的根節點(root)</p>
+<p>2.其餘節點可成為另一棵樹或稱子樹，注意子樹互不相交</p>
+<h2 id="節點分類"><a href="#節點分類" class="headerlink" title="節點分類"></a>節點分類</h2><p>一個節點的子樹數量稱為<code>度</code></p>
+<p>度為 0 表示此節點是葉子</p>
+<h2 id="階級"><a href="#階級" class="headerlink" title="階級"></a>階級</h2><p>階級是從<code>root</code>開始算，根為一階並往下加</p>
+<p>最大階度也稱為樹的深度或高度</p>
+<h2 id="樹的抽象資料型別"><a href="#樹的抽象資料型別" class="headerlink" title="樹的抽象資料型別"></a>樹的抽象資料型別</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">樹 (Tree)</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">樹中節點有相同資料型態及階級關係</span><br><span class="line"></span><br><span class="line">Operation</span><br><span class="line">  InitTree(*T)       : 初始化</span><br><span class="line">  DestroyTree(*T)    : 銷毀樹</span><br><span class="line">  CreateTree(*T,def) : 根據 def 定義樹</span><br><span class="line">  ClearTree(*T)      : 清空 Tree  </span><br><span class="line">  TreeEmpty(T)       : 檢查 Tree 是否為空</span><br><span class="line">  TreeDepth(T)       : 檢查 Tree 深度</span><br><span class="line">  Root(T)            : 回傳 Tree 根節點</span><br><span class="line">  Value(T,cur_e)     : 回傳此節點的值</span><br><span class="line">  Assign(T,cur_e,val): 將節點值改變</span><br><span class="line">  Parent(T,cur_e)    : 回傳節點雙親</span><br></pre></td></tr></table></figure>
+<h2 id="二元樹"><a href="#二元樹" class="headerlink" title="二元樹"></a>二元樹</h2><p>1.每個節點最多兩個子樹，所以沒有大於2度的節點</p>
+<p>2.左子樹和右子樹是有順序的</p>
+<p>3.即使只有一個子樹也要區分左右</p>
+<h2 id="特殊二元樹"><a href="#特殊二元樹" class="headerlink" title="特殊二元樹"></a>特殊二元樹</h2><p>斜樹:所有節點只有左子樹或右子樹</p>
+<p>完滿二元樹(Full binary):所有葉子都在同一階，<code>高度 h 要有 2^h-1 個 Node</code></p>
+<p>完整二元樹(Complete binary):也就是<code>高度 h 但 Node &lt; 2^h-1 個 Node 的樹</code></p>
+<h2 id="實作二元樹"><a href="#實作二元樹" class="headerlink" title="實作二元樹"></a>實作二元樹</h2><p>3 種實作二元樹的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">陣列表示法(如果是斜樹會浪費空間)</span><br><span class="line">結構陣列表示法(如果是斜樹會浪費空間)</span><br><span class="line">鏈結表示法</span><br></pre></td></tr></table></figure>
+<h2 id="走訪二元樹"><a href="#走訪二元樹" class="headerlink" title="走訪二元樹"></a>走訪二元樹</h2><p>走訪二元樹的順序很重要，每個 Node 只拜訪一次</p>
+<p>主要分為下面 4 種走法，都用遞迴寫法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">前序(PreOrder)</span><br><span class="line">中序(InOrder)</span><br><span class="line">後序(PostOrder)</span><br><span class="line">階序</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-10-24T16:00:39.000Z"><a href="/2016/10/25/data-structures-linear-list/">2016-10-25</a></time>
       
       
@@ -334,47 +388,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/memory-pool-use-c/">2016-09-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/26/memory-pool-use-c/">Memory Pool C 實作</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 在 run time 期間可以使用 malloc 來動態取得記憶體</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define N 10000</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int* p  = malloc(sizeof(int));          //allocate a pointer to an integer</span><br><span class="line">	int* pa = malloc(sizeof(int) * N);      //allocate an array with N integers</span><br><span class="line">	/*statement*/</span><br><span class="line">	free(p);              </span><br><span class="line">	free(pa);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不過當程式執行時，如果一直反覆 malloc 和 free 記憶體區塊。</p>
-<p>會導致記憶體的碎片問題，碎片一多可使用的記憶體就變少</p>
-<p>最後產生 memory leak，而 memory pool 的想法是</p>
-<p>預先就 alloc 一個大的記憶體區塊，而程式在 run time 期間</p>
-<p>就只會對此區塊的記憶體做分配 (allocate)、使用 (access)、歸還 (free) </p>
-<p>這樣就不會有記憶體破碎的問題</p>
-<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="acm.sjtu.edu.cn/ppca/w/images/c/cd/Memory_Pool_-_彭燕庆.pptx">參考</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/structure-align-c/">2016-09-26</a></time>
       
       
@@ -418,34 +431,30 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-char-and-string/">2016-09-25</a></time>
+        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/memory-pool-use-c/">2016-09-26</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/09/25/how-to-program-c-char-and-string/">How to program C〈字元與字串〉</a></h1>
+    <h1 class="title"><a href="/2016/09/26/memory-pool-use-c/">Memory Pool C 實作</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>字元是程式的基本元素，每一段程式都是由字元組成而來</p>
-<p>字元常數(char constant)是由<code>單引號</code>括起的字元</p>
-<p>他也代表一個<code>int</code>的值，字串及一連串的字元</p>
-<p>字串可包含字母、數字、或特殊符號(+,-,*,/,$)</p>
-<p>字串是由<code>雙引號</code>括起的</p>
-<p>C 的字串是以 <code>NULL(&#39;\0&#39;)</code>為結束的<code>字元陣列</code></p>
-<p>注意</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">字串是指標</span><br><span class="line">字元是整數(0-255)</span><br><span class="line">所以如果方法參數要字元，要宣告為 func(int c);</span><br></pre></td></tr></table></figure>
-<p>字串宣告有兩種</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 字串即陣列</span><br><span class="line">char color[]            = &quot;blue&quot;;</span><br><span class="line">char color[]            = &#123;&apos;b&apos;,&apos;l&apos;,&apos;u&apos;,&apos;e&apos;,&apos;\0&apos;&#125;;</span><br><span class="line">const char *colorPtr    = &quot;blue&quot;;</span><br><span class="line"></span><br><span class="line">// 動態建立陣列</span><br><span class="line">int size = 10;</span><br><span class="line">int i    = 0;</span><br><span class="line">int *arr = malloc(size * sizeof(int));</span><br><span class="line">memset(arr, 0, sizeof(int) * size);</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;指定元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    arr[i] = i*10;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line">free(arr);</span><br></pre></td></tr></table></figure>
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 在 run time 期間可以使用 malloc 來動態取得記憶體</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define N 10000</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int* p  = malloc(sizeof(int));          //allocate a pointer to an integer</span><br><span class="line">	int* pa = malloc(sizeof(int) * N);      //allocate an array with N integers</span><br><span class="line">	/*statement*/</span><br><span class="line">	free(p);              </span><br><span class="line">	free(pa);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不過當程式執行時，如果一直反覆 malloc 和 free 記憶體區塊。</p>
+<p>會導致記憶體的碎片問題，碎片一多可使用的記憶體就變少</p>
+<p>最後產生 memory leak，而 memory pool 的想法是</p>
+<p>預先就 alloc 一個大的記憶體區塊，而程式在 run time 期間</p>
+<p>就只會對此區塊的記憶體做分配 (allocate)、使用 (access)、歸還 (free) </p>
+<p>這樣就不會有記憶體破碎的問題</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="acm.sjtu.edu.cn/ppca/w/images/c/cd/Memory_Pool_-_彭燕庆.pptx">參考</a></p>
+
       
     </div>
     <footer>
       
-        
-          <div class="alignleft">
-            <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
-          </div>
         
         
       
@@ -540,6 +549,10 @@
 	
   
 	
+		<li><a href="/categories/ML/">ML</a><small>1</small></li>
+	
+  
+	
 		<li><a href="/categories/Machine-Learning/">Machine-Learning</a><small>1</small></li>
 	
   
@@ -595,7 +608,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ML/">ML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -655,6 +668,8 @@
     <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
   
     <li><a href="/tags/ML/">ML</a><small>1</small></li>
+  
+    <li><a href="/tags/Machine-Learning/">Machine Learning</a><small>1</small></li>
   
     <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>2</small></li>
   
