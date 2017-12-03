@@ -54,6 +54,43 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-08-29T07:28:17.000Z"><a href="/2016/08/29/linux-i2c/">2016-08-29</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/29/linux-i2c/">Linux（I2C）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>i2c 分兩種格式: 7bit &amp; 10bit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(M) = Master to Slave</span><br><span class="line">(S) = Slave  to Master</span><br><span class="line"># Write 格式</span><br><span class="line">S(M) + Slave Address(M) + W = 0(M) + A(S) + DATA(M) + A(S) + DATA(M) + A(S) + P(M)</span><br><span class="line"></span><br><span class="line"># Read 格式</span><br><span class="line">S(M) + Slave Address(M) + R = 1(M) + A(S) + DATA(S) + A(M) + DATA(S) + A(M) + P(M)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/29/linux-i2c/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-08-27T16:00:39.000Z"><a href="/2016/08/28/grammar-for-new-toeic-conditionals-and-modal-verbs/">2016-08-28</a></time>
       
       
@@ -74,49 +111,6 @@
         
           <div class="alignleft">
             <a href="/2016/08/28/grammar-for-new-toeic-conditionals-and-modal-verbs/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-semaphore/">2016-08-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/08/22/linux-semaphore/">Linux（Semaphore）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Semaphore-System-V"><a href="#Semaphore-System-V" class="headerlink" title="Semaphore(System V)"></a>Semaphore(System V)</h2><p>目前 Semaphore 有兩種版本 1.POSIX 2.System V</p>
-<p>以下為 System V 範例</p>
-<p>System V Sem 流程如下</p>
-<p>1.Create Sem</p>
-<p>2.不同 Process 取得 Sem</p>
-<p>3.取得 Sem 後執行 P() FUNC，等於拿走 Sem，其他 Process 只能等</p>
-<p>4.執行完 Critical Section 後執行 V() FUNC，釋放 Sem</p>
-<h2 id="舉例"><a href="#舉例" class="headerlink" title="舉例"></a>舉例</h2><p><a href="https://github.com/JasonChiuCC/Linux-cmd/tree/master/IPC/semaphore">範例檔案</a></p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/08/22/linux-semaphore/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
@@ -178,22 +172,32 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-08-15T05:28:17.000Z"><a href="/2016/08/15/port-sfp/">2016-08-15</a></time>
+        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-semaphore/">2016-08-22</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/08/15/port-sfp/">SFP (small form-factor pluggable)</a></h1>
+    <h1 class="title"><a href="/2016/08/22/linux-semaphore/">Linux（Semaphore）</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h1 id="SFP-EEPROM-Format"><a href="#SFP-EEPROM-Format" class="headerlink" title="SFP EEPROM Format"></a>SFP EEPROM Format</h1><p><a href="https://www.finisar.com/sites/default/files/resources/AN_2030_DDMI_for_SFP_Rev_E2.pdf" target="_blank" rel="external">參考</a></p>
-
+        <h2 id="Semaphore-System-V"><a href="#Semaphore-System-V" class="headerlink" title="Semaphore(System V)"></a>Semaphore(System V)</h2><p>目前 Semaphore 有兩種版本 1.POSIX 2.System V</p>
+<p>以下為 System V 範例</p>
+<p>System V Sem 流程如下</p>
+<p>1.Create Sem</p>
+<p>2.不同 Process 取得 Sem</p>
+<p>3.取得 Sem 後執行 P() FUNC，等於拿走 Sem，其他 Process 只能等</p>
+<p>4.執行完 Critical Section 後執行 V() FUNC，釋放 Sem</p>
+<h2 id="舉例"><a href="#舉例" class="headerlink" title="舉例"></a>舉例</h2><p><a href="https://github.com/JasonChiuCC/Linux-cmd/tree/master/IPC/semaphore">範例檔案</a></p>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2016/08/22/linux-semaphore/#more" class="more-link">繼續閱讀</a>
+          </div>
         
         
       
@@ -225,6 +229,39 @@
 <p>Q:bundle format unrecognized, invalid, or unsuitable Command /bin/sh failed with exit code 1<br>A:rm-rf (~/Library/Developer/Xcode/DerivedData)</p>
 <p>Q:前面小圖示<br>A:<a href="http://ipdevelop.blogspot.tw/2016/08/ide-entry-types.html" target="_blank" rel="external">參考</a></p>
 <p>Q:requires a development team. Select a development team in the project editor.<br>A:<a href="http://stackoverflow.com/questions/37807161/error-when-build-project-in-new-xcode-8-0-beta" target="_blank" rel="external">參考</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-15T05:28:17.000Z"><a href="/2016/08/15/port-sfp/">2016-08-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/15/port-sfp/">SFP (small form-factor pluggable)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="SFP-EEPROM-Format"><a href="#SFP-EEPROM-Format" class="headerlink" title="SFP EEPROM Format"></a>SFP EEPROM Format</h1><p><a href="https://www.finisar.com/sites/default/files/resources/AN_2030_DDMI_for_SFP_Rev_E2.pdf" target="_blank" rel="external">參考</a></p>
 
       
     </div>
@@ -415,46 +452,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-08-02T08:28:17.000Z"><a href="/2016/08/02/mozilla-addon-SDK-context-menu-item/">2016-08-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/08/02/mozilla-addon-SDK-context-menu-item/">Firefox Add-on SDK（Context Menu Item）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Add_a_Context_Menu_Item">官方文件</a></p>
-<p>請先看基本 <a href="http://jasonchiucc.github.io/2016/08/01/mozilla-addon-SDK/">Add-on 製作方法</a></p>
-<p>Context menu 讓你能在右鍵新增選單，你要使用 <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/context-menu">context menu</a> 模組</p>
-<p>首先 index.js 程式碼如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> contextMenu = <span class="built_in">require</span>(<span class="string">"sdk/context-menu"</span>);</span><br><span class="line"><span class="keyword">var</span> menuItem = contextMenu.Item(&#123;</span><br><span class="line">  label: <span class="string">"Log Selection"</span>,</span><br><span class="line">  context: contextMenu.SelectionContext(),</span><br><span class="line">  contentScript: <span class="string">'self.on("click", function () &#123;'</span> +</span><br><span class="line">                 <span class="string">'  var text = window.getSelection().toString();'</span> +</span><br><span class="line">                 <span class="string">'  self.postMessage(text);'</span> +</span><br><span class="line">                 <span class="string">'&#125;);'</span>,</span><br><span class="line">  onMessage: <span class="function"><span class="keyword">function</span> (<span class="params">selectionText</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.error(selectionText);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/08/02/mozilla-addon-SDK-context-menu-item/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -538,7 +535,7 @@
 	
   
 	
-		<li><a href="/categories/ML/">ML</a><small>1</small></li>
+		<li><a href="/categories/ML/">ML</a><small>2</small></li>
 	
   
 	
@@ -597,7 +594,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ML/">ML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ML/">ML</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -658,7 +655,7 @@
   
     <li><a href="/tags/ML/">ML</a><small>1</small></li>
   
-    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>3</small></li>
+    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>4</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   

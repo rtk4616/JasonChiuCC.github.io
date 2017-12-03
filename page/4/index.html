@@ -54,6 +54,49 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/structure-align-c/">2016-09-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/26/structure-align-c/">Struct Align</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 以變數類型配置記憶體空間，常見類型及大小如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">char 	        1 byte 	        -128 to 127 or 0 to 255</span><br><span class="line">unsigned char 	1 byte 	        0 to 255</span><br><span class="line">signed char 	1 byte 	        -128 to 127</span><br><span class="line">int 	        2 or 4 bytes 	-32,768 to 32,767 or -2,147,483,648 to 2,147,483,647</span><br><span class="line">unsigned int 	2 or 4 bytes 	0 to 65,535 or 0 to 4,294,967,295</span><br><span class="line">short 	        2 bytes 	    -32,768 to 32,767</span><br><span class="line">unsigned short 	2 bytes 	    0 to 65,535</span><br><span class="line">long 	        4 bytes 	    -2,147,483,648 to 2,147,483,647</span><br><span class="line">unsigned long 	4 bytes 	    0 to 4,294,967,295</span><br></pre></td></tr></table></figure>
+<p>32 bits 的架構上，一次的資料存取也就是32 bits (4bytes)</p>
+<p>4 bytes 不是隨便從哪個點抓都可以，而是以4 bytes 為單位</p>
+<p>比如說第 0，4，8 ，12….等，而不會是從3，7，9 開始</p>
+<p>這表示了對齊 (alignment)的重要，因為會影響到幾次才抓的完。</p>
+<p>如果要抓一個4 bytes 的int，而這個int是從 6 擺到 10，那就表示要抓兩次</p>
+<p>因為會先 (4),5,6,7 再來 (8),9,10,11，範例</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/26/structure-align-c/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-data-struct/">2016-09-25</a></time>
       
       
@@ -74,6 +117,46 @@
         
           <div class="alignleft">
             <a href="/2016/09/25/how-to-program-c-data-struct/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">2016-09-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">How to program C〈結構、Union、Bit、列舉〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>結構定義如下，定義結構不會佔用記憶體</p>
+<p>他只是建立一種新的類型，就像<code>int</code>一樣</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct player&#123;</span><br><span class="line">    char name[20];    </span><br><span class="line">    /*</span><br><span class="line">    不可以包含自己，只能用指標</span><br><span class="line">    struct player person;</span><br><span class="line">    */</span><br><span class="line">    struct player *personPtr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>宣告變數如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct a, b[20], *c;</span><br><span class="line"></span><br><span class="line">或是直接和定義寫在一起</span><br><span class="line">struct card&#123;</span><br><span class="line">    char name[20];</span><br><span class="line">&#125; a, b[20], *c;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/25/how-to-program-c-struct-union-bit/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
@@ -119,46 +202,6 @@
         
           <div class="alignleft">
             <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">2016-09-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/25/how-to-program-c-struct-union-bit/">How to program C〈結構、Union、Bit、列舉〉</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>結構定義如下，定義結構不會佔用記憶體</p>
-<p>他只是建立一種新的類型，就像<code>int</code>一樣</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct player&#123;</span><br><span class="line">    char name[20];    </span><br><span class="line">    /*</span><br><span class="line">    不可以包含自己，只能用指標</span><br><span class="line">    struct player person;</span><br><span class="line">    */</span><br><span class="line">    struct player *personPtr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>宣告變數如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct a, b[20], *c;</span><br><span class="line"></span><br><span class="line">或是直接和定義寫在一起</span><br><span class="line">struct card&#123;</span><br><span class="line">    char name[20];</span><br><span class="line">&#125; a, b[20], *c;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/09/25/how-to-program-c-struct-union-bit/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
@@ -475,43 +518,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-08-29T07:28:17.000Z"><a href="/2016/08/29/linux-i2c/">2016-08-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/08/29/linux-i2c/">Linux（I2C）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>i2c 分兩種格式: 7bit &amp; 10bit</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(M) = Master to Slave</span><br><span class="line">(S) = Slave  to Master</span><br><span class="line"># Write 格式</span><br><span class="line">S(M) + Slave Address(M) + W = 0(M) + A(S) + DATA(M) + A(S) + DATA(M) + A(S) + P(M)</span><br><span class="line"></span><br><span class="line"># Read 格式</span><br><span class="line">S(M) + Slave Address(M) + R = 1(M) + A(S) + DATA(S) + A(M) + DATA(S) + A(M) + P(M)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/08/29/linux-i2c/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -595,7 +601,7 @@
 	
   
 	
-		<li><a href="/categories/ML/">ML</a><small>1</small></li>
+		<li><a href="/categories/ML/">ML</a><small>2</small></li>
 	
   
 	
@@ -654,7 +660,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ML/">ML</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ML/">ML</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -715,7 +721,7 @@
   
     <li><a href="/tags/ML/">ML</a><small>1</small></li>
   
-    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>3</small></li>
+    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>4</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   
