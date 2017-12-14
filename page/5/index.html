@@ -170,49 +170,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-ram/">2016-08-22</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/08/22/linux-ram/">Linux（Ram）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux Kernel 通常放在 Ram 開頭 1 MB 的位置</p>
-<p>利用 mmap 和 /dev/mem 來直接使用實體 ram</p>
-<p>可利用 devmem 指令確認是否正確讀寫實體 ram</p>
-<p>/dev/kmem : kernel virtual address (0x0 - 0xFFFFFFFF(4GB) )</p>
-<p>/dev/mem  : physical address       (0x0 - 0x7FFFFFFF(2GB) )</p>
-<p>特定 process 的 VMA(Virtual Memory Areas),可從 /proc/pid/maps 看到</p>
-<p>以下欄位分別對應 vm_area_struct(<linux/mm.h>) 結構</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># cat /proc/1/maps</span><br><span class="line">#start-end        perm offset   major:minor inode      imagename</span><br><span class="line">00008000-000a7000 r-xp 00000000 00:01       141        /bin/busybox</span><br><span class="line">000af000-000b0000 rw-p 0009f000 00:01       141        /bin/busybox</span><br><span class="line">000b0000-000b1000 rw-p 00000000 00:00       0</span><br><span class="line">00dd5000-00dda000 rw-p 00000000 00:00       0          [heap]</span><br><span class="line">b6eb9000-b6f0f000 r-xp 00000000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f0f000-b6f17000 ---p 00000000 00:00       0</span><br><span class="line">b6f17000-b6f18000 r--p 00056000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f18000-b6f19000 rw-p 00057000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f19000-b6f1d000 rw-p 00000000 00:00       0</span><br><span class="line">b6f1d000-b6f23000 r-xp 00000000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f28000-b6f2a000 rw-p 00000000 00:00       0</span><br><span class="line">b6f2a000-b6f2b000 r--p 00005000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f2b000-b6f2c000 rw-p 00006000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">bec5e000-bec7f000 rw-p 00000000 00:00       0          [stack]</span><br><span class="line">ffff0000-ffff1000 r-xp 00000000 00:00       0          [vectors]</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/08/22/linux-ram/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-semaphore/">2016-08-22</a></time>
       
       
@@ -238,6 +195,49 @@
         
           <div class="alignleft">
             <a href="/2016/08/22/linux-semaphore/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-08-22T07:28:17.000Z"><a href="/2016/08/22/linux-ram/">2016-08-22</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/08/22/linux-ram/">Linux（Ram）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux Kernel 通常放在 Ram 開頭 1 MB 的位置</p>
+<p>利用 mmap 和 /dev/mem 來直接使用實體 ram</p>
+<p>可利用 devmem 指令確認是否正確讀寫實體 ram</p>
+<p>/dev/kmem : kernel virtual address (0x0 - 0xFFFFFFFF(4GB) )</p>
+<p>/dev/mem  : physical address       (0x0 - 0x7FFFFFFF(2GB) )</p>
+<p>特定 process 的 VMA(Virtual Memory Areas),可從 /proc/pid/maps 看到</p>
+<p>以下欄位分別對應 vm_area_struct(<linux/mm.h>) 結構</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># cat /proc/1/maps</span><br><span class="line">#start-end        perm offset   major:minor inode      imagename</span><br><span class="line">00008000-000a7000 r-xp 00000000 00:01       141        /bin/busybox</span><br><span class="line">000af000-000b0000 rw-p 0009f000 00:01       141        /bin/busybox</span><br><span class="line">000b0000-000b1000 rw-p 00000000 00:00       0</span><br><span class="line">00dd5000-00dda000 rw-p 00000000 00:00       0          [heap]</span><br><span class="line">b6eb9000-b6f0f000 r-xp 00000000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f0f000-b6f17000 ---p 00000000 00:00       0</span><br><span class="line">b6f17000-b6f18000 r--p 00056000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f18000-b6f19000 rw-p 00057000 00:01       17         /lib/libuClibc-0.9.33.2.so</span><br><span class="line">b6f19000-b6f1d000 rw-p 00000000 00:00       0</span><br><span class="line">b6f1d000-b6f23000 r-xp 00000000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f28000-b6f2a000 rw-p 00000000 00:00       0</span><br><span class="line">b6f2a000-b6f2b000 r--p 00005000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">b6f2b000-b6f2c000 rw-p 00006000 00:01       83         /lib/ld-uClibc-0.9.33.2.so</span><br><span class="line">bec5e000-bec7f000 rw-p 00000000 00:00       0          [stack]</span><br><span class="line">ffff0000-ffff1000 r-xp 00000000 00:00       0          [vectors]</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/08/22/linux-ram/#more" class="more-link">繼續閱讀</a>
           </div>
         
         

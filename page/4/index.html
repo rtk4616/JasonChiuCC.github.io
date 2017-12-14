@@ -54,6 +54,47 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/memory-pool-use-c/">2016-09-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/26/memory-pool-use-c/">Memory Pool C 實作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 在 run time 期間可以使用 malloc 來動態取得記憶體</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define N 10000</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int* p  = malloc(sizeof(int));          //allocate a pointer to an integer</span><br><span class="line">	int* pa = malloc(sizeof(int) * N);      //allocate an array with N integers</span><br><span class="line">	/*statement*/</span><br><span class="line">	free(p);              </span><br><span class="line">	free(pa);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不過當程式執行時，如果一直反覆 malloc 和 free 記憶體區塊。</p>
+<p>會導致記憶體的碎片問題，碎片一多可使用的記憶體就變少</p>
+<p>最後產生 memory leak，而 memory pool 的想法是</p>
+<p>預先就 alloc 一個大的記憶體區塊，而程式在 run time 期間</p>
+<p>就只會對此區塊的記憶體做分配 (allocate)、使用 (access)、歸還 (free) </p>
+<p>這樣就不會有記憶體破碎的問題</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="acm.sjtu.edu.cn/ppca/w/images/c/cd/Memory_Pool_-_彭燕庆.pptx">參考</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/structure-align-c/">2016-09-26</a></time>
       
       
@@ -80,47 +121,6 @@
           <div class="alignleft">
             <a href="/2016/09/26/structure-align-c/#more" class="more-link">繼續閱讀</a>
           </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/memory-pool-use-c/">2016-09-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/26/memory-pool-use-c/">Memory Pool C 實作</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 在 run time 期間可以使用 malloc 來動態取得記憶體</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define N 10000</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int* p  = malloc(sizeof(int));          //allocate a pointer to an integer</span><br><span class="line">	int* pa = malloc(sizeof(int) * N);      //allocate an array with N integers</span><br><span class="line">	/*statement*/</span><br><span class="line">	free(p);              </span><br><span class="line">	free(pa);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不過當程式執行時，如果一直反覆 malloc 和 free 記憶體區塊。</p>
-<p>會導致記憶體的碎片問題，碎片一多可使用的記憶體就變少</p>
-<p>最後產生 memory leak，而 memory pool 的想法是</p>
-<p>預先就 alloc 一個大的記憶體區塊，而程式在 run time 期間</p>
-<p>就只會對此區塊的記憶體做分配 (allocate)、使用 (access)、歸還 (free) </p>
-<p>這樣就不會有記憶體破碎的問題</p>
-<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="acm.sjtu.edu.cn/ppca/w/images/c/cd/Memory_Pool_-_彭燕庆.pptx">參考</a></p>
-
-      
-    </div>
-    <footer>
-      
         
         
       
@@ -178,44 +178,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-data-struct/">2016-09-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/25/how-to-program-c-data-struct/">How to program C〈資料結構〉</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="自我參考結構"><a href="#自我參考結構" class="headerlink" title="自我參考結構"></a>自我參考結構</h2><p>自我參考結構就是你定義的結構中</p>
-<p>有一個成員為指向本身結構的 pointer，例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct node&#123;</span><br><span class="line">    int date;</span><br><span class="line">    struct node *nextPtr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/09/25/how-to-program-c-data-struct/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-char-and-string/">2016-09-25</a></time>
       
       
@@ -243,6 +205,44 @@
         
           <div class="alignleft">
             <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-data-struct/">2016-09-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/25/how-to-program-c-data-struct/">How to program C〈資料結構〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="自我參考結構"><a href="#自我參考結構" class="headerlink" title="自我參考結構"></a>自我參考結構</h2><p>自我參考結構就是你定義的結構中</p>
+<p>有一個成員為指向本身結構的 pointer，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct node&#123;</span><br><span class="line">    int date;</span><br><span class="line">    struct node *nextPtr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/25/how-to-program-c-data-struct/#more" class="more-link">繼續閱讀</a>
           </div>
         
         
