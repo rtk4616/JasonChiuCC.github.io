@@ -54,6 +54,115 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-12-25T04:28:17.000Z"><a href="/2017/12/25/ml-2017-lhy-1/">2017-12-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/12/25/ml-2017-lhy-1/">機器學習 2017 (Hung-yi Lee)（1）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h1><p><a href="https://www.youtube.com/watch?v=CXgbekl66jc&amp;feature=youtu.be" target="_blank" rel="external">https://www.youtube.com/watch?v=CXgbekl66jc&amp;feature=youtu.be</a></p>
+<p>根據 Data ，來找一個 function</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f(語音) = &quot;How are you&quot;</span><br><span class="line">f(圖)   = &quot;Cat&quot;</span><br><span class="line">f(盤勢) = &quot;5-5&quot;</span><br></pre></td></tr></table></figure>
+<p>如何找 f?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(1)A set of function (Model) </span><br><span class="line">     |</span><br><span class="line">     v</span><br><span class="line">(2)Goodness of function -&gt; (3) Pick &quot;Best&quot; Function -&gt; Using f*</span><br><span class="line">     ^</span><br><span class="line">     |</span><br><span class="line">Training Data</span><br><span class="line"></span><br><span class="line">我們告訴機器 input &amp; output = supervisor</span><br></pre></td></tr></table></figure>
+<p>Learning Map</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">==========================================================</span><br><span class="line">/* </span><br><span class="line"> Supervised Learning </span><br><span class="line"> 找出 input/output(label) 之間有什麼關係，需要大量 Data</span><br><span class="line">*/</span><br><span class="line">Regression ( f 的輸入是一個 scalar 純量)</span><br><span class="line"> |</span><br><span class="line"> v</span><br><span class="line">Classification</span><br><span class="line">(1) Binary Classification</span><br><span class="line">- Spam filtering (垃圾郵件過濾，是/否)</span><br><span class="line">- http://www.toptenreviews.com/software/security/best-spam-filter/</span><br><span class="line">(2) Multi-class Classification</span><br><span class="line">- Document Classification</span><br><span class="line">- 輸入一則新聞，輸入是體育,經濟,體育...</span><br><span class="line"> |</span><br><span class="line"> V</span><br><span class="line">Linear Model</span><br><span class="line"> |</span><br><span class="line"> V</span><br><span class="line">Non-Linear Model</span><br><span class="line">(1)Deep Learning</span><br><span class="line">(2)SVM</span><br><span class="line">(3)Decision tree</span><br><span class="line">(4)K-NN</span><br><span class="line">==========================================================</span><br><span class="line"> </span><br><span class="line">==========================================================</span><br><span class="line">/* </span><br><span class="line"> Semi-Supervised Learning </span><br><span class="line"> 少量 Labelled Data, 其他是 Unlabeled data</span><br><span class="line"> 這些 Unlabeled data 對機器學習也有幫助</span><br><span class="line">*/</span><br><span class="line">==========================================================</span><br><span class="line"> </span><br><span class="line">==========================================================</span><br><span class="line">/* </span><br><span class="line"> Transfer Learning </span><br><span class="line"> 少量 Labelled Data,其他是 Unlabeled data 或 Labelled Data</span><br><span class="line"> 但這些其他的 data 是和原本 data 沒關係的</span><br><span class="line"> </span><br><span class="line"> 例如有少量貓狗圖的 Labelled Data</span><br><span class="line"> 其他圖是大象，獅子等等</span><br><span class="line">*/</span><br><span class="line">==========================================================</span><br><span class="line"></span><br><span class="line">==========================================================</span><br><span class="line">/* </span><br><span class="line">  Unsupervised Learning</span><br><span class="line">  讓機器自己看大量文章 or Data，機器會自己產生 data</span><br><span class="line">*/</span><br><span class="line">==========================================================</span><br><span class="line"></span><br><span class="line">==========================================================</span><br><span class="line">/* </span><br><span class="line">  Structured Learning</span><br><span class="line">  機器會輸出有結構性的東西</span><br><span class="line">  (1) 輸入語音 -&gt;文字</span><br><span class="line">  (2) 輸入文字 -&gt;翻譯其他語言</span><br><span class="line">  (3) 輸入圖像 -&gt;人臉辨識</span><br><span class="line">*/</span><br><span class="line">==========================================================</span><br><span class="line"></span><br><span class="line">==========================================================</span><br><span class="line">/* </span><br><span class="line">  Reinforcement Learning vs Supervised Learning</span><br><span class="line">  </span><br><span class="line">  Supervised(我們會告訴機器要回應什麼):</span><br><span class="line">    Hello -&gt; Hi</span><br><span class="line">    Bye   -&gt; 88</span><br><span class="line">    </span><br><span class="line">  Reinforcement(不告訴機器，讓機器自己學):</span><br><span class="line">    Learning form critics(評價)      </span><br><span class="line">*/</span><br><span class="line">==========================================================</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-12-25T04:28:17.000Z"><a href="/2017/12/25/linear-algebra-1/">2017-12-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/12/25/linear-algebra-1/">線性代數 - Vector（1）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="向量-Ventor"><a href="#向量-Ventor" class="headerlink" title="向量(Ventor)"></a>向量(Ventor)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ventor = magnitude(大小) + direction(方向)</span><br><span class="line"></span><br><span class="line">5mph      = magnitude (Not ventor)</span><br><span class="line">5mph East = magnitude + direction (velocity = ventor)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-12-20T04:28:17.000Z"><a href="/2017/12/20/ml-foundations-1/">2017-12-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/12/20/ml-foundations-1/">機器學習基石上 (Machine Learning Foundations)（1）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h1><p>判斷是否適合使用機器學習</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.存在潛在的模式 (underlying pattern)</span><br><span class="line">2.不知如何寫程式</span><br><span class="line">3.需要有資料 (pattern)</span><br></pre></td></tr></table></figure>
+<p>機器學習應用</p>
+<p>data -&gt; ML -&gt; skill</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.吃</span><br><span class="line">data:Twitter 上的圖片＆文字 </span><br><span class="line">skill:學到某餐廳好不好吃，衛不衛生</span><br><span class="line"></span><br><span class="line">2.穿</span><br><span class="line">data:顧客調查，銷售數字</span><br><span class="line">skill:推薦客戶產品</span><br><span class="line"></span><br><span class="line">3.住</span><br><span class="line">data:用以蓋好的房子能源消耗的問題</span><br><span class="line">skill:預測蓋好房子之前的能源消耗</span><br><span class="line"></span><br><span class="line">4.行</span><br><span class="line">data:號誌圖像＆意義</span><br><span class="line">skill:自動辨識號誌</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-12-17T04:28:17.000Z"><a href="/2017/12/17/ml-a-z-4/">2017-12-17</a></time>
       
       
@@ -64,12 +173,16 @@
     </header>
     <div class="entry">
       
-        <a id="more"></a>
-
+        <h1 id="Multiple-Linear-Regression"><a href="#Multiple-Linear-Regression" class="headerlink" title="Multiple Linear Regression"></a>Multiple Linear Regression</h1><p>前面的 Regression 資料集當中只有一個自變量</p>
+<p>下面是多個自變量的例子</p>
       
     </div>
     <footer>
       
+        
+          <div class="alignleft">
+            <a href="/2017/12/17/ml-a-z-4/#more" class="more-link">繼續閱讀</a>
+          </div>
         
         
       
@@ -373,168 +486,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-05-29T04:00:17.000Z"><a href="/2017/05/29/python-scikit-ch1/">2017-05-29</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/05/29/python-scikit-ch1/">Python 機器學習 （Scikit-Learn Ch1）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="安裝-scikit"><a href="#安裝-scikit" class="headerlink" title="安裝 scikit"></a>安裝 scikit</h2><p>首先在乾淨環境下安裝 Python，本文使用 Win10 64 安裝 Python 3.6.1</p>
-<p><a href="https://www.python.org/downloads/windows/" target="_blank" rel="external">Python 3.6.1 For Windows</a></p>
-<p>建議不要安裝在<code>C:</code>(OS 安裝硬碟)，不然之後常遇到權限問題</p>
-<p>安裝完預設就會有 pip，可以在 cmd 下試試看</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip -V</span><br><span class="line">pip 9.0.1 from d:\program files\python36\lib\site-packages (python 3.6)</span><br></pre></td></tr></table></figure>
-<p>要安裝<code>Scikit-Learn</code>之前需要先安裝以下其他的 Lib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">● nose (自動化測試相關)</span><br><span class="line">● numpy+mkl (注意有加上 mkl(math kernel library)，運算陣列矩陣相關)</span><br><span class="line">● scipy (數學演算法相關、訊號處理、圖像處理、積分、線代等等)</span><br></pre></td></tr></table></figure>
-<p>首先先安裝<code>nose</code>，直接用 pip 安裝即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install nose</span><br></pre></td></tr></table></figure>
-<p>接下來的<code>numpy+mkl</code>和<code>scipy</code>不要使用 pip 直接安裝，會發生很多問題</p>
-<p>先打開此網站<a href="www.lfd.uci.edu/~gohlke/pythonlibs/">LFD</a></p>
-<p>裡面有許多<code>whl</code>檔案可以下載，所以要下載 (有32/64位元，依照你的OS下載)</p>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy" target="_blank" rel="external">numpy-1.13.0rc2+mkl-cp36-cp36m-win_amd64.whl</a></p>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy" target="_blank" rel="external">scipy-0.19.0-cp36-cp36m-win_amd64.whl</a></p>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#scikit-learn" target="_blank" rel="external">scikit_learn-0.18.1-cp36-cp36m-win_amd64.whl</a></p>
-<p>下載完後安裝指令如下，記得要按照順序，因為<code>scikit_learn</code>會先檢查<code>numpy+mkl</code>和<code>scipy</code>是否已經安裝</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip install &quot;numpy-1.13.0rc2+mkl-cp36-cp36m-win_amd64.whl&quot;</span><br><span class="line">D:\&gt;pip install scipy-0.19.0-cp36-cp36m-win_amd64.whl</span><br><span class="line">D:\&gt;pip install scikit_learn-0.18.1-cp36-cp36m-win_amd64.whl</span><br></pre></td></tr></table></figure>
-<p>顯示一下已安裝的 Lib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pip freeze</span><br><span class="line">nose==1.3.7</span><br><span class="line">numpy==1.13.0rc2+mkl</span><br><span class="line">scikit-learn==0.18.1</span><br><span class="line">scipy==0.19.0</span><br></pre></td></tr></table></figure>
-<p>最後執行測試指令看是否成功安裝<code>scikit_learn</code> <a href="http://scikit-learn.org/stable/developers/advanced_installation.html#id2" target="_blank" rel="external">參考</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt; nosetests -v sklearn</span><br></pre></td></tr></table></figure>
-<p>之後會開始跑一些測試，會花一段時間，最後顯示以下訊息，會出現兩個 fail </p>
-<p>但是目前不知道為什麼，有找到問題在更新</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ran 7159 tests in 240.549s</span><br><span class="line"></span><br><span class="line">FAILED (SKIP=19, failures=2)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-04-20T04:28:17.000Z"><a href="/2017/04/20/30-days-of-python-ch1/">2017-04-20</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/04/20/30-days-of-python-ch1/">Python 30 天筆記</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="常用網頁"><a href="#常用網頁" class="headerlink" title="常用網頁"></a>常用網頁</h2><p><a href="https://github.com/codingforentrepreneurs/30-Days-of-Python" target="_blank" rel="external">範例程式</a></p>
-<p><a href="https://www.youtube.com/codingentrepreneurs" target="_blank" rel="external">Youtube</a></p>
-<p><a href="https://www.codingforentrepreneurs.com/suggest/" target="_blank" rel="external">建議</a></p>
-<h2 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h2><p>Lists (array) 可存不同種類</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">list_var = [&apos;some string&apos; , 123, &quot;another string&quot;]</span><br><span class="line">list_var.append(&quot;some other item&quot;) // 加入新 item</span><br><span class="line">len(list_var)                      // 4 ( 4 個 item)</span><br><span class="line">len(&quot;an string&quot;)                   // 9 ( 9 個字元) </span><br><span class="line"></span><br><span class="line">list = [1,2,3]</span><br><span class="line">list.pop(0) </span><br><span class="line">print(list)                        // [2,3]</span><br></pre></td></tr></table></figure>
-<h2 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h2><p>用 <code>{}</code> 包起來 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Python 可以用字串當作 Key</span><br><span class="line">a_dict = &#123; &quot;a&quot;:&quot;1&quot;, &quot;b&quot;:&quot;2&quot;, &quot;c&quot;:&quot;3&quot;&#125;</span><br><span class="line">a_dict[&quot;abc&quot;] = &quot;another&quot;          // &#123;&apos;a&apos;: &apos;1&apos;, &apos;b&apos;: &apos;2&apos;, &apos;c&apos;: &apos;3&apos;, &apos;abc&apos;: &apos;another&apos;&#125;</span><br><span class="line"></span><br><span class="line">// Python 也可以用整數當作 Key</span><br><span class="line">abc    = &#123;&#125;</span><br><span class="line">abc[0] = &quot;abc&quot;</span><br><span class="line"></span><br><span class="line">// dic 也可以把 dic 或 list 放進去</span><br></pre></td></tr></table></figure>
-<h2 id="Tuple"><a href="#Tuple" class="headerlink" title="Tuple"></a>Tuple</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tup = ()</span><br><span class="line">tup = (&quot;abc&quot;,&quot;abc&quot;)</span><br><span class="line">tup = ( (&quot;a&quot;,&quot;b&quot;), (&quot;c&quot;,&quot;d&quot;))</span><br></pre></td></tr></table></figure>
-<h2 id="差別"><a href="#差別" class="headerlink" title="差別"></a>差別</h2><p>Tuple 資料不可以修改，List 可以</p>
-<p>但是 Tuple 使用的資料型態會比較小</p>
-<h2 id="Loop"><a href="#Loop" class="headerlink" title="Loop"></a>Loop</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">bag = [1,2,3,4,5,6,7,8,9,10]</span><br><span class="line"></span><br><span class="line">// For</span><br><span class="line">for item in bag:</span><br><span class="line">    print(item)</span><br><span class="line">    </span><br><span class="line">// While    </span><br><span class="line">i = 0</span><br><span class="line">while i &lt; 11:</span><br><span class="line">    print(&quot;OK&quot;)</span><br><span class="line">    i+=1</span><br></pre></td></tr></table></figure>
-<h2 id="Conditionals"><a href="#Conditionals" class="headerlink" title="Conditionals"></a>Conditionals</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">True</span><br><span class="line">Flase</span><br><span class="line"></span><br><span class="line">i = 1</span><br><span class="line">if i == 1:</span><br><span class="line">    print(&quot;A&quot;)</span><br><span class="line">elif i == 2:</span><br><span class="line">    print(&quot;B&quot;)</span><br><span class="line">else:</span><br><span class="line">    print(&quot;C&quot;)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">print(isinstance(3, int))           # T</span><br><span class="line">print(isinstance(&quot;Jason&quot;, int))     # F</span><br><span class="line">print(isinstance(&quot;Jason&quot;, str))     # T</span><br></pre></td></tr></table></figure>
-<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">str_items = [&quot;A&quot;, &quot;C&quot;, &quot;W&quot;, &quot;a&quot;, &quot;E&quot;]</span><br><span class="line">str_items.sort()</span><br><span class="line">str_items.sort(key=str.lower)</span><br><span class="line">str_items.sort(key=str.lower,reverse=True)</span><br><span class="line"></span><br><span class="line">int_items = [123,11,534.12,561,22.213]</span><br><span class="line">new_items = sorted(int_items,reverse=True)</span><br><span class="line">print(new_items)</span><br><span class="line"></span><br><span class="line">int_items = [123,11,534.12,561,22.213]</span><br><span class="line">new_items = sorted(int_items,reverse=True)</span><br><span class="line">print(new_items)</span><br><span class="line">print(sum(int_items))</span><br></pre></td></tr></table></figure>
-<p>自訂 function</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">items = [&quot;Mac&quot;, &quot;Phone&quot;, 123.11, 462.14, &quot;Jason&quot;, &quot;Bag&quot;, 512]</span><br><span class="line"></span><br><span class="line">str_items = []</span><br><span class="line">num_items = []</span><br><span class="line"></span><br><span class="line">for i in items:</span><br><span class="line">    if isinstance(i, float) or isinstance(i, int):</span><br><span class="line">        num_items.append(i)</span><br><span class="line">    elif isinstance(i, str):</span><br><span class="line">        str_items.append(i)</span><br><span class="line">    else:</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">print(str_items)</span><br><span class="line">print(num_items)</span><br><span class="line"></span><br><span class="line">def parse_lists(some_list):</span><br><span class="line">    str_list_items = []</span><br><span class="line">    num_list_items = []</span><br><span class="line">    for i in items:</span><br><span class="line">        if isinstance(i, float) or isinstance(i, int):</span><br><span class="line">            num_list_items.append(i)</span><br><span class="line">        elif isinstance(i, str):</span><br><span class="line">            str_list_items.append(i)</span><br><span class="line">        else:</span><br><span class="line">            pass</span><br><span class="line">    return str_list_items,num_list_items</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(parse_lists(items))</span><br></pre></td></tr></table></figure>
-<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><p><a href="https://github.com/codingforentrepreneurs/30-Days-of-Python/blob/master/PythonCheatSheet.md" target="_blank" rel="external">Cheat Sheet</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">text = &quot;This is a &#123;var&#125;&quot;.format(var=&quot;cool&quot;)</span><br><span class="line">print(text)</span><br><span class="line"></span><br><span class="line">text = &quot;&#123;0&#125; &#123;1&#125; &#123;2&#125;&quot;.format(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;)</span><br><span class="line">print(text)</span><br><span class="line"></span><br><span class="line">text = &quot;Hello %s %s&quot; %(&quot;Jason&quot;,&quot;Sharon&quot;)</span><br><span class="line">print(text)</span><br><span class="line"></span><br><span class="line">text = &quot;Hello %%s %s&quot; %(&quot;Jason&quot;)</span><br><span class="line">print(text) // Hello %s Jason</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-04-10T17:23:04.000Z"><a href="/2017/04/11/machine-learning-1/">2017-04-11</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/04/11/machine-learning-1/">Machine Learning (1)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Supervised"><a href="#Supervised" class="headerlink" title="Supervised"></a>Supervised</h2><p>給定一組 Data set</p>
-<p>Classification 分類問題(連續)</p>
-<p>Regression     遞歸問題(分類)</p>
-<h2 id="UnSupervised"><a href="#UnSupervised" class="headerlink" title="UnSupervised"></a>UnSupervised</h2><p>所有數據都是一樣的，需要根據給定數據找出規則或分類</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">雞尾酒問題</span><br><span class="line"></span><br><span class="line">假設宴會上有很多人，現在給 2 人 1 人 1 隻麥克風講話</span><br><span class="line"></span><br><span class="line">此 2 個麥克風都會錄到 2 人的聲音</span><br><span class="line"></span><br><span class="line">要如何分離 2 人聲音或背景音樂?</span><br><span class="line"></span><br><span class="line">[W,s,v] = svd(( repmat(sum(x.*x,1),size(x,1),1).*x)*x&apos;);</span><br><span class="line"></span><br><span class="line">SVD = singular value decomposition (奇異值分解)</span><br></pre></td></tr></table></figure>
-<p><a href="https://en.wikipedia.org/wiki/Cocktail_party_effect" target="_blank" rel="external">Cocktail Party</a></p>
-<p>學習 ML 使用 Octave (free) 或 Matlab 練習</p>
-<p>先用 Octave 做出原型，在用其他語言實現</p>
-<p>因為 Octave 以內建許多演算法函式</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>3 element vector or a 3 dimensional vector</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      element 1</span><br><span class="line">A = [ element 2 ]</span><br><span class="line">      element 3</span><br></pre></td></tr></table></figure>
-<p><a href="http://cs229.stanford.edu/materials.html" target="_blank" rel="external">練習</a></p>
-<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>Regression Problem = 根據之前的數據，預測出一個準確值</p>
-<p>Training set = 之前蒐集的數據</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">面積(x)   價錢(y)</span><br><span class="line">2104       460</span><br><span class="line">1416       232</span><br><span class="line">1534       315</span><br><span class="line">852        178</span><br><span class="line">...        ...</span><br><span class="line"></span><br><span class="line">m = 幾項樣本數目，假設有 47 樣本數就為 47</span><br><span class="line">x = input  = input features</span><br><span class="line">y = output = target variable</span><br><span class="line"></span><br><span class="line">(x,y)                     = one training example</span><br><span class="line">(x^(i) , y^(i))           = 第 i 項樣本</span><br><span class="line">(x^(i) , y^(i)) i=1,....m = training set</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Ex:</span><br><span class="line">x^(2) = 1416</span><br><span class="line">y^(3) = 315</span><br></pre></td></tr></table></figure>
-<p>流程: Training Set -&gt; Learning Algo -&gt; h(Hypothesis) 表示函數</p>
-<p>面積(x) -&gt; h -&gt; 價錢(y)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h maps from x to y</span><br></pre></td></tr></table></figure>
-<p>h 可以寫成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hθ(x) = θ0 + θ1X (線性函數)</span><br><span class="line">= 線性回歸(linear regression) model</span><br><span class="line">= 根據 x (變量) 來預測價格</span><br><span class="line">= 單變量線性回歸</span><br></pre></td></tr></table></figure>
-<h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>代價函數，或稱為 squared error function</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">Training Set:</span><br><span class="line">面積(x)   價錢(y)</span><br><span class="line">2104       460</span><br><span class="line">1416       232</span><br><span class="line">1534       315</span><br><span class="line">852        178</span><br><span class="line">...        ...</span><br><span class="line"></span><br><span class="line">Hypothesis : hθ(x) = θ0 + θ1X </span><br><span class="line">用來預測的函數</span><br><span class="line"></span><br><span class="line">θi = Parameters = Parameters of model</span><br><span class="line">問題在於如何決定 θ0 或 θ1</span><br><span class="line"></span><br><span class="line">θ0 和 θ1 不同會造成線的斜率不同</span><br><span class="line">所以我們要找的是，再給定的 Training Set 之下</span><br><span class="line">θ0 和 θ1 要取多少才會經過最多的 Training Set</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">所以根據此想法，我們要訂一個規則:</span><br><span class="line"></span><br><span class="line">1. minimize θ0,θ1</span><br><span class="line">2. (hθ(x) - y)^2 要小 (表示越準確)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hypothesis:</span><br><span class="line">h(x) = θ0 + θ1X</span><br><span class="line"></span><br><span class="line">Parameters:</span><br><span class="line">θ0 , θ1</span><br><span class="line"></span><br><span class="line">Cost Function:</span><br><span class="line">                 m</span><br><span class="line">J(θ0,θ1) = 1/2m  ∑ ( h(x^(i) ) - y^(i) )^2</span><br><span class="line">                i=1 </span><br><span class="line">                </span><br><span class="line">Goal: minimize J(θ0,θ1)</span><br><span class="line">        θ0,θ1</span><br><span class="line">        </span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">Simplified: 將 θ0 = 0</span><br><span class="line"></span><br><span class="line">                 m</span><br><span class="line">J(θ1) = 1/2m  ∑ ( h(x^(i) ) - y^(i) )^2</span><br><span class="line">                i=1 </span><br><span class="line">                </span><br><span class="line">Goal: minimize J(θ1)</span><br><span class="line">         θ1</span><br></pre></td></tr></table></figure>
-<p>簡單的說，就是要找出 θ0 , θ1，並且使 J(θ0,θ1) 最小</p>
-<p>使用梯度下降演算法 ( gradient descent )</p>
-<p>此演算法會持續變化 θ0 , θ1 來找出 min J(θ0,θ1)</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -612,11 +563,15 @@
 	
   
 	
+		<li><a href="/categories/Linear-Algebra/">Linear-Algebra</a><small>1</small></li>
+	
+  
+	
 		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
 	
   
 	
-		<li><a href="/categories/Machine-Learning/">Machine-Learning</a><small>7</small></li>
+		<li><a href="/categories/Machine-Learning/">Machine-Learning</a><small>9</small></li>
 	
   
 	
@@ -671,7 +626,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linear-Algebra/">Linear-Algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -726,11 +681,13 @@
   
     <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
   
+    <li><a href="/tags/Linear-Algebra/">Linear-Algebra</a><small>1</small></li>
+  
     <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
   
     <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
   
-    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>7</small></li>
+    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>9</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   
@@ -772,7 +729,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2017 JasonChiuCC
+  &copy; 2018 JasonChiuCC
   
 </div>
 

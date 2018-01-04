@@ -54,6 +54,125 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-10-17T07:28:17.000Z"><a href="/2016/10/17/the-linux-programming-interface-ch3/">2016-10-17</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/17/the-linux-programming-interface-ch3/">The Linux Programming Interface〈系統概念〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="系統呼叫"><a href="#系統呼叫" class="headerlink" title="系統呼叫"></a>系統呼叫</h2><p>系統呼叫流程，以使用 execve() 來說</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *argv[] = &#123;<span class="string">"ls"</span>,<span class="string">"-al"</span>,<span class="string">"/etc/passwd"</span>,(char *)<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">char</span> *envp[] = &#123;<span class="string">"PATH=/bin"</span>,<span class="number">0</span>&#125;;</span><br><span class="line">    execve(<span class="string">"/bin/ls"</span>,argv,envp);</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>execve 是 syscall 編號 11</p>
+<p>編號定義位於<code>kernel\linux-3.6.5\arch\x86\include\generated\asm\unistd_32/64.h</code> </p>
+<p>不同版本 Kernel 放的位置可能有點差別，另外 32/64 定義編號也會不一樣</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 32 位元編號定義</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_link    9</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_unlink 10</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_execve 11</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 64 位元編號定義</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_fork   57</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_vfork  58</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_execve 59</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __NR_exit   60</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/17/the-linux-programming-interface-ch3/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-13T07:28:17.000Z"><a href="/2016/10/13/program-self-cultivation-ch4/">2016-10-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/13/program-self-cultivation-ch4/">程式設計師的自我修養〈靜態連結〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>前面目的檔章節介紹 ELF 檔案格式</p>
+<p>此章節說明如果有兩個目的檔要如何連結</p>
+<p>這裡使用 a.c 和 b.c 兩個檔案當範例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># a.c</span><br><span class="line">extern int shared;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 100;</span><br><span class="line">    swap(&amp;a, &amp;shared);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># b.c</span><br><span class="line">int shared = 1;</span><br><span class="line"></span><br><span class="line">void swap(int *a, int *b)</span><br><span class="line">&#123;</span><br><span class="line">    *a ^= *b ^= *a ^= *b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">readelf -s a.o</span><br><span class="line">Symbol table &apos;.symtab&apos; contains 11 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND</span><br><span class="line">     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS a.c</span><br><span class="line">     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1</span><br><span class="line">     3: 0000000000000000     0 SECTION LOCAL  DEFAULT    3</span><br><span class="line">     4: 0000000000000000     0 SECTION LOCAL  DEFAULT    4</span><br><span class="line">     5: 0000000000000000     0 SECTION LOCAL  DEFAULT    6</span><br><span class="line">     6: 0000000000000000     0 SECTION LOCAL  DEFAULT    7</span><br><span class="line">     7: 0000000000000000     0 SECTION LOCAL  DEFAULT    5</span><br><span class="line">     8: 0000000000000000    44 FUNC    GLOBAL DEFAULT    1 main</span><br><span class="line">     9: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND shared</span><br><span class="line">    10: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND swap</span><br><span class="line"> </span><br><span class="line">$ readelf -s b.o</span><br><span class="line"></span><br><span class="line">Symbol table &apos;.symtab&apos; contains 10 entries:</span><br><span class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</span><br><span class="line">     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND</span><br><span class="line">     1: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS b.c</span><br><span class="line">     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    1</span><br><span class="line">     3: 0000000000000000     0 SECTION LOCAL  DEFAULT    2</span><br><span class="line">     4: 0000000000000000     0 SECTION LOCAL  DEFAULT    3</span><br><span class="line">     5: 0000000000000000     0 SECTION LOCAL  DEFAULT    5</span><br><span class="line">     6: 0000000000000000     0 SECTION LOCAL  DEFAULT    6</span><br><span class="line">     7: 0000000000000000     0 SECTION LOCAL  DEFAULT    4</span><br><span class="line">     8: 0000000000000000     4 OBJECT  GLOBAL DEFAULT    2 shared(全域符號)</span><br><span class="line">     9: 0000000000000000    74 FUNC    GLOBAL DEFAULT    1 swap  (全域符號)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/10/13/program-self-cultivation-ch4/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-10-12T07:28:17.000Z"><a href="/2016/10/12/code-training/">2016-10-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/10/12/code-training/">線上程式練習</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="線上程式練習網站"><a href="#線上程式練習網站" class="headerlink" title="線上程式練習網站"></a>線上程式練習網站</h2><p><a href="https://leetcode.com/" target="_blank" rel="external">Leetcode</a></p>
+<p><a href="http://codeforces.com/" target="_blank" rel="external">Codeforces</a></p>
+<p><a href="https://uva.onlinejudge.org/index.php" target="_blank" rel="external">UVA</a></p>
+<p><a href="https://www.hackerrank.com/" target="_blank" rel="external">Hackerrank</a></p>
+<p><a href="http://zerojudge.tw/Problems?tabid=BASIC" target="_blank" rel="external">Zerojudge</a></p>
+<p><a href="http://acm.csie.org/ntujudge/index.php" target="_blank" rel="external">NTUjudge</a></p>
+<p><a href="http://poj.org/" target="_blank" rel="external">Poj</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">URI Online Jugde</span><br><span class="line">CodeChef</span><br><span class="line">CodinGame</span><br><span class="line">CodeWars</span><br><span class="line">Codeforces</span><br><span class="line">HackerRank</span><br><span class="line">Sphere Online Judge</span><br><span class="line">TopCoder</span><br><span class="line">LeetCode</span><br><span class="line">UVa Online Judge</span><br><span class="line">Jan&apos;s Lightoj</span><br><span class="line">Hackerearth</span><br><span class="line">Dev Skill</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-09-26T17:23:04.000Z"><a href="/2016/09/27/how-to-program-c-pointer/">2016-09-27</a></time>
       
       
@@ -76,47 +195,6 @@
           <div class="alignleft">
             <a href="/2016/09/27/how-to-program-c-pointer/#more" class="more-link">繼續閱讀</a>
           </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/memory-pool-use-c/">2016-09-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/26/memory-pool-use-c/">Memory Pool C 實作</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 在 run time 期間可以使用 malloc 來動態取得記憶體</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define N 10000</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int* p  = malloc(sizeof(int));          //allocate a pointer to an integer</span><br><span class="line">	int* pa = malloc(sizeof(int) * N);      //allocate an array with N integers</span><br><span class="line">	/*statement*/</span><br><span class="line">	free(p);              </span><br><span class="line">	free(pa);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不過當程式執行時，如果一直反覆 malloc 和 free 記憶體區塊。</p>
-<p>會導致記憶體的碎片問題，碎片一多可使用的記憶體就變少</p>
-<p>最後產生 memory leak，而 memory pool 的想法是</p>
-<p>預先就 alloc 一個大的記憶體區塊，而程式在 run time 期間</p>
-<p>就只會對此區塊的記憶體做分配 (allocate)、使用 (access)、歸還 (free) </p>
-<p>這樣就不會有記憶體破碎的問題</p>
-<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="acm.sjtu.edu.cn/ppca/w/images/c/cd/Memory_Pool_-_彭燕庆.pptx">參考</a></p>
-
-      
-    </div>
-    <footer>
-      
         
         
       
@@ -177,34 +255,30 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-char-and-string/">2016-09-25</a></time>
+        <time datetime="2016-09-25T17:23:04.000Z"><a href="/2016/09/26/memory-pool-use-c/">2016-09-26</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/09/25/how-to-program-c-char-and-string/">How to program C〈字元與字串〉</a></h1>
+    <h1 class="title"><a href="/2016/09/26/memory-pool-use-c/">Memory Pool C 實作</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>字元是程式的基本元素，每一段程式都是由字元組成而來</p>
-<p>字元常數(char constant)是由<code>單引號</code>括起的字元</p>
-<p>他也代表一個<code>int</code>的值，字串及一連串的字元</p>
-<p>字串可包含字母、數字、或特殊符號(+,-,*,/,$)</p>
-<p>字串是由<code>雙引號</code>括起的</p>
-<p>C 的字串是以 <code>NULL(&#39;\0&#39;)</code>為結束的<code>字元陣列</code></p>
-<p>注意</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">字串是指標</span><br><span class="line">字元是整數(0-255)</span><br><span class="line">所以如果方法參數要字元，要宣告為 func(int c);</span><br></pre></td></tr></table></figure>
-<p>字串宣告有兩種</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 字串即陣列</span><br><span class="line">char color[]            = &quot;blue&quot;;</span><br><span class="line">char color[]            = &#123;&apos;b&apos;,&apos;l&apos;,&apos;u&apos;,&apos;e&apos;,&apos;\0&apos;&#125;;</span><br><span class="line">const char *colorPtr    = &quot;blue&quot;;</span><br><span class="line"></span><br><span class="line">// 動態建立陣列</span><br><span class="line">int size = 10;</span><br><span class="line">int i    = 0;</span><br><span class="line">int *arr = malloc(size * sizeof(int));</span><br><span class="line">memset(arr, 0, sizeof(int) * size);</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;指定元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    arr[i] = i*10;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line">free(arr);</span><br></pre></td></tr></table></figure>
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>C 在 run time 期間可以使用 malloc 來動態取得記憶體</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#define N 10000</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int* p  = malloc(sizeof(int));          //allocate a pointer to an integer</span><br><span class="line">	int* pa = malloc(sizeof(int) * N);      //allocate an array with N integers</span><br><span class="line">	/*statement*/</span><br><span class="line">	free(p);              </span><br><span class="line">	free(pa);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不過當程式執行時，如果一直反覆 malloc 和 free 記憶體區塊。</p>
+<p>會導致記憶體的碎片問題，碎片一多可使用的記憶體就變少</p>
+<p>最後產生 memory leak，而 memory pool 的想法是</p>
+<p>預先就 alloc 一個大的記憶體區塊，而程式在 run time 期間</p>
+<p>就只會對此區塊的記憶體做分配 (allocate)、使用 (access)、歸還 (free) </p>
+<p>這樣就不會有記憶體破碎的問題</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><p><a href="acm.sjtu.edu.cn/ppca/w/images/c/cd/Memory_Pool_-_彭燕庆.pptx">參考</a></p>
+
       
     </div>
     <footer>
       
-        
-          <div class="alignleft">
-            <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
-          </div>
         
         
       
@@ -300,6 +374,51 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-09-24T17:23:04.000Z"><a href="/2016/09/25/how-to-program-c-char-and-string/">2016-09-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/09/25/how-to-program-c-char-and-string/">How to program C〈字元與字串〉</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="基本介紹"><a href="#基本介紹" class="headerlink" title="基本介紹"></a>基本介紹</h2><p>字元是程式的基本元素，每一段程式都是由字元組成而來</p>
+<p>字元常數(char constant)是由<code>單引號</code>括起的字元</p>
+<p>他也代表一個<code>int</code>的值，字串及一連串的字元</p>
+<p>字串可包含字母、數字、或特殊符號(+,-,*,/,$)</p>
+<p>字串是由<code>雙引號</code>括起的</p>
+<p>C 的字串是以 <code>NULL(&#39;\0&#39;)</code>為結束的<code>字元陣列</code></p>
+<p>注意</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">字串是指標</span><br><span class="line">字元是整數(0-255)</span><br><span class="line">所以如果方法參數要字元，要宣告為 func(int c);</span><br></pre></td></tr></table></figure>
+<p>字串宣告有兩種</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 字串即陣列</span><br><span class="line">char color[]            = &quot;blue&quot;;</span><br><span class="line">char color[]            = &#123;&apos;b&apos;,&apos;l&apos;,&apos;u&apos;,&apos;e&apos;,&apos;\0&apos;&#125;;</span><br><span class="line">const char *colorPtr    = &quot;blue&quot;;</span><br><span class="line"></span><br><span class="line">// 動態建立陣列</span><br><span class="line">int size = 10;</span><br><span class="line">int i    = 0;</span><br><span class="line">int *arr = malloc(size * sizeof(int));</span><br><span class="line">memset(arr, 0, sizeof(int) * size);</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;指定元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    arr[i] = i*10;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printf(&quot;顯示元素值：\n&quot;);</span><br><span class="line">for(i = 0; i &lt; size; i++) &#123;</span><br><span class="line">    printf(&quot;arr[%d] = %d\n&quot;, i, *(arr+i));</span><br><span class="line">&#125;</span><br><span class="line">free(arr);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/09/25/how-to-program-c-char-and-string/#more" class="more-link">繼續閱讀</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-09-23T07:28:17.000Z"><a href="/2016/09/23/phy-mgnt/">2016-09-23</a></time>
       
       
@@ -325,178 +444,6 @@
           <div class="alignleft">
             <a href="/2016/09/23/phy-mgnt/#more" class="more-link">繼續閱讀</a>
           </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-09-21T07:28:17.000Z"><a href="/2016/09/21/program-self-cultivation-ch3/">2016-09-21</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/21/program-self-cultivation-ch3/">程式設計師的自我修養〈目的檔〉</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="目的檔格式"><a href="#目的檔格式" class="headerlink" title="目的檔格式"></a>目的檔格式</h2><p>可執行檔格式(Executable)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Windows : PE  (Portable Executable)</span><br><span class="line">Linux   : ELF (Executable Linkable Format)</span><br><span class="line">Intel   : OMF (Object Module Format)</span><br><span class="line">Unix    : .out</span><br><span class="line">DOS     : .COM</span><br></pre></td></tr></table></figure>
-<p>以上都是 COFF(Common object file format) 格式的變化</p>
-<p>動態連結程式庫</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Windows : .dll</span><br><span class="line">Linux   : .so</span><br></pre></td></tr></table></figure>
-<p>靜態連結程式庫</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Windows : .lib</span><br><span class="line">Linux   : .a</span><br></pre></td></tr></table></figure>
-<p>動態/靜態連結程式庫也是按照可執行檔格式儲存</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/09/21/program-self-cultivation-ch3/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-09-08T07:28:17.000Z"><a href="/2016/09/08/program-self-cultivation-ch2/">2016-09-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/08/program-self-cultivation-ch2/">程式設計師的自我修養〈編譯和連結〉</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello World\n"</span>);    </span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>編譯一個最簡單的 Hello World 檔案指令為</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ gcc hello.c</span><br><span class="line">$ ./a.out</span><br><span class="line">$ Hello World</span><br></pre></td></tr></table></figure>
-<p>編譯過程分為 4 個步驟</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.前置處理 = 預處理 = 前編譯 (Preprocessing)</span><br><span class="line">2.編譯 (Compilation)</span><br><span class="line">3.組譯 (Assemby)</span><br><span class="line">4.連結 (Linking)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/09/08/program-self-cultivation-ch2/#more" class="more-link">繼續閱讀</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-09-06T17:23:04.000Z"><a href="/2016/09/07/arduino-ble/">2016-09-07</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/09/07/arduino-ble/">IOS 連接 BLE+Arduino</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p><a href="http://www.jianshu.com/p/c9b20fe17600" target="_blank" rel="external">Apple 官方 BLE 翻譯</a></p>
-<p><a href="http://www.books.com.tw/products/0010714135" target="_blank" rel="external">書籍參考</a></p>
-<p>一開始可以先看 Apple 官方 BLE 翻譯，對基本概念有個理解</p>
-<p>IOS 主要使用 Core Bluetooth 框架來和藍芽裝置通訊，以下簡稱 CB</p>
-<p>一般就是一個手機和一個藍牙來進行通訊，這兩個設備有另一個專有名詞</p>
-<p>外接裝置（Peripheral = Server 端）和中心 (central = Client 端)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Server = 藍芽裝置(HM-10)</span><br><span class="line">Client = IOS 裝置(手機)</span><br></pre></td></tr></table></figure>
-<p>所謂 Server 端就是提供資料方，Client 端是接收資料方</p>
-<p>當然如果你是兩台 iphone 使用 BLE 互傳資料</p>
-<p>那手機就可同時為 Server 端或 Client 端，並非手機只能當 Client</p>
-<p>Client 要讀取外接裝置的流程如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">設定 CBCentralManager -&gt; 發現外接裝置 -&gt; 發現服務(CServer) </span><br><span class="line">					  -&gt; 發現特徵(CBCharateristic) -&gt; 訂閱特徵 -&gt; 讀取資料(Rx)</span><br></pre></td></tr></table></figure>
-<p>外接裝置的設定如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">設定 CBPeripheralManager -&gt; 設定服務與特徵 -&gt; 發布服務與特徵 -&gt; 廣播服務 -&gt; 發送資料</span><br></pre></td></tr></table></figure>
-<p>手機和 BLE 溝通時會用倒的方法</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Rx (IOS裝置讀取外接裝置)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">peripheral</span><span class="params">(peripheral: CBPeripheral?, didUpdateValueForCharacteristic </span><br><span class="line">				characteristic: CBCharacteristic?, error: NSError!)</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Tx (IOS裝置傳送外接裝置)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">peripheralDevice</span>.<span class="title">writeValue</span><span class="params">(data, forCharacteristic: deviceCharacteristics, </span><br><span class="line">               type: CBCharacteristicWriteType.WithoutResponse)</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="安裝-Arduino-IDE"><a href="#安裝-Arduino-IDE" class="headerlink" title="安裝 Arduino IDE"></a>安裝 Arduino IDE</h2><p><a href="https://www.arduino.cc/en/Guide/MacOSX?setlang=cn" target="_blank" rel="external">參考</a> <a href="http://rexstjohn.com/bluetooth-smart-ble-scanning-on-osx-xcode-6/" target="_blank" rel="external">參考</a></p>
-<p><a href="http://www.pondoudou.com/?p=2004" target="_blank" rel="external">參考</a> <a href="http://www.hangar42.nl/hm10" target="_blank" rel="external">參考</a></p>
-<p>如果找不到 port 按工具-&gt; Get board info 重抓</p>
-<h2 id="BLE-模組（HM-10-CC2541）"><a href="#BLE-模組（HM-10-CC2541）" class="headerlink" title="BLE 模組（HM-10 CC2541）"></a>BLE 模組（HM-10 CC2541）</h2><p><a href="http://www.instructables.com/files/orig/FNB/KL6A/I8FQVHZD/FNBKL6AI8FQVHZD.pdf" target="_blank" rel="external">DataSheet 英文</a></p>
-<p><a href="http://www.pondoudou.com/?download=2009" target="_blank" rel="external">DataSheet 中文</a></p>
-<p><a href="http://www.instructables.com/id/IPhone-to-Arduino-using-Bluetooth-40-/" target="_blank" rel="external">教學參考</a></p>
-<p>CC2541 是晶片的型號，由 Texas Instrument 公司開發</p>
-<p>HM-10 和 Arduino 接法如下 <a href="https://www.sunfounder.com/wiki/index.php?title=Bluetooth_4.0_HM-10_Master_Slave_Module" target="_blank" rel="external">參考</a></p>
-<img src="/2016/09/07/arduino-ble/160906-0001.png" alt="160906-0001.png" title="">
-<p>接好之後 HM-10 會閃爍紅燈，接著下載 App 測試是否能 Scan 到 HM-10</p>
-<p>可以去 Appstore 下載 Bluetooth Smart Scanner 來掃描看看</p>
-<p>要注意的是，上面 Arduino 的接法是直接接到 Arduino 板子上的 pin0(Rx) 和 pin1(Tx)</p>
-<p>這樣接法在上傳 Arduino 檔案時會有問題，會出現 arduino stk500_recv(): programmer is not responding</p>
-<p>記得先把 HM-10 Tx 和 Rx pin 拔掉再燒錄，或是改差 Arduino 的其他 pin (不使用 pin0 或 pin1 )</p>
-<h2 id="XCode-撰寫"><a href="#XCode-撰寫" class="headerlink" title="XCode 撰寫"></a>XCode 撰寫</h2><p><a href="http://cms.35g.tw/coding/%E8%97%8D%E7%89%99-ble-corebluetooth-%E5%88%9D%E6%8E%A2/" target="_blank" rel="external">參考</a></p>
-<p>手機要和使用外部 BLE 設備溝通的流程是 Discover、Connect、Explore、Interact</p>
-<p><img src="http://cms.35g.tw/coding/wp-content/uploads/2014/03/BLE_FLOW1.png" alt="參考"></p>
-<p>一開始介紹兩個類別 CBCentralManager 和 CBCentralManagerDelegate</p>
-<p>CBCentralManager 管理手機 BLE 的連線狀態 </p>
-<p>CBCentralManagerDelegate 會負責監控手機 BLE 狀態是否發生改變</p>
-<p>以上說的 BLE 狀態是指手機端喔，不是指 HM-10 的狀態</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> activeCentralManager : <span class="type">CBCentralManager</span>?</span><br><span class="line">...</span><br><span class="line">activeCentralManager    = <span class="type">CBCentralManager</span>(delegate: <span class="keyword">self</span>, queue: <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
-<p>這邊把 delegate 設為自己，也就是說本身的 class 要繼承 CBCentralManagerDelegate</p>
-<p>並且實作 CBCentralManagerDelegate 裡面的方法，而此 Delegate 要實作的方法如下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">centralManagerDidUpdateState(central: <span class="type">CBCentralManager</span>)</span><br></pre></td></tr></table></figure>
-<p>在此方法可以知道目前手機藍芽的狀態</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">centralManagerDidUpdateState</span><span class="params">(cManager: CBCentralManager)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 顯示狀態</span></span><br><span class="line">    <span class="keyword">switch</span> (cManager.state) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">Unknown</span>:</span><br><span class="line">             <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"Unknown"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">Unsupported</span>:</span><br><span class="line">            <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"Unsupported"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">Unauthorized</span>:</span><br><span class="line">            <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"Unauthorized"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">Resetting</span>:</span><br><span class="line">            <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"Resetting"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">PoweredOff</span>:</span><br><span class="line">            <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"PoweredOff"</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">PoweredOn</span>:</span><br><span class="line">            <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"PoweredOn"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>當你手機有開啟藍芽功能時，執行此段程式會跑到 PoweredOn 的狀態</p>
-<p>注意一定要用實機跑，simulator 目前還沒支援 BLE 功能</p>
-<p>另外實體手機要 ip4 以上才有支援 BLE 功能</p>
-<p>再來如果目前狀態為 PoweredOn，那我們就能開啟手機藍牙搜尋功能(scan)，程式加入以下片段</p>
-<p>另外也要注意一點，一定要先確認 PoweredOn 狀態才能開啟 scanForPeripheralsWithServices</p>
-<p>直接開啟 scanForPeripheralsWithServices 是沒用的</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">centralManagerDidUpdateState</span><span class="params">(cManager: CBCentralManager)</span></span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 顯示狀態</span></span><br><span class="line">    <span class="keyword">switch</span> (cManager.state) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="type">CBCentralManagerState</span>.<span class="type">Unknown</span>:</span><br><span class="line">             <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"Unknown"</span>)</span><br><span class="line">        <span class="comment">// 省略......</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果狀態為 PoweredOn，開啟 BLE 搜尋功能</span></span><br><span class="line">    <span class="keyword">if</span> cManager.state == <span class="type">CBCentralManagerState</span>.<span class="type">PoweredOn</span> &#123;</span><br><span class="line">        cManager.scanForPeripheralsWithServices(<span class="literal">nil</span>, options: <span class="literal">nil</span>)</span><br><span class="line">        <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"開始搜尋外部 BLE 裝置"</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"請先將手機藍牙打開"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再來要說的是 scanForPeripheralsWithServices(nil, options: nil) 的參數</p>
-<p>第一個參數是 ServiceUUID，如果你填 nil 那手機就會掃描所有可以用的外部設備</p>
-<p>你可以先把 ServiceUUID 當作是一個特定的設備 id，例如假設我們只想掃到 HM-10，不想掃到其他外部設備</p>
-<p>而 HM-10 預設的 ServiceUUID 是 0xFFE0，就可以改寫為</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> serviceUUID = [<span class="type">CBUUID</span>(string: <span class="string">"0xFFE0"</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果狀態為 PoweredOn，開啟 BLE 搜尋功能</span></span><br><span class="line"><span class="keyword">if</span> cManager.state == <span class="type">CBCentralManagerState</span>.<span class="type">PoweredOn</span> &#123;</span><br><span class="line">    cManager.scanForPeripheralsWithServices(serviceUUID, options: <span class="literal">nil</span>)</span><br><span class="line">    <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"開始搜尋外部 BLE 裝置"</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">UDebug</span>.<span class="type">DLog</span>(<span class="string">"請先將手機藍牙打開"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>目前使用 UITableViewController 協定後，就不需要在寫 UITableViewDelegate, UITableViewDataSource</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="type">O</span>) <span class="class"><span class="keyword">class</span> <span class="title">BleTblVwCtrl</span>: <span class="title">UITableViewController</span>, <span class="title">UITableViewDelegate</span>, <span class="title">UITableViewDataSource</span> </span><br><span class="line">(<span class="title">X</span>) <span class="title">class</span> <span class="title">BleTblVwCtrl</span>: <span class="title">UITableViewController</span></span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
         
         
       
@@ -587,11 +534,15 @@
 	
   
 	
+		<li><a href="/categories/Linear-Algebra/">Linear-Algebra</a><small>1</small></li>
+	
+  
+	
 		<li><a href="/categories/Linux/">Linux</a><small>14</small></li>
 	
   
 	
-		<li><a href="/categories/Machine-Learning/">Machine-Learning</a><small>7</small></li>
+		<li><a href="/categories/Machine-Learning/">Machine-Learning</a><small>9</small></li>
 	
   
 	
@@ -646,7 +597,7 @@
 		<li><a href="/categories/XCode/">XCode</a><small>1</small></li>
 	
    -->
-     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
+     <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome/">Chrome</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DataStructures/">DataStructures</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firebase/">Firebase</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Firefox/">Firefox</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/GCC/">GCC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/">IOS</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IOS/BLE/">BLE</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Laravel/">Laravel</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linear-Algebra/">Linear-Algebra</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine-Learning</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/">PHP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PHP/Composer/">Composer</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PHY/">PHY</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Port/">Port</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/">Storage</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Storage/Nand-Flash/">Nand-Flash</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/">Swift</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/AutoLayout/">AutoLayout</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/DesignPattern/">DesignPattern</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Swift/Released/">Released</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TOEIC/">TOEIC</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/U-Boot/">U-Boot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/XCode/">XCode</a><span class="category-list-count">1</span></li></ul> 
 </div>
  
 
@@ -701,11 +652,13 @@
   
     <li><a href="/tags/Laravel/">Laravel</a><small>8</small></li>
   
+    <li><a href="/tags/Linear-Algebra/">Linear-Algebra</a><small>1</small></li>
+  
     <li><a href="/tags/Linux/">Linux</a><small>15</small></li>
   
     <li><a href="/tags/Linux（Process）/">Linux（Process）</a><small>1</small></li>
   
-    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>7</small></li>
+    <li><a href="/tags/Machine-Learning/">Machine-Learning</a><small>9</small></li>
   
     <li><a href="/tags/Nand-Flash/">Nand-Flash</a><small>1</small></li>
   
@@ -747,7 +700,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2017 JasonChiuCC
+  &copy; 2018 JasonChiuCC
   
 </div>
 
