@@ -54,6 +54,39 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2017-12-25T04:28:17.000Z"><a href="/2017/12/25/linear-algebra-1/">2017-12-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/12/25/linear-algebra-1/">線性代數 - Vector（1）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="向量-Ventor"><a href="#向量-Ventor" class="headerlink" title="向量(Ventor)"></a>向量(Ventor)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ventor = magnitude(大小) + direction(方向)</span><br><span class="line"></span><br><span class="line">5mph      = magnitude (Not ventor)</span><br><span class="line">5mph East = magnitude + direction (velocity = ventor)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2017-12-25T04:28:17.000Z"><a href="/2017/12/25/ml-2017-lhy-1/">2017-12-25</a></time>
       
       
@@ -93,39 +126,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-12-25T04:28:17.000Z"><a href="/2017/12/25/linear-algebra-1/">2017-12-25</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/12/25/linear-algebra-1/">線性代數 - Vector（1）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="向量-Ventor"><a href="#向量-Ventor" class="headerlink" title="向量(Ventor)"></a>向量(Ventor)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ventor = magnitude(大小) + direction(方向)</span><br><span class="line"></span><br><span class="line">5mph      = magnitude (Not ventor)</span><br><span class="line">5mph East = magnitude + direction (velocity = ventor)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2017-12-20T04:28:17.000Z"><a href="/2017/12/20/ml-foundations-1/">2017-12-20</a></time>
       
       
@@ -141,6 +141,27 @@
 <p>機器學習應用</p>
 <p>data -&gt; ML -&gt; skill</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.吃</span><br><span class="line">data:Twitter 上的圖片＆文字 </span><br><span class="line">skill:學到某餐廳好不好吃，衛不衛生</span><br><span class="line"></span><br><span class="line">2.穿</span><br><span class="line">data:顧客調查，銷售數字</span><br><span class="line">skill:推薦客戶產品</span><br><span class="line"></span><br><span class="line">3.住</span><br><span class="line">data:用以蓋好的房子能源消耗的問題</span><br><span class="line">skill:預測蓋好房子之前的能源消耗</span><br><span class="line"></span><br><span class="line">4.行</span><br><span class="line">data:號誌圖像＆意義</span><br><span class="line">skill:自動辨識號誌</span><br></pre></td></tr></table></figure>
+<h1 id="Perceptron"><a href="#Perceptron" class="headerlink" title="Perceptron"></a>Perceptron</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">x = (x1, x2, x3, .....)</span><br><span class="line"></span><br><span class="line">              d</span><br><span class="line">h(x) = sign( (Σ   WiXi)  - threshold)</span><br><span class="line">             i=1</span><br><span class="line">             </span><br><span class="line">              d</span><br><span class="line">     = sign( (Σ   WiXi)  + (-threshold)x(+1)</span><br><span class="line">             i=1                w0       x0</span><br><span class="line">     </span><br><span class="line">             d</span><br><span class="line">     = sign( Σ   WiXi )</span><br><span class="line">             i=0</span><br><span class="line">     </span><br><span class="line">     = sign(w^T x)</span><br></pre></td></tr></table></figure>
+<h1 id="Perceptron-Learning-Algorithm"><a href="#Perceptron-Learning-Algorithm" class="headerlink" title="Perceptron Learning Algorithm"></a>Perceptron Learning Algorithm</h1><p>以 R^2 空間為例子</p>
+<p>先隨便畫出一條線 w，當 sign(w^T*Xn) != yn 時</p>
+<p>也就是傳入 data 後輸出的值不是我們預期的</p>
+<p>表示此 w 線是錯誤的，此時就要對 w 來修正</p>
+<p>看 w 是要往右 or 往左 or 調整角度等等</p>
+<p>最後得到 w 是可以得到正確的輸出</p>
+<p>則稱 w = W PLA = g</p>
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_1.png" alt="2017_01_10_1.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_2.png" alt="2017_01_10_2.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_3.png" alt="2017_01_10_3.png" title="">
+<p>紅色是原本的線，黑色是找到錯誤的線，紫色是想要修正的線</p>
+<p>所以下一步的線會和紫色線垂直</p>
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_4.png" alt="2017_01_10_4.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_5.png" alt="2017_01_10_5.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_6.png" alt="2017_01_10_6.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_7.png" alt="2017_01_10_7.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_8.png" alt="2017_01_10_8.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_9.png" alt="2017_01_10_9.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_10.png" alt="2017_01_10_10.png" title="">
+<img src="/2017/12/20/ml-foundations-1/2017_01_10_11.png" alt="2017_01_10_11.png" title="">
 
       
     </div>
